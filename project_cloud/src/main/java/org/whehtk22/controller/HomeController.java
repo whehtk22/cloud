@@ -42,6 +42,7 @@ public class HomeController {
 	}
 	@RequestMapping(value="/about", method=RequestMethod.GET)
 	public String about() {
+		System.out.println("이것이 about입니다.");
 		return "about";
 	}
 }
