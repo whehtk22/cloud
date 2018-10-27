@@ -1,0 +1,22 @@
+/*ÀüÃ¼ À±°û*/
+html{
+	width:100%;
+	height:100%;
+}
+body{
+	width:100%;
+	height:100%;
+}
+#wrapper{
+	max-width:1920px;
+	min-width:320px;
+	/* width:100%; */
+	height:100%;
+	overflow-x:hidden;
+}
+
+#contentsWrap{
+	width:1280px;
+	margin:60px auto;
+	background-color:#dedede;
+}

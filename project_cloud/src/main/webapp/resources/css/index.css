@@ -1,0 +1,126 @@
+
+
+/*############### container #################*/
+#container{
+	width:100%;
+}
+/* container >> mainVisual */
+#mainVisualWrap{
+	width:100%;
+	height:360px;
+}
+#mainVisual{
+	width:100%;
+	height:100%;
+}
+.imgArea{
+	width:100%;
+	height:300px;
+	overflow:hidden;
+	background-image:url("../images/bg_landing.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:center 30%;
+}
+.textArea{
+	width:100%;
+	height:60px;
+	background-color:#ddd;
+	color:#223d4b;
+	text-align:center;
+	line-height:60px;
+}
+.textArea span{
+	font-weight:900;
+	color:skyblue;
+}
+.textArea strong{
+	color:red;
+}
+
+/* container >> contentsWrap */
+
+
+#contents{
+	width:100%;
+	overflow:hidden;
+}
+#contents article{
+	float:left;
+	text-align:center;
+}
+.row1{
+	height:300px;
+	line-height:300px;
+}
+.row2{
+	height:400px;
+	line-height:400px;
+}
+#aboutZone{
+	width:30%;
+	background-color:#223d4b;
+	color:#ededed;
+}
+#mypageZone{
+	width:40%;
+	background-color:#EFF6F8;
+}
+#eventZone{
+	width:30%;
+	background-color:#F35757;
+	color:#fff;
+}
+#advZone{
+	width:40%;
+	background-color:orange;
+}
+/*메인페이지 글목록 요약존*/
+#boardZone{
+	width:60%;
+	line-height:1;
+	padding:30px 20px;
+}
+#boardZone h3{
+	width:100%;
+	padding-bottom:15px;
+	border-bottom:1px solid #223d4b;
+}
+#listWrap{
+	/* background-color:lightblue; */
+	padding-top:15px;
+}
+.articleArea{
+	width:100%;
+	line-height:2rem;
+	padding-bottom:15px;
+}
+.more{
+	width:100%;
+	padding-top:15px;
+	border-top:1px solid #223d4b;
+	line-height:3rem;
+	text-align:right;
+}
+.moreImg{
+	display:inline-block;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	vertical-align:middle;
+}
+.moreImg img{
+	width:100%;
+	vertical-align:middle;
+}
+.moreTxt{
+	color:#333;
+	font-weight:700;
+}
+
+/*float 확인사살*/
+#contents:after{
+	content:'';
+	display:block;
+	clear:both;
+}

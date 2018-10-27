@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.whehtk22.mapper.Enq_BoardMapper">
+	<select id="getList"
+		resultType="org.whehtk22.domain.Enq_BoardVO">
+		<!-- id는 특정 메소드의 이름과 동일하게, 그리고 resultType은 반환할 객체의 형태와 일치하게 -->
+<![CDATA[
+select * from enq_board where bno>0
+]]>
+	</select>
+	<insert id="insert">
+		insert into enq_board(bno,title,content,writer)
+		values (SEQ_BOARD.nextval,#{title},#{content},#{writer})
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE"
+			resultType="long">
+			select SEQ_BOARD.nextval from dual
+		</selectKey>
+		insert into enq_board(bno,title,content,writer)
+		values(#{bno},#{title},#{content},#{writer})
+	</insert>
+	<select id="read" resultType="org.whehtk22.domain.Enq_BoardVO">
+		select * from enq_board where bno=#{bno}
+	</select>
+	<delete id="delete">
+	delete enq_board where bno=#{bno}
+	</delete>
+	<update id="update">
+	update enq_board
+	set title=#{title},
+	content=#{content},
+	writer=#{writer},
+	updateDate = sysdate
+	where bno=#{bno}
+	</update>
+</mapper>

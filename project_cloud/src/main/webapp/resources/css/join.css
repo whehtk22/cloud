@@ -1,0 +1,110 @@
+#contentsWrap{
+	background-color:#efefef;
+}
+/* form이 포함된 전체 contentWrap 부분 */
+#formArea{
+	width:100%;
+	padding:30px;
+}
+
+/* 회원가입 항목 입력부분을 감쌈 */
+#registWrap{
+	width:100%;
+}
+#registWrap h3{
+	width:100%;
+	height:40px;
+	lineheight:40px;
+	text-align:center;
+	font-size:2rem;
+	color:#223d4b;
+}
+#registWrap h3:after{
+	content:'';
+	display:block;
+	width:100%;
+	height:1px;
+	margin:15px 0;
+	background-color:red;
+}
+
+/* 이제 form 감싼 영역 ㅋㅋ */
+#registerBox{
+	width:100%;
+	/* background-color:lightblue; */
+	margin-top:30px;
+}
+/* 진짜 form 요소*/
+#registerBox form{
+	width:100%;
+	line-height:2rem;
+	padding:2%;
+}
+/* 첫 번째 fieldset#membership : 회원정보 입력 부분 */
+#membership{
+	width:100%;
+	border:none;
+}
+#membership legend{
+	display:inline-block;
+	width:100%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	font-weight:700;
+	font-size:24px;
+	color:#3e3e3e;
+	margin-bottom:50px;
+}
+#membership legend span{
+	font-size:20px;
+	color:red;
+	padding-left:5px;
+}
+/* input을 감쌀 ul,li태그 */
+#signUp{
+	width:100%;
+	padding:20px;
+	border:1px solid #ccc;
+}
+#signUp li{
+	width:100%;
+	height:60px;
+}
+#signUp li label{
+	display:inline-block;
+	vertical-align:middle;
+	width:24%;
+	padding-right:6%;
+	text-align:right;
+}
+#signUp li label:after{
+	content:'';
+	display:inline-block;
+	vertical-align:middel;
+	height:15px;
+	padding-left:3%;
+	border-right:1px solid #3e3e3e;
+}
+#signUp li input{
+	display:inline-block;
+	width:50%;
+	height:30px;
+	line-height:30px;	
+	text-indent:5px;
+}
+#signUp li input[type="button"]{
+	display:inline-block;
+	width:20%;
+	height:30px;
+	vertical-align:center;
+}
+#signUp li input[type="checkbox"]{
+	display:inline-block;
+	width:15px;
+	height:15px;
+	
+}
+#signUp li.email,#signUp li.phone{
+	height:120px;
+}
