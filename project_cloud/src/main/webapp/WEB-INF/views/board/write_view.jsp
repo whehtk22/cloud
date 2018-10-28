@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,35 +8,36 @@
 </head>
 <body>
 	<div class="div_center" align="center">
-		<h3>°Ô½ÃÆÇ ±Û ÀÛ¼º</h3>
+		<h3>ê²Œì‹œíŒ ê¸€ ìž‘ì„±</h3>
 		<hr>
-		<form action="write.board" method="post">
-			<input type="hidden" name="bName" value="${user_name}">
+		<form action="/board/register" method="post">
+			
 			<table width="500" border="1">
 				<tr>
-					<td>ÀÛ¼ºÀÚ</td>
+					<td>ìž‘ì„±ìž</td>
 					<td>
+					<input type="text" name="writer" >
 						<%--  <input type="text" name="bName" size="10"> --%>
-						${user_name}(${user_id})
-						<%-- inputÀ» °¡·Á¼­ ÆÄ¶ó¹ÌÅÍ°¡ ¾ø¾îÁ³À¸´Ï È÷µçÀ¸·Î ÀÌ¸§Á¤º¸¸¦ DB¿¡ ³Ñ°Ü¾ß--%>
+						<%-- ${user_name}(${user_id}) --%>
+						<%-- inputì„ ê°€ë ¤ì„œ íŒŒë¼ë¯¸í„°ê°€ ì—†ì–´ì¡Œìœ¼ë‹ˆ ížˆë“ ìœ¼ë¡œ ì´ë¦„ì •ë³´ë¥¼ DBì— ë„˜ê²¨ì•¼--%>
 					</td>
 				</tr>
 				<tr>
-					<td>±Û Á¦¸ñ</td>
+					<td>ê¸€ ì œëª©</td>
 					<td>
-						<input type="text" name="bTitle" size="20">
+						<input type="text" name="title" size="20">
 					</td>
 				</tr>
 				<tr>
-					<td>±Û ³»¿ë</td>
+					<td>ê¸€ ë‚´ìš©</td>
 					<td>
-						<textarea name="bContent" rows="10" cols="50"></textarea>
+						<textarea name="content" rows="10" cols="50"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" class="btn btn-default" value="¿Ï·á" onclick="return confirm('±Û ÀÛ¼ºÀ» ¿Ï·áÇÏ½Ã°Ú½À´Ï±î?')">
-						&nbsp;&nbsp;<a href="/jimmyZip/board/b_list.board">[¸ñ·Ï]</a>
+						<input type="submit" class="btn btn-default" value="ì™„ë£Œ" >
+						&nbsp;&nbsp;<a href="/board/list">[ëª©ë¡]</a>
 					</td>
 				</tr>
 			</table>
