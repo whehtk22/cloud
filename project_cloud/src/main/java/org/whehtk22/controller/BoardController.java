@@ -26,6 +26,11 @@ public class BoardController {
 		log.info("list");
 		model.addAttribute("list",service.getList());
 	}
+   @GetMapping("/register")
+   public String register() {
+	   System.out.println("register");
+	   return "/board/write_view";
+   }
    @PostMapping("/register")
 	public String register(Enq_BoardVO board, RedirectAttributes rttr) {
 		log.info("register: "+board);
@@ -35,9 +40,9 @@ public class BoardController {
 		rttr.addFlashAttribute("result",board.getBno());//새롭게 등록된 게시블의 번호를 같이 전달.
 		return "redirect:/board/list";//스프링이 자동적으로 response.sendRedirect()를 처리해 준다.
 	}
-   @GetMapping("/get")
+   @GetMapping({"/get","/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
-		log.info("/get");
+		log.info("/get or /modify");
 		model.addAttribute("board",service.get(bno));
 	}
    @PostMapping("/modify")
