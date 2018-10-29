@@ -15,6 +15,7 @@ $(document).ready(function(){
 	var formObj = $("form")
 	
 	$('button').on("click",function(e){
+		
 		e.preventDefault()
 		
 		var operation = $(this).data("oper")
@@ -26,7 +27,12 @@ $(document).ready(function(){
 		}else if(operation==='list'){
 			//self.location="/board/list"
 			formObj.attr("action","/board/list").attr("method","get")//단순히 list로 가는 것이기 때문에 post방식이 필요 없이 get방식으로 해도 된다.
+			var pageNum = $("input[name='pageNum']").clone()
+			var amount = $("input[name='amount']").clone()
+			
 			formObj.empty()
+			formObj.append(pageNum)
+			formObj.append(amount)
 		}
 		formObj.submit()
 	})
@@ -71,7 +77,10 @@ $(document).ready(function(){
 			</td>
 		</tr>
 	</table>
-	<div><input type="hidden" class="form-control" name='updateDate' value='<fmt:formatDate value="${board.updateDate}" pattern="yyyy/MM/dd/"/>' ></div>
+	<div><input type="hidden" class="form-control" name='updateDate' value='<fmt:formatDate value="${board.updateDate}" pattern="yyyy/MM/dd/"/>' >
+	<input type="hidden" name='pageNum' value='${page.pageNum}'>
+	<input type="hidden" name='amount' value='${page.amount}'>
+	</div>
 	</form>
 </body>
 </html>

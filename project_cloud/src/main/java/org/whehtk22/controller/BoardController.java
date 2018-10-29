@@ -3,11 +3,14 @@ package org.whehtk22.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.whehtk22.domain.Enq_BoardVO;
+import org.whehtk22.domain.PageDTO;
+import org.whehtk22.domain.PageSetting;
 import org.whehtk22.service.Enq_BoardService;
 
 import lombok.AllArgsConstructor;
@@ -21,10 +24,16 @@ public class BoardController {
 
 	private Enq_BoardService service;
 	
-   @GetMapping("/list")
+  /* @GetMapping("/list")
 	public void list(Model model) {
 		log.info("list");
 		model.addAttribute("list",service.getList());
+	}*/
+	@GetMapping("/list")
+	public void list(PageSetting page,Model model) {
+		log.info("list: "+page);
+		model.addAttribute("list",service.getList(page));
+		model.addAttribute("page",new PageDTO(page,123));
 	}
    @GetMapping("/register")
    public String register() {
@@ -41,25 +50,31 @@ public class BoardController {
 		return "redirect:/board/list";//스프링이 자동적으로 response.sendRedirect()를 처리해 준다.
 	}
    @GetMapping({"/get","/modify"})
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(@RequestParam("bno") Long bno, @ModelAttribute("page") PageSetting page, Model model) {
 		log.info("/get or /modify");
 		model.addAttribute("board",service.get(bno));
 	}
    @PostMapping("/modify")
-	public String modify(Enq_BoardVO board,RedirectAttributes rttr) {
+	public String modify(Enq_BoardVO board,@ModelAttribute("page") PageSetting page, RedirectAttributes rttr) {
 		log.info("modify: "+board);
 		
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		rttr.addAttribute("pageNum",page.getPageNum());
+		rttr.addAttribute("amount",page.getAmount());
+		
 		return "redirect:/board/list";
 	}
    @PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("page") PageSetting page, RedirectAttributes rttr) {
 		log.info("remove......"+bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		rttr.addAttribute("pageNum",page.getPageNum());
+		rttr.addAttribute("amount",page.getAmount());
+		
 		return "redirect:/board/list";
 	}
 }

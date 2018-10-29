@@ -1,11 +1,14 @@
 package org.whehtk22.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.whehtk22.domain.Enq_BoardVO;
+import org.whehtk22.domain.PageSetting;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -62,5 +65,14 @@ public class Enq_BoardMapperTests {
 		
 		int count = mapper.update(board);
 		log.info("UPDATE COUNT: "+count);
+	}
+	@Test
+	public void testPaging() {
+		PageSetting page = new PageSetting();
+		page.setAmount(10);
+		page.setPageNum(1);
+		List<Enq_BoardVO> list = mapper.getListWithPaging(page);
+		
+		list.forEach(board->log.info(board));
 	}
 }

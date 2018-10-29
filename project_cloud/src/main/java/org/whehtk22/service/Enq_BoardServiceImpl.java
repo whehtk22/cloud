@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.whehtk22.domain.Enq_BoardVO;
+import org.whehtk22.domain.PageSetting;
 import org.whehtk22.mapper.Enq_BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -43,11 +44,17 @@ public class Enq_BoardServiceImpl implements Enq_BoardService {
 		return mapper.delete(bno)==1;
 	}
 
-	@Override
-	public List<Enq_BoardVO> getList() {
+	//@Override
+	/*public List<Enq_BoardVO> getList() {
 		log.info("getList.......");
 		
 		return mapper.getList();
+	}*/
+
+	@Override
+	public List<Enq_BoardVO> getList(PageSetting page) {
+		log.info("get List with page: "+page);
+		return mapper.getListWithPaging(page);
 	}
 
 }

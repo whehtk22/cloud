@@ -49,7 +49,8 @@
 				<c:forEach var="list" items="${list}">
 				<li class="contentRow">
 					<p>${list.bno}</p><!--  target='_blank' -->
-					<p><a  href='/board/get?bno=${list.bno}'>${list.title }</a></p>
+					<p><a  class='move' href='<c:out value="${list.bno}"/>'>
+					<c:out value="${list.title }"/></a></p>
 					<p>${list.writer }</p>
 					<p><fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/></p>
 					<p><fmt:formatDate pattern="yyyy-MM-dd" value="${list.updateDate}"/></p>
@@ -61,25 +62,20 @@
 					</div>
 				</li>
 			</ul>
-			<div id="pagingArea">
-				<p class="prev">
-					<a class="prevBtn" href="#none" title="이전목록">이전</a>
-				</p>
-				<p class="pageNoArea">
-					<a class="pageNo" href="#none" title="1"><span>1</span></a>
-					<a class="pageNo" href="#none" title="2"><span>2</span></a>
-					<a class="pageNo" href="#none" title="3"><span>3</span></a>
-					<a class="pageNo" href="#none" title="4"><span>4</span></a>
-					<a class="pageNo" href="#none" title="5"><span>5</span></a>
-					<a class="pageNo" href="#none" title="6"><span>6</span></a>
-					<a class="pageNo" href="#none" title="7"><span>7</span></a>
-					<a class="pageNo" href="#none" title="8"><span>8</span></a>
-					<a class="pageNo" href="#none" title="9"><span>9</span></a>
-					<a class="pageNo" href="#none" title="10"><span>10</span></a>
-				</p>
-				<p class="next">
-					<a class="nextBtn" href="#none" title="다음목록">다음</a>
-				</p>
+			<div>
+			<ul>
+			<c:if test="${page.prev}">
+			<li><a href="${page.startPage-1}">Previous</a></li>
+			</c:if>
+			<c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">
+			<p class="page_button  ${page.page.pageNum == num ? "active" : ""} "> 
+			<a href="${num}" title="1"><span>${num}</span></a></p>
+			</c:forEach>
+			
+			<c:if test="{page.next}">
+			<li><a href="${page.endPage+1}">Next</a>
+			</c:if>
+			</ul>
 			</div>
 		</div>
 		<div id="searchAreaWrapper">
@@ -96,6 +92,10 @@
 			</form>
 		</div>
 	</div>
+	<form id='actionForm' action="/board/list" method="get">
+	<input type='hidden' name='pageNum' value='${page.page.pageNum}'>
+	<input type='hidden' name='amount' value='${page.page.amount}'>
+	</form>
 	<!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -134,6 +134,28 @@
 		$("#write_board").on("click",function(){
 			self.location="/board/register"
 		})
+		
+		var actionForm = $("#actionForm")
+		
+		$(".page_button a").on("click",function(e){
+			e.preventDefault()
+			
+			console.log('click')
+			
+			actionForm.find("input[name='pageNum']").val($(this).attr("href"))
+			actionForm.submit()
+		})
+		
+		$(".move").on("click",function(e){
+			e.preventDefault()
+			
+			console.log('click')
+			actionForm.append("<input type='hidden' name='bno' value='"+
+					$(this).attr("href")+"'>")//bno값을 추가하는 input태그를 생성
+			actionForm.attr("action","/board/get")//액션값을 바꿔서 상세보기로~
+			actionForm.submit()
+		})
+		
 	})
 		
 	</script>
