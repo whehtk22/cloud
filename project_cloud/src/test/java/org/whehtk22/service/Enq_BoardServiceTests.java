@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.whehtk22.domain.Enq_BoardVO;
+import org.whehtk22.domain.PageSetting;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -36,9 +37,9 @@ public class Enq_BoardServiceTests {
 		//모든 실행이 끝나고 난 이후에 board객체를 반환해 준다.
 		log.info("생성된 게시물의 번호: "+board.getBno());
 	}
-//	@Test
+	@Test
 	public void testGetList() {
-		service.getList().forEach(board->log.info(board));
+		service.getList(new PageSetting(3,10)).forEach(board->log.info(board));
 	}
 //	@Test
 	public void testGet() {

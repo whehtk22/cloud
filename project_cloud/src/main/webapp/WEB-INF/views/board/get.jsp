@@ -24,6 +24,12 @@ $(document).ready(function(){
 		operForm.attr("action","/board/list")
 		operForm.submit()
 	})
+	
+	$("button[data-oper='remove']").on("click",function(e){
+		operForm.attr("action","/board/remove")
+		operForm.attr("method","post")
+		operForm.submit()
+	})
 })
 
 </script>
@@ -66,6 +72,8 @@ $(document).ready(function(){
 	<!-- 숨겨진 폼을 만들어서 각각의 버튼에 대해서 다른 기능을 구현. -->
 	<form id='operForm' action="/board/modify" method="get">
 	<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
+	<input type='hidden' name='pageNum' value='<c:out value="${page.pageNum}"/>'>
+	<input type='hidden' name='amount' value='<c:out value="${page.amount}"/>'> 
 	</form>
 </body>
 </html>
