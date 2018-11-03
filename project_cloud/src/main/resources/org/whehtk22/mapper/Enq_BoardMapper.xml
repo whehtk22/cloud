@@ -3,18 +3,48 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.whehtk22.mapper.Enq_BoardMapper">
-<select id="getListWithPaging" resultType="org.whehtk22.domain.Enq_BoardVO">
-<!-- CDATA는 (<)나 (>)등을 처리하기 위해서 사용하는 섹션이다. -->
+<sql id="pageSetting"><!-- 필요한 구문을 재사용할 수 있는 단위로 생성한다. -->
+		<trim prefix="(" suffix=")  AND  " prefixOverrides="OR"><!-- prefixOverrides="OR" -->
+			<foreach item='type' collection="typeArr"><!-- 배열인 typeArr을 이용한다. -->
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%' ||#{keyword}|| '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%' ||#{keyword}|| '%'
+						</when>
+						<when test="type =='W'.toString()">
+							writer like '%' ||#{keyword}|| '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+		</sql>
+	<select id="getListWithPaging"
+		resultType="org.whehtk22.domain.Enq_BoardVO">
+		<!-- CDATA는 (<)나 (>)등을 처리하기 위해서 사용하는 섹션이다. -->
 <![CDATA[
-select 
-	bno, title, content, writer, regdate, updatedate
+select bno, title, content, writer, regdate, updatedate
 	from 
 	(
-select /*+INDEX_DESC(enq_board pk_board) */ rownum rn, bno, title, content, writer, regdate
-, updatedate from enq_board where rownum<=#{pageNum}*#{amount}) 
-where rn>(#{pageNum}-1)*#{amount}
+select /*+INDEX_DESC(enq_board pk_board) */ rownum as rn, bno, title, content, writer, regdate
+, updatedate from enq_board where 
+]]><!-- prefix는 앞의 문장 바로 뒤에 붙여주라는 의미, suffix는 trim안에 내포된 태그들이 끝나면 그 뒤에 붙여주라는 
+			의미, foreach문 안에 있는 것은 when절이 조건을 만족하여 붙여질 경우 그 바로 뒤에 다른 when절이 조건을 만족하여 연달아서 
+			두 문장을 넣는 경우 그 사이를 prefix인 OR을 삽입하는 것이다. -->
+			<include refid="pageSetting"></include><!-- sql문을 가져와서 쓴다. -->
+<![CDATA[rownum<= #{pageNum}*#{amount}
+					)
+					where rn > (#{pageNum}-1)*#{amount}
 ]]>
-</select>
+	</select>
+	<select id="getTotalCount" resultType="int">
+	select count(*) from enq_board
+	where
+	<include refid="pageSetting"></include>
+	</select>
 	<select id="getList"
 		resultType="org.whehtk22.domain.Enq_BoardVO">
 		<!-- id는 특정 메소드의 이름과 동일하게, 그리고 resultType은 반환할 객체의 형태와 일치하게 -->
@@ -36,17 +66,21 @@ select * from enq_board where bno>0
 		values(#{bno},#{title},#{content},#{writer})
 	</insert>
 	<select id="read" resultType="org.whehtk22.domain.Enq_BoardVO">
-		select * from enq_board where bno=#{bno}
+		select * from enq_board where
+		bno=#{bno}
 	</select>
 	<delete id="delete">
-	delete enq_board where bno=#{bno}
+		delete enq_board where bno=#{bno}
 	</delete>
 	<update id="update">
-	update enq_board
-	set title=#{title},
-	content=#{content},
-	writer=#{writer},
-	updateDate = sysdate
-	where bno=#{bno}
+		update enq_board
+		set title=#{title},
+		content=#{content},
+		writer=#{writer},
+		updateDate = sysdate
+		where bno=#{bno}
 	</update>
+	<select id="getTotalNum" resultType="int">
+		select count(*) from enq_board where bno>0
+	</select>
 </mapper>

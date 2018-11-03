@@ -8,10 +8,30 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/resources/js/reply.js"></script>
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
 <script type="text/javascript">
 //각기 다른 버튼에 대해서 data-oper를 다르게 적용하여 버튼마다 다른 기능을 구현.
+console.log("---------------------")
+console.log("JS TEST")
+
+var bnoValue='<c:out value="${board.bno}"/>'
+
+//for replyService add test
+//reply.js에서 등록한 변수인 replyService의 함수인 add를 호출해서 json의 형태로 추가해주고 결과가
+//나오면 경고창으로 보여준다.
+/* replyService.add(
+		{reply:"JS Test",replyer:"tester",bno:bnoValue},
+		function(result){
+			alert("RESULT: "+result)
+		}
+		) */
+		replyService.getList({bno:bnoValue,page:1},function(list){
+			for(var i=0,len=list.length||0;i<len;i++){
+				console.log(list[i])
+			}
+		})
 $(document).ready(function(){
 	var operForm = $("#operForm")
 	
@@ -74,6 +94,8 @@ $(document).ready(function(){
 	<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
 	<input type='hidden' name='pageNum' value='<c:out value="${page.pageNum}"/>'>
 	<input type='hidden' name='amount' value='<c:out value="${page.amount}"/>'> 
+	<input type='hidden' name='keyword' value='<c:out value="${page.keyword}"/>'>
+	<input type='hidden' name='type' value='<c:out value="${page.type}"/>'>
 	</form>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package org.whehtk22.mapper;
+/*package org.whehtk22.mapper;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class Enq_BoardMapperTests {
 		int count = mapper.update(board);
 		log.info("UPDATE COUNT: "+count);
 	}
-	@Test
+	//@Test
 	public void testPaging() {
 		PageSetting page = new PageSetting();
 		page.setAmount(10);
@@ -75,4 +75,14 @@ public class Enq_BoardMapperTests {
 		
 		list.forEach(board->log.info(board));
 	}
+	@Test
+	public void testSearch() {
+		PageSetting page = new PageSetting();
+		page.setKeyword("새로");
+		page.setType("TC");
+		
+		List<Enq_BoardVO>list = mapper.getListWithPaging(page);
+		list.forEach(board->log.info(board));
+	}
 }
+*/

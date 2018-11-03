@@ -19,4 +19,7 @@ public interface Enq_BoardService {
 	
 	public List<Enq_BoardVO>getList(PageSetting page);
 	
+	public List<Enq_BoardVO>getListWithPaging(PageSetting page);
+	
+	public int getTotal(PageSetting page);//sql문을 처리하는데에는 필요없는 PageSetting이지만 검색처리에서 쓰인다.
 }

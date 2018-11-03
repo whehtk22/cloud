@@ -32,8 +32,13 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(PageSetting page,Model model) {
 		log.info("list: "+page);
-		model.addAttribute("list",service.getList(page));
-		model.addAttribute("page",new PageDTO(page,123));
+		model.addAttribute("list",service.getListWithPaging(page));
+//		model.addAttribute("page",new PageDTO(page,123));
+		
+		int total = service.getTotal(page);
+		
+		log.info("total: "+total);
+		model.addAttribute("page",new PageDTO(page,total));
 	}
    @GetMapping("/register")
    public String register() {
@@ -55,16 +60,18 @@ public class BoardController {
 		model.addAttribute("board",service.get(bno));
 	}
    @PostMapping("/modify")
-	public String modify(Enq_BoardVO board,@ModelAttribute("page") PageSetting page, RedirectAttributes rttr) {
-		log.info("modify: "+board);
+   public String modify(Enq_BoardVO board,@ModelAttribute("page") PageSetting page, RedirectAttributes rttr) {
+	   	log.info("modify: "+board);
 		
-		if(service.modify(board)) {
-			rttr.addFlashAttribute("result","success");
-		}
+	   	if(service.modify(board)) {
+	   		rttr.addFlashAttribute("result","success");
+	   	}
 		rttr.addAttribute("pageNum",page.getPageNum());
 		rttr.addAttribute("amount",page.getAmount());
+		rttr.addAttribute("type",page.getType());//목록으로 이동하기 전에 전에 검색했던 사항들을 추가해서 전달.
+		rttr.addAttribute("keyword",page.getKeyword());
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list"+page.getListLink();
 	}
    @PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("page") PageSetting page, RedirectAttributes rttr) {
@@ -74,7 +81,10 @@ public class BoardController {
 		}
 		rttr.addAttribute("pageNum",page.getPageNum());
 		rttr.addAttribute("amount",page.getAmount());
+		rttr.addAttribute("type",page.getType());//목록으로 이동하기 전에 전에 검색했던 사항들을 추가해서 전달.
+		rttr.addAttribute("keyword",page.getKeyword());
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list"+page.getListLink();
 	}
+   
 }
