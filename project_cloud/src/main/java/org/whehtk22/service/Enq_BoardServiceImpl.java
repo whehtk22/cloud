@@ -56,5 +56,14 @@ public class Enq_BoardServiceImpl implements Enq_BoardService {
 		log.info("get List with page: "+page);
 		return mapper.getListWithPaging(page);
 	}
-
+	@Override
+	public int getTotal(PageSetting page) {
+		log.info("get total count");
+		return mapper.getTotalNum(page);
+	}
+	@Override
+	public List<Enq_BoardVO> getListWithPaging(PageSetting page) {
+		log.info("getList with paging");
+		return mapper.getListWithPaging(page);
+	}
 }

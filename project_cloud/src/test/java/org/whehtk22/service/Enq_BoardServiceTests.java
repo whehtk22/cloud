@@ -1,4 +1,4 @@
-package org.whehtk22.service;
+/*package org.whehtk22.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -61,3 +61,4 @@ public class Enq_BoardServiceTests {
 		log.info("MODIFY RESULT : "+service.modify(board));
 	}
 }
+*/

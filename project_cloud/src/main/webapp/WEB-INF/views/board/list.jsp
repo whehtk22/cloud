@@ -16,8 +16,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
 	<div id="navContainer">
 		<nav id="navInner">
 			<ul id="nav">
@@ -79,15 +77,22 @@
 			</div>
 		</div>
 		<div id="searchAreaWrapper">
-			<form id="searchArea" action="#none" method="get">
-				<select>
-					<option value="제목">제목</option>
-					<option value="작성자">작성자</option>
-					<option value="작성자+내용">작성자+내용</option>
+			<form id="searchArea" action="/board/list" method="get">
+				<select name="type">
+				
+				<option value="" <c:out value="${page.page.type==null?'selected':'' }"/>>--</option>
+					<option value="T" <c:out value="${page.page.type eq 'T' ? 'selected':'' }"/>>제목</option>
+					<option value="C" <c:out value="${page.page.type eq 'C' ? 'selected':'' }"/>>내용</option>
+					<option value="W" <c:out value="${page.page.type eq 'W' ? 'selected':'' }"/>>작성자</option>
+					<option value="TC" <c:out value="${page.page.type eq 'TC' ? 'selected':'' }"/>>제목 or 내용</option>
+					<option value="TW" <c:out value="${page.page.type eq 'TW' ? 'selected':'' }"/>>제목 or 작성자</option>
+					<option value="TWC" <c:out value="${page.page.type eq 'TWC' ? 'selected':'' }"/>>제목 or 내용 or 작성자</option>
 				</select>
 				<p>
-					<input id="search" type="text" name="search">
-					<input type="submit" value="검색">
+					<input type="text" name="keyword">
+					<input type="hidden" name='pageNum' value="${page.page.pageNum}">
+					<input type='hidden' name='amount' value='${page.page.amount}'>
+					<button class='btn btn-default'>Search</button>
 				</p>	
 			</form>
 		</div>
@@ -95,6 +100,8 @@
 	<form id='actionForm' action="/board/list" method="get">
 	<input type='hidden' name='pageNum' value='${page.page.pageNum}'>
 	<input type='hidden' name='amount' value='${page.page.amount}'>
+	<input type='hidden' name='type' value='${page.page.type}'>
+	<input type='hidden' name='keyword' value='${page.page.keyword}'>
 	</form>
 	<!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -155,7 +162,26 @@
 			actionForm.attr("action","/board/get")//액션값을 바꿔서 상세보기로~
 			actionForm.submit()
 		})
-		
+		var searchForm = $("#searchArea")
+		console.log(searchForm)
+		$("#searchArea button").on("click",function(e){
+			  if(!searchForm.find("option:selected").val()){
+				console.log(searchForm.find("option:selected").val())
+				alert("검색 종류를 선택하세요!")
+				return false
+			} 
+			
+			if(!searchForm.find("input[name='keyword']").val()){
+				alert("키워드를 입력하세요!")
+				return false
+			} 
+			//검색을 하는 경우 만약 검색하기 전에 3페이지였던 경우 3페이지로 이동하는데 그것을 막기 위해 페이지
+			//번호를 1번으로 해준다.
+			searchForm.find("input[name='pageNum']").val("1")
+			e.preventDefault()
+			
+			searchForm.submit()
+		})
 	})
 		
 	</script>

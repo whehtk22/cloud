@@ -1,4 +1,4 @@
-package org.whehtk22.sample;
+/*package org.whehtk22.sample;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -29,3 +29,4 @@ public class SampleTest {
 		
 	}
 }
+*/

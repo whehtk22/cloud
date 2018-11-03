@@ -139,6 +139,13 @@
 			<artifactId>HikariCP</artifactId>
 			<version>2.7.4</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.12</version>
+</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -180,7 +187,7 @@
     <artifactId>commons-fileupload</artifactId>
     <version>1.3.3</version>
 </dependency>
-
+<!-- https://mvnrepository.com/artifact/OJDBC/ojdbc -->
 	</dependencies>
 	<build>
 		<plugins>
