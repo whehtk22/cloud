@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.whehtk22.domain.PageSetting;
+import org.whehtk22.domain.ReplyPageDTO;
 import org.whehtk22.domain.ReplyVO;
 import org.whehtk22.mapper.ReplyMapper;
 
@@ -48,4 +49,9 @@ public class ReplyServiceImpl implements ReplyService{
 		return mapper.getListWithPaging(page, bno);
 	}
 
+	@Override
+	public ReplyPageDTO getListPage(PageSetting page, Long bno) {
+		
+		return new ReplyPageDTO(mapper.getCountByBno(bno),mapper.getListWithPaging(page, bno));
+	}
 }

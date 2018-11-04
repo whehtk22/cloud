@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>FileRoom Home</title>
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-	<script src="./js/jquery-1.12.4.min.js"></script>
-	<script src="./js/common.js"></script>
+	<script src="/resources/js/jquery-1.12.4.min.js"></script>
+	<script src="/resources/js/common.js"></script>
 </head>
 <body>
 	<div id="wrapper">
