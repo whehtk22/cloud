@@ -6,7 +6,7 @@
 <div id="headWrap">
 	<header id="header">
 		<h1 id="logo">
-			<a href="index.jsp" title="메인페이지로">LOGO</a>
+			<a href="/index" title="메인페이지로">LOGO</a>
 		</h1>
 		<a id="menuWrap" href="#none" title="menu contents 링크">
 			<dl id="menuBtn">
@@ -26,10 +26,10 @@
 			<h2>헤더 내 gnb</h2>
 			<ul>
 				<li><a href="about.jsp" title="greeting">Greeting</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
-				<li><a href="index.jsp" title="home">Home</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
+				<li><a href="/index" title="home">Home</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="fileroom.jsp" title="cloud">Cloud</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="login.jsp" title="login">Sign In</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
-				<li><a href="join.jsp" title="register">Register</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
+				<li><a href="/member/join" title="register">Register</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="mypage.jsp" title="register">My Page</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="storage_market.jsp" title="market">Market</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="/board/list" title="board">Board</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>

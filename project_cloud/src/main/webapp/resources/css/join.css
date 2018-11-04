@@ -1,13 +1,13 @@
 #contentsWrap{
 	background-color:#efefef;
 }
-/* formÀÌ Æ÷ÇÔµÈ ÀüÃ¼ contentWrap ºÎºĞ */
+/* formï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½Ã¼ contentWrap ï¿½Îºï¿½ */
 #formArea{
 	width:100%;
-	padding:30px;
+	padding:60px 60px 150px 60px;
 }
 
-/* È¸¿ø°¡ÀÔ Ç×¸ñ ÀÔ·ÂºÎºĞÀ» °¨½Ó */
+/* È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ ï¿½Ô·ÂºÎºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 #registWrap{
 	width:100%;
 }
@@ -28,19 +28,19 @@
 	background-color:red;
 }
 
-/* ÀÌÁ¦ form °¨½Ñ ¿µ¿ª ¤»¤» */
+/* ï¿½ï¿½ï¿½ï¿½ form ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 #registerBox{
 	width:100%;
 	/* background-color:lightblue; */
 	margin-top:30px;
 }
-/* ÁøÂ¥ form ¿ä¼Ò*/
+/* ï¿½ï¿½Â¥ form ï¿½ï¿½ï¿½ï¿½*/
 #registerBox form{
 	width:100%;
 	line-height:2rem;
 	padding:2%;
 }
-/* Ã¹ ¹øÂ° fieldset#membership : È¸¿øÁ¤º¸ ÀÔ·Â ºÎºĞ */
+/* Ã¹ ï¿½ï¿½Â° fieldset#membership : È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Îºï¿½ */
 #membership{
 	width:100%;
 	border:none;
@@ -56,12 +56,20 @@
 	color:#3e3e3e;
 	margin-bottom:50px;
 }
+#membership legend:after{
+	content:'';
+	display:block;
+	width:5%;
+	height:3px;
+	background-color:#3e3e3e;
+	margin:15px auto;
+}
 #membership legend span{
 	font-size:20px;
 	color:red;
 	padding-left:5px;
 }
-/* inputÀ» °¨½Ò ul,liÅÂ±× */
+/* inputï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ul,liï¿½Â±ï¿½ */
 #signUp{
 	width:100%;
 	padding:20px;
@@ -74,8 +82,10 @@
 #signUp li label{
 	display:inline-block;
 	vertical-align:middle;
-	width:24%;
-	padding-right:6%;
+	width:25%;
+	height:50%;
+	line-height:30px;
+	padding-right:5%;
 	text-align:right;
 }
 #signUp li label:after{
@@ -90,21 +100,199 @@
 	display:inline-block;
 	width:50%;
 	height:30px;
-	line-height:30px;	
+	line-height:30px;
 	text-indent:5px;
+	border:none;
+}
+/* ëª¨ë“  input ë° ë²„íŠ¼ê¸°ëŠ¥í•˜ëŠ” ìš”ì†Œë“¤ ëª¨ì„œë¦¬ì²˜ë¦¬ */
+#signUp li input, #buttonArea input, .agreeText a{
+	border-radius:5px;
+}
+/* email */
+#signUp li.email{
+	width:100%;
+	height:90px;
+	margin-bottom:30px;
+}
+#signUp li.email label{
+	height:30px;
+	line-height:30px;
+}
+/* phone */
+#signUp li.phone{
+	width:100%;
+	height:60px;
+	margin-bottom:30px;
+}
+#signUp li.phone label{
+	height:30px;
+	line-height:30px;
 }
 #signUp li input[type="button"]{
 	display:inline-block;
 	width:20%;
 	height:30px;
-	vertical-align:center;
+	vertical-align:middle;
+	background-color:transparent;
+	border:none;
+	border:1px solid #223d4b;
+	color:#223d4b;
+	transition:all .3s ease-in-out;
+}
+#signUp li input[type="button"]:hover,#signUp li input[type="button"]:focus{
+	color:#ededed;
+	background-color:#223d4b;
 }
 #signUp li input[type="checkbox"]{
 	display:inline-block;
 	width:15px;
 	height:15px;
-	
 }
-#signUp li.email,#signUp li.phone{
-	height:120px;
+/* ì£¼ì˜ì‚¬í•­ */
+.caution{
+	display:inline-block;
+	width:100%;
+	height:30px;
+	line-height:30px;
+	padding-left:25%;
+	color:red;
+	font-size:0.8rem;
+}
+
+/* email,phone ìˆ˜ì‹ ë™ì˜ ë¶€ë¶„ */
+#signUp li.specific p.agree{
+	width:50%;
+	height:30px;
+	line-height:30px;
+	margin-left:25%;
+	overflow:hidden;
+}
+#signUp li.specific p.agree input[type="checkbox"]{
+	display:inline-block;
+	width:3%;
+	height:100%;
+	padding:0;
+	vertical-align:middle;
+}
+#signUp li.specific p.agree label.normal{
+	display:inline-block;
+	width:97%;
+	height:100%;
+	line-height:28px;
+	padding:0;
+	vertical-align:middle;
+	text-align:left;
+	text-indent:1%;
+}
+#signUp li.specific p.agree label.normal:after{
+	content:'';
+	width:0;
+	height:30px;
+	line-height:30px;
+	display:none;
+}
+
+/* #buttonArea */
+#buttonArea{
+	width:100%;
+	height:50px;
+	margin-top:30px;
+	overflow:hidden;
+}
+#buttonArea p{
+	width:50%;
+	height:30px;
+	margin:10px auto;
+}
+#buttonArea p input{
+	display:inline-block;
+	width:32%;
+	height:100%;
+	line-height:30px;
+	margin-left:1%;
+	border:none;
+	border:1px solid #ccc;
+	background-color:transparent;
+	transition:all .3s ease-in-out;
+}
+#buttonArea p input:hover,#button p input:focus{
+	background-color:#223d4b;
+	/* color:#ef4b24; */
+	color:pink;
+	font-weight:700;
+}
+
+/* ì´ìš©ì•½ê´€, ê°œì¸ì •ë³´ */
+#termsPrivacy{
+	margin-top:60px;
+	width:100%;
+	height:100px;
+	border:none;
+}
+#termsPrivacy legend{
+	display:inline-block;
+	width:100%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	font-weight:700;
+	font-size:24px;
+	color:#3e3e3e;
+	margin-bottom:50px;
+}
+#termsPrivacy legend:after{
+	content:'';
+	display:block;
+	width:5%;
+	height:3px;
+	background-color:#3e3e3e;
+	margin:15px auto;
+}
+.agreeText{
+	width:100%;
+	padding:30px;
+	border:1px solid #ccc;
+}
+.agreeText p{
+	width:100%;
+	height:100%;
+	line-height:30px;
+	overflow:hidden;
+	margin-bottom:10px;
+}
+.agreeText p span{
+	display:inline-block;
+	width:25%;
+	height:100%;
+	padding-right:5%;
+	vertical-align:middle;
+	text-align:right;
+}
+.agreeText p input[type="checkbox"]{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	padding:7px 0;
+	vertical-align:middle;
+}
+.agreeText p label{
+	display:inline-block;
+	width:49%;
+	vertical-align:middle;
+	text-indent:1%;
+}
+.agreeText p a{
+	display:inline-block;
+	width:20%;
+	color:#223d4b;
+	background-color:transparent;
+	border:1px solid #223d4b;
+	text-align:center;
+	font-size:0.8rem;
+	transition:all .5s ease-in-out;
+	vertical-align:middle;
+}
+.agreeText p:hover a,.agreeText p a:focus{
+	color:#ededed;
+	background-color:#223d4b;
 }

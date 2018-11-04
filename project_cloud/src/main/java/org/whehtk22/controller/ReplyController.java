@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.whehtk22.domain.PageSetting;
+import org.whehtk22.domain.ReplyPageDTO;
 import org.whehtk22.domain.ReplyVO;
 import org.whehtk22.service.ReplyService;
 
@@ -45,12 +46,12 @@ public class ReplyController {
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_UTF8_VALUE
 			})
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page")int page, @PathVariable("bno")Long bno){
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page")int pagenum, @PathVariable("bno")Long bno){
 		log.info("getList............");
-		PageSetting pagesetting = new PageSetting(page,10);
+		PageSetting pagesetting = new PageSetting(pagenum,10);
 		log.info(pagesetting);
 		
-		return new ResponseEntity<>(service.getList(pagesetting, bno),HttpStatus.OK);
+		return new ResponseEntity<>(service.getListPage(pagesetting, bno),HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/{rno}",

@@ -60,15 +60,23 @@ public class ReplyMapperTests {
 		
 		log.info("UPDATE COUNT: "+count);
 	}
-	@Test
+	//@Test
 	public void testList() {
 		PageSetting page = new PageSetting();
 		List<ReplyVO> replies = mapper.getListWithPaging(page, bnoArr[0]);
 		
 		replies.forEach(rep->log.info(rep));
 	}
-	@Test
+	//@Test
 	public void testMapper() {
 		log.info(mapper);
+	}
+	@Test
+	public void testList2() {
+		PageSetting page = new PageSetting(2,10);
+		
+		List<ReplyVO> replies = mapper.getListWithPaging(page, 2097150L);
+		
+		replies.forEach(reply->log.info(reply));
 	}
 }

@@ -19,9 +19,16 @@
 	</update>
 	
 	<select id="getListWithPaging" resultType="org.whehtk22.domain.ReplyVO">
-	select rno, bno, reply, replyer,replyDate,updatedate
-	from tbl_reply
-	where bno=#{bno}
-	order by rno asc
+	<![CDATA[select rno, bno, reply, replyer,replyDate,updatedate
+	from (select /*+INDEX(tbl_reply idx_reply)*/ rownum rn, rno, bno, reply, replyer, replyDate, updatedate
+	from tbl_reply where bno=#{bno} and rno>0 and rownum<=#{page.pageNum}*#{page.amount}
+	) where rn>(#{page.pageNum}-1)*#{page.amount}
+	]]><!-- 안의 select문에서는 페이지의 번호에 따라 rownum의 범위를 좁혀준다.  -->
+	</select>
+	
+	<select id="getCountByBno" resultType="int"><!-- 특정 게시물의 전체 댓글수를 구하는 sql문 -->
+	<![CDATA[
+	select count(rno) from tbl_reply where bno=#{bno}
+	]]>
 	</select>
 	</mapper>
