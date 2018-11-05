@@ -2,6 +2,7 @@ package org.whehtk22.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.whehtk22.domain.Enq_BoardVO;
 import org.whehtk22.domain.PageSetting;
 
@@ -23,4 +24,6 @@ public interface Enq_BoardMapper {
 	public int delete(Long bno);
 	
 	public int update(Enq_BoardVO board);
+	
+	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 }

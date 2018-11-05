@@ -13,4 +13,6 @@ public class Enq_BoardVO {
 	private String writer;
 	private Date regdate;
 	private Date updateDate;
+	
+	private int replyCnt;
 }
