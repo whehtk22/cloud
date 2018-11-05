@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.whehtk22.domain.PageSetting;
 import org.whehtk22.domain.ReplyPageDTO;
 import org.whehtk22.domain.ReplyVO;
+import org.whehtk22.mapper.Enq_BoardMapper;
 import org.whehtk22.mapper.ReplyMapper;
 
 import lombok.Setter;
@@ -18,9 +20,13 @@ public class ReplyServiceImpl implements ReplyService{
 	
 	@Setter(onMethod_=@Autowired)
 	private ReplyMapper mapper;
+	@Setter(onMethod_=@Autowired)
+	private Enq_BoardMapper boardmapper;
 	
+	@Transactional
 	public int register(ReplyVO vo) {
 		
+		boardmapper.updateReplyCnt(vo.getBno(), 1);
 		log.info("register..."+vo);
 		return mapper.insert(vo);
 	}
@@ -36,10 +42,12 @@ public class ReplyServiceImpl implements ReplyService{
 		log.info("modify.."+vo);
 		return mapper.update(vo);
 	}
-
+	@Transactional
 	@Override
 	public int remove(Long rno) {
 		log.info("remove..."+rno);
+		ReplyVO vo = mapper.read(rno);//해당 댓글의 정보를 읽어와서
+		boardmapper.updateReplyCnt(vo.getBno(), -1);//해당 댓글이 포함된 게시물의 번호를 가져와서 댓글의 수를 감소시킨다.
 		return mapper.delete(rno);
 	}
 

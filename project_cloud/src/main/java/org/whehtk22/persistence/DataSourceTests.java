@@ -1,4 +1,4 @@
-package org.whehtk22.persistence;
+/*package org.whehtk22.persistence;
 
 import static org.junit.Assert.fail;
 
@@ -27,7 +27,7 @@ public class DataSourceTests {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private SqlSessionFactory sqlSessionFactory;
-	@Test
+	//@Test
 	public void testConnection() {
 		try(Connection con = dataSource.getConnection()){
 			
@@ -35,7 +35,7 @@ public class DataSourceTests {
 			fail(e.getMessage());
 		}
 	}
-	@Test
+	//@Test
 	public void testMyBatis() {
 		try(SqlSession session = sqlSessionFactory.openSession();
 				Connection con = session.getConnection();){
@@ -47,3 +47,4 @@ public class DataSourceTests {
 		}
 	}
 }
+*/

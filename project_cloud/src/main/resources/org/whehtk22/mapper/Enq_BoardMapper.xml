@@ -26,10 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="org.whehtk22.domain.Enq_BoardVO">
 		<!-- CDATA는 (<)나 (>)등을 처리하기 위해서 사용하는 섹션이다. -->
 <![CDATA[
-select bno, title, content, writer, regdate, updatedate
+select bno, title, content, writer, regdate, updatedate, replycnt
 	from 
 	(
-select /*+INDEX_DESC(enq_board pk_board) */ rownum as rn, bno, title, content, writer, regdate
+select /*+INDEX_DESC(enq_board pk_board) */ rownum as rn, bno, title, content, writer, regdate, replycnt
 , updatedate from enq_board where 
 ]]><!-- prefix는 앞의 문장 바로 뒤에 붙여주라는 의미, suffix는 trim안에 내포된 태그들이 끝나면 그 뒤에 붙여주라는 
 			의미, foreach문 안에 있는 것은 when절이 조건을 만족하여 붙여질 경우 그 바로 뒤에 다른 when절이 조건을 만족하여 연달아서 
@@ -83,4 +83,7 @@ select * from enq_board where bno>0
 	<select id="getTotalNum" resultType="int">
 		select count(*) from enq_board where bno>0
 	</select>
+	<update id="updateReplyCnt">
+	update enq_board set replyCnt = replyCnt+#{amount} where bno=#{bno}
+	</update>
 </mapper>

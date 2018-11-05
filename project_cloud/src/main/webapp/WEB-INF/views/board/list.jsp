@@ -48,7 +48,7 @@
 				<li class="contentRow">
 					<p>${list.bno}</p><!--  target='_blank' -->
 					<p><a  class='move' href='<c:out value="${list.bno}"/>'>
-					<c:out value="${list.title }"/></a></p>
+					<c:out value="${list.title }"/><b>[<c:out value="${list.replyCnt}"/>]</b></a></p>
 					<p>${list.writer }</p>
 					<p><fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/></p>
 					<p><fmt:formatDate pattern="yyyy-MM-dd" value="${list.updateDate}"/></p>

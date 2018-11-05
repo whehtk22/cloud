@@ -1,4 +1,4 @@
-package org.whehtk22.mapper;
+/*package org.whehtk22.mapper;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -71,7 +71,7 @@ public class ReplyMapperTests {
 	public void testMapper() {
 		log.info(mapper);
 	}
-	@Test
+	//@Test
 	public void testList2() {
 		PageSetting page = new PageSetting(2,10);
 		
@@ -80,3 +80,4 @@ public class ReplyMapperTests {
 		replies.forEach(reply->log.info(reply));
 	}
 }
+*/
