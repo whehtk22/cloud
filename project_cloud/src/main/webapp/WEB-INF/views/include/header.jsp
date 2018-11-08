@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
     <head>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
 <div id="headWrap">
 	<header id="header">
@@ -41,6 +41,6 @@
 		</nav>
 	</header>
 </div>
-<div id="page-wrapper">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</div>
+<!-- <div id="page-wrapper">
+
+</div> -->

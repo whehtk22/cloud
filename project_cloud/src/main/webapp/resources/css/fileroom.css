@@ -1,0 +1,34 @@
+.cloudMainWrap{
+  width:100%;
+  height:100%;
+  background-color:none;
+}
+#cloudContentsWrap{
+  width:100%;
+  overflow:hidden;
+}
+#cloudContentsWrap:after{
+  content:'';
+  display:block;
+  clear:both;
+}
+#sideBarWrap{
+  width:15%;
+  position:fixed;
+  left:0;
+  top:80px;
+  background-color:#ccc;
+}
+#subHeader,#mainArea{
+  float:right;
+}
+#subHeader{
+  width:85%;
+  height:100px;
+  background-color:pink;
+}
+#mainArea{
+  width:85%;
+  background-color:lightblue;
+  line-height:10rem;
+}

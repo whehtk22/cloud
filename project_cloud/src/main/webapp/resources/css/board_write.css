@@ -1,0 +1,238 @@
+#contentsWrap{
+	width:100%;
+	overflow:hidden;
+}
+#contentsWrap:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.sideBarArea,.formArea,.adsArea{
+	float:left;
+	overflow:hidden;
+}
+/* ########## sideBarArea 관련 css ########## */
+.sideBarArea{
+	width:15%;
+	padding:1%;
+	background-color:#1bbc9b;
+}
+.sideNavWrap{
+	width:100%;
+}
+.sideNavWrap h3{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	font-size:0.8rem;
+	color:#ddd;
+}
+.sideNavWrap h3:after{
+	content:'';
+	display:block;
+	width:100%;
+	height:1px;
+	background-color:#ddd;
+}
+.sideNavWrap h3 span{
+	font-size:0.9rem;
+	color:#333;
+}
+.sideNav{
+	width:100%;
+	margin-top:30px;
+}
+.sideNav li{
+	width:100%;
+	height:50px;
+	border-bottom:1px solid #ededed;
+}
+.sideNav li:last-child{
+	border-bottom:none;
+}
+.sideNav li a{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	line-height:50px;
+	text-align:right;
+	color:#fff;
+	transition:all .3s ease-in-out;
+}
+.sideNav li:hover a,.sideNav li a:focus{
+	color:red;
+	font-weight:700;
+}
+
+
+/* ########## formArea 관련 css ########## */
+.formArea{
+	width:70%;
+	padding:1% 3%;
+	background-color:#efefef;
+}
+.formArea h3{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	font-size:1rem;
+	text-align:center;
+}
+.formArea h3:after{
+	content:'';
+	display:block;
+	width:100%;
+	height:1px;
+	background-color:red;
+}
+.writeForm{
+	width:100%;
+	margin-top:30px;
+}
+#write_form{
+	width:100%;
+	border:none;
+}
+.formInner{
+	width:100%;
+	font-size:0.8rem;
+}
+.formInner p{
+	width:100%;
+	padding:10px 0;
+}
+.formInner p label{
+	display:inline-block;
+	float:left;
+	width:15%;
+	height:30px;
+	text-align:center;
+	font-weight:700;
+	line-height:30px;
+}
+.formInner p label:after{
+	content:'';
+	display:inline-block;
+	vertical-align:top;
+	height:16px;
+	margin-top:7px;
+	padding-left:10px;
+	border-right:1px solid #3e3e3e;
+}
+.formInner p input,.formInner p .wTime{
+	width:85%;
+	line-height:30px;
+	text-indent:5px;
+}
+.wTime{
+	color:#777;
+	vertical-align:middle;
+}
+.formInner p textarea{
+	width:100%;
+	height:300px;
+	text-indent:10px;
+	padding:10px 0;
+}
+.attachFiles{
+	width:100%;
+	height:50px;
+	margin-top:30px;
+	overflow:hidden;
+}
+.attachFiles p{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.attachFiles p label[for="file"]{
+	display:inline-block;
+	width:15%;
+	vertical-align:middle;
+}
+.attachFiles p input[type="file"]{
+	display:inline-block;
+	width:75%;
+	vertical-align:middle;
+}
+.attachFiles p button{
+	display:inline-block;
+	width:10%;
+	font-size:0.8rem;
+	vertical-align:middle;
+}
+.btnArea{
+	width:100%;
+	height:50px;
+	margin-bottom:30px;
+}
+.btnArea p{
+	width:100%;
+	height:100%;
+	line-height:50px;
+	text-align:center;
+}
+.btnArea p button,
+.btnArea p input,
+.btnArea p a{
+	display:inline-block;
+	width:20%;
+	height:30px;
+	line-height:30px;
+	vertical-align:middle;
+	margin-right:1%;
+	font-size:1rem;
+	background-color:transparent;
+	border:none;
+	border:1px solid #223d4b;
+	color:#223d4b;
+	transition:all .3s ease-in-out;
+}
+.goListBtn{
+	margin-right:0;
+}
+.btnTempSave:hover,.btnTempSavef:focus,
+input[type="submit"]:hover,input[type="submit"]:focus,
+.goListBtn:hover,.goListBtn:focus{
+	background-color:#223d4b;
+	color:pink;
+}
+
+/* ########## adsArea 관련 css ########## */
+.adsArea{
+	width:15%;
+}
+.adsArea ul{
+	width:100%;
+	padding:1%;
+	background-color:#1bbc9b;
+	overflow:hidden;
+}
+.adsArea ul li{
+	width:100%;
+	height:200px;
+	padding:1%;
+	overflow:hidden;
+}
+.adsArea ul li a{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.adsArea ul li a img{
+	height:100%;
+}
+.adImg01{
+	transform:translate(-15%);
+}
+.adImg02{
+	transform:translate(-60%);
+}
+
+/* addClass 시킬 css속성값들*/
+.fixed{
+	position:fixed;
+	right:0;
+	top:0;
+}

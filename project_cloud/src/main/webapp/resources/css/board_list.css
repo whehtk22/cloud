@@ -1,0 +1,332 @@
+#contentsWrap{
+	width:100%;
+	overflow:hidden;
+	background-color:#fff;
+}
+#contentsWrap:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.sideBarArea,.formArea,.adsArea{
+	float:left;
+	overflow:hidden;
+}
+/* ########## sideBarArea ���� css ########## */
+.sideBarArea{
+	width:15%;
+	padding:1%;
+	background-color:#1bbc9b;
+}
+.sideNavWrap{
+	width:100%;
+}
+.sideNavWrap h3{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	font-size:0.8rem;
+	color:#ddd;
+}
+.sideNavWrap h3:after{
+	content:'';
+	display:block;
+	width:100%;
+	height:1px;
+	background-color:#ddd;
+}
+.sideNavWrap h3 span{
+	font-size:0.9rem;
+	color:#333;
+}
+.sideNav{
+	width:100%;
+	margin-top:30px;
+}
+.sideNav li{
+	width:100%;
+	height:50px;
+	border-bottom:1px solid #ededed;
+}
+.sideNav li:last-child{
+	border-bottom:none;
+}
+.sideNav li a{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	line-height:50px;
+	text-align:right;
+	color:#fff;
+	transition:all .3s ease-in-out;
+}
+.sideNav li:hover a,.sideNav li a:focus{
+	color:red;
+	font-weight:700;
+}
+
+
+/* ########## formArea ���� css ########## */
+.formArea{
+	width:70%;
+	padding:1% 3%;
+	background-color:#efefef;
+}
+.formArea h3{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	font-size:1rem;
+	text-align:center;
+}
+.formArea h3:after{
+	content:'';
+	display:block;
+	width:100%;
+	height:1px;
+	background-color:red;
+}
+/*### search starts ###*/
+#searchAreaWrapper{
+	width:100%;
+	height:60px;
+	background-color:#223d4b;
+	margin-top:30px;
+}
+#searchArea{
+	width:100%;
+	height:100%;
+}
+#searchField{
+	width:100%;
+	height:100%;
+	padding:18px 20px;
+	border:none;
+	overflow:hidden;
+}
+#searchField:after{
+	content:'';
+	display:inline-block;
+	clear:both;
+}
+#searchField p{
+	float:left;
+	height:100%;
+}
+.choose{
+	width:30%;
+	padding-right:20px;
+}
+.search{
+	width:70%;
+}
+.search:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+#searchField p select,
+#searchField p input, 
+#searchField p button{
+	height:100%;
+	color:#ededed;
+	background-color:transparent;
+	border:none;
+	border:1px solid #fff;
+}
+.choose select{
+	display:block;
+	width:100%;
+	height:100%;
+	outline:none;
+}
+.choose select option{
+	background-color:#223d4b;
+}
+.search input{
+	display:block;
+	float:left;
+	height:100%;
+	outline:none;
+}
+.search input[type="text"]{
+	display:block;
+	width:75%;
+	margin-right:20px;
+	text-indent:10px;
+	font-size:0.8rem;
+	line-height:20px;
+}
+.search input[type="hidden"]{
+	display:block;
+	width:0;
+	margin:0;
+	padding:0;
+}
+.search button{
+	display:block;
+	width:20%;
+	transition:all .3s ease-in-out;
+}
+.search input:hover[type="button"],.search input:focus[type="button"]{
+	cursor:pointer;
+	background-color:#fff !important;
+	color:#223d4b !important;
+}
+/*### search ends ###*/
+/*### table starts ###*/
+#tableContents{
+	width:100%;
+	margin-top:30px;
+}
+.tableInner{
+	width:100%;
+}
+.table{
+	width:100%;
+	padding:1%;
+	background-color:#fff;
+}
+.table li{
+	width:100%;
+	height:50px;
+	overflow:hidden;
+}
+.table li p{
+	float:left;
+	width:15%;
+	height:100%;
+	line-height:50px;
+	font-size:0.7rem;
+}
+.table li:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+/*### table .titleRow ������ ###*/
+.titleRow{
+	background-color:#223d4b;
+}
+.titleRow p{
+	font-size:1rem;
+	text-align:center;
+	color:#fff;
+	font-weight:700;
+}
+.titleRow .title1{
+	width:40%;
+}
+/*### table .contentRow �� ����Ʈ ###*/
+.contentRow{
+	width:100%;
+	height:50px;
+	border-bottom:1px dotted rgba(204,204,204,0.5);
+}
+li.contentRow p{
+	width:15%;
+	height:30px;
+	margin:10px 0;
+	line-height:30px;
+}
+.contentRow .content1{
+	width:40%;
+}
+li.contentRow p span{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	text-align:center;
+	border-right:1px solid rgba(204,204,204,0.5);
+}
+p.content4 span{
+	border-right:none !important;
+}
+/*### table ends ###*/
+/*### writeBtn starts ###*/
+.writeBtn{
+	width:100%;
+	padding:0 1%;
+	height:20px;
+	margin:10px 0 20px;
+}
+.writeBtn button{
+	display:block;
+	width:15%;
+	height:100%;
+	margin-left:85%;
+	cursor:pointer;
+	border:none;
+	background-color:transparent;
+	font-size:0.8rem;
+	color:#223d4b;
+	border:1px solid #223d4b;
+	transition:all 0.3s ease-in-out;
+}
+.writeBtn button:hover,.writeBtn button:focus{
+	background-color:#223d4b;
+	color:#ededed;
+}
+/*### writeBtn starts ###*/
+/*### pagingArea ������ó�� starts ###*/
+.pagingArea{
+	width:100%;
+	height:40px;
+	padding:5px 1%;
+	background-color:pink;
+}
+.pagingInner{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.pagingInner:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.pagingInner li{
+	float:left;
+	height:100%;
+	line-height:30px;
+}
+
+/*### pagingArea ������ó�� starts ###*/
+/* ########## adsArea ���� css ########## */
+.adsArea{
+	width:15%;
+}
+.adsArea ul{
+	width:100%;
+	padding:1%;
+	background-color:#1bbc9b;
+	overflow:hidden;
+}
+.adsArea ul li{
+	width:100%;
+	height:200px;
+	padding:1%;
+	overflow:hidden;
+}
+.adsArea ul li a{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.adsArea ul li a img{
+	height:100%;
+}
+.adImg01{
+	transform:translate(-15%);
+}
+.adImg02{
+	transform:translate(-60%);
+}
+
+/* addClass ��ų css�Ӽ�����*/
+.fixed{
+	position:fixed;
+	right:0;
+	top:0;
+}
