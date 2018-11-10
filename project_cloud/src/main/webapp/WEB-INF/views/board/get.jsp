@@ -1,49 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/resources/js/reply.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/js/reply.js"></script>
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Reply Modal</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                            <label>Reply</label>
-                                            <input class="form-control" name='reply' value='New Reply'>
-                                            </div>
-                                            <div class="form-group">
-                                            <label>Replyer</label>
-                                            <input class="form-control" name='replyer' value='replyer'>
-                                            </div>
-                                            <div class="form-group">
-                                            <label>Reply Date</label>
-                                            <input class="form-control" name='replyDate' value=' '>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
-                                            <button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
-                                            <button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
-                                            <button id='modalCloseBtn' type="button" class="btn btn-default">Close</button>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                            <!-- /.modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Reply Modal</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>Reply</label> <input class="form-control" name='reply'
+						value='New Reply'>
+				</div>
+				<div class="form-group">
+					<label>Replyer</label> <input class="form-control" name='replyer'
+						value='replyer'>
+				</div>
+				<div class="form-group">
+					<label>Reply Date</label> <input class="form-control"
+						name='replyDate' value=' '>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
+				<button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
+				<button id='modalRegisterBtn' type="button" class="btn btn-primary">Register</button>
+				<button id='modalCloseBtn' type="button" class="btn btn-default">Close</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <script type="text/javascript">
 //각기 다른 버튼에 대해서 data-oper를 다르게 적용하여 버튼마다 다른 기능을 구현.
 var bnoValue='<c:out value="${board.bno}"/>'
@@ -243,6 +248,10 @@ $(document).ready(function(){
 			showList(pageNum)
 		})
 	})
+	modalCloseBtn.on("click",function(e){
+		modal.modal("hide")
+		showList(pageNum)
+	})
 	$(".panel-footer").on("click","li a",function(e){
 		e.preventDefault()
 		console.log("page click")
@@ -282,57 +291,59 @@ $(document).ready(function(){
 			<td width="40%">글 내용</td>
 			<td width="60%" height="100px" colspan="3">${board.content}</td>
 		</tr>
-		
+
 		<tr>
 			<td colspan="4">
-			<button data-oper='modify' class="btn btn-default">[수정]</button>
-			<button data-oper='remove' class="btn btn-danger">[삭제]</button>
-			<button data-oper='list' class="btn btn-info">[목록]</button>
-				<a href="/jimmyZip/board/b_reply_form.board?bId=${content.bId}">[답변]</a>&nbsp;&nbsp;
+				<button data-oper='modify' class="btn btn-default">[수정]</button>
+				<button data-oper='remove' class="btn btn-danger">[삭제]</button>
+				<button data-oper='list' class="btn btn-info">[목록]</button> <a
+				href="/jimmyZip/board/b_reply_form.board?bId=${content.bId}">[답변]</a>&nbsp;&nbsp;
 				<%--해당글을 수정,삭제,답변 해야하니까 글번호를 주소에 묻혀보낸다. --%>
 			</td>
 		</tr>
 	</table>
 	<div class='row'>
-	<div class="col-lg-12">
-	<!-- 패널 -->
-	<div class="panel panel-default">
-	<!-- <div class="panel-heading">
+		<div class="col-lg-12">
+			<!-- 패널 -->
+			<div class="panel panel-default">
+				<!-- <div class="panel-heading">
 	<i class="fa fa-comments fa-fw"></i>Reply
 	</div> -->
-	<div class="panel-heading">
-	<i class="fa fa-comments fa-fw"></i>Reply
-	<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
-	</div>
-	<!-- 패널 헤딩 -->
-	<div class="panel-body">
-	<ul class="chat">
-	<!-- start reply -->
-	<li class="left clearfix" data-rno='12'>
-	<div>
-	<div class="left clearfix" data-rno='12'>
-	<div>
-	<div class="header">
-	<strong class="primary-foot">user000</strong>
-	<small class="pull-right text-muted">2018-11-04 14:43</small>
-	</div>
-	<p>Good job!!!</p>
-	</div>
-	</div>
-	</div>
-	</ul>
-	</div>
-	
-	<div class="panel-footer">
-	</div>
-	</div>
-	<!-- 숨겨진 폼을 만들어서 각각의 버튼에 대해서 다른 기능을 구현. -->
-	<form id='operForm' action="/board/modify" method="get">
-	<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
-	<input type='hidden' name='pageNum' value='<c:out value="${page.pageNum}"/>'>
-	<input type='hidden' name='amount' value='<c:out value="${page.amount}"/>'> 
-	<input type='hidden' name='keyword' value='<c:out value="${page.keyword}"/>'>
-	<input type='hidden' name='type' value='<c:out value="${page.type}"/>'>
-	</form>
+				<div class="panel-heading">
+					<i class="fa fa-comments fa-fw"></i>Reply
+					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New
+						Reply</button>
+				</div>
+				<!-- 패널 헤딩 -->
+				<div class="panel-body">
+					<ul class="chat">
+						<!-- start reply -->
+						<li class="left clearfix" data-rno='12'>
+							<div>
+								<div class="left clearfix" data-rno='12'>
+									<div>
+										<div class="header">
+											<strong class="primary-foot">user000</strong> <small
+												class="pull-right text-muted">2018-11-04 14:43</small>
+										</div>
+										<p>Good job!!!</p>
+									</div>
+								</div>
+							</div>
+					</ul>
+				</div>
+
+				<div class="panel-footer"></div>
+			</div>
+			<!-- 숨겨진 폼을 만들어서 각각의 버튼에 대해서 다른 기능을 구현. -->
+			<form id='operForm' action="/board/modify" method="get">
+				<input type='hidden' id='bno' name='bno'
+					value='<c:out value="${board.bno}"/>'> <input type='hidden'
+					name='pageNum' value='<c:out value="${page.pageNum}"/>'> <input
+					type='hidden' name='amount' value='<c:out value="${page.amount}"/>'>
+				<input type='hidden' name='keyword'
+					value='<c:out value="${page.keyword}"/>'> <input
+					type='hidden' name='type' value='<c:out value="${page.type}"/>'>
+			</form>
 </body>
 </html>

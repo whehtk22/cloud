@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -64,11 +65,11 @@ public class UpdateController {
 	@GetMapping("/uploadAjax")
 	public String uploadAjax() {
 		log.info("upload ajax");
-		return "/file/uploadAjax";
+		return "/file/fileroom";
 	}
 	@PostMapping(value="/uploadAjaxAction",produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
+	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(@RequestHeader("User-Agent") String userAgent, MultipartFile[] uploadFile) {
 		
 		List<AttachFileDTO>list = new ArrayList<>();
 		String uploadFolder = "C:\\upload";
@@ -87,8 +88,10 @@ public class UpdateController {
 			
 			String uploadFileName = multipartfile.getOriginalFilename();
 			
-			//IE has file path
-//			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			if(userAgent.contains("Trident")||userAgent.contains("Edge")) {//인터넷 익스플로러와 엣지는 파일 이름이 전체 경로까지 다 나온다.
+			
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);//그렇기 때문에 경로들을 이름에서 제외해 준다.
+			}
 			log.info("only file name: "+uploadFileName);
 			attachDTO.setFileName(uploadFileName);
 			
@@ -105,7 +108,7 @@ public class UpdateController {
 					attachDTO.setImage(true);
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath,"s_"+uploadFileName));
 					//앞에 s_가 붙는 파일을 경로에 생성해주는 outputstream을 생성
-					Thumbnailator.createThumbnail(multipartfile.getInputStream(), thumbnail, 100,100);
+					Thumbnailator.createThumbnail(multipartfile.getInputStream(), thumbnail, 200,200);
 					//받아온 multipartfile을 위의 경로의 이름으로 100*100사이즈로 생성해준다.
 					thumbnail.close();
 				}
@@ -151,7 +154,7 @@ public class UpdateController {
 		//크롬은 자체적으로 adblock이라는 필터를 거치기 때문에 확장자가 추가되는 현상이 발생해서 resource가 존재하지 않는다고 나온다.
 		//그렇기 때문에 일단 브라우저의 형식을 먼저 판별한후 리소스의 유무를 판별한다.
 		String resourceName = resource.getFilename();
-		
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_")+1);//uuid를 제거해준다.
 		HttpHeaders headers = new HttpHeaders();
 		try {
 			String downloadName = null;
@@ -161,16 +164,16 @@ public class UpdateController {
 					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 				}
 				log.info("IE browser");
-				downloadName = URLEncoder.encode(resourceName, "UTF-8").replaceAll("\\+"," ");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+"," ");
 			}else if(userAgent.contains("Edge")) {//엣지
 				if(resource.exists()==false) {
 					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 				}
 				log.info("Edge browser");
-				downloadName = URLEncoder.encode(resourceName, "UTF-8");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8");
 			}else {//크롬브라우저
 				log.info("Chrome browser");
-				downloadName = new String(resourceName.getBytes("UTF-8"),"ISO-8859-1");
+				downloadName = new String(resourceOriginalName.getBytes("UTF-8"),"ISO-8859-1");
 			}
 			log.info("downloadName: "+downloadName);
 			headers.add("Content-Disposition","attachment; filename="+downloadName);
@@ -178,6 +181,31 @@ public class UpdateController {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
+	}
+
+	@PostMapping("/deleteFile")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(String fileName,String type) throws InterruptedException{
+		log.info("deleteFile : "+fileName);
+		
+		File file;
+		try {
+
+			file = new File("C:/upload/"+URLDecoder.decode(fileName, "UTF-8").replace('\\','/'));
+			log.info("원본파일"+"C:/upload/"+URLDecoder.decode(fileName, "UTF-8").replace('\\','/'));
+			file.delete();
+			if(type.equals("image")) {
+				String largeFileName = file.getAbsolutePath().replace("s_", "");//섬네일이 아닌 원본이미지파일을 지워준다.
+				log.info("largeFileName: "+largeFileName);
+				file = new File(largeFileName);
+				file.delete();
+				
+			}
+		}catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String> ("deleted",HttpStatus.OK);
 	}
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -192,6 +220,9 @@ public class UpdateController {
 		try {
 			Tika tika = new Tika();//파일의 타입을 찾아주는 클래스.
 			 String mimeType = tika.detect(file);//컨텐트 타입을 반환
+			 log.info(mimeType);
+			 log.info(mimeType.indexOf("/"));//'/'의 인덱스번호를 반환해준다.
+			 log.info(mimeType.substring(mimeType.indexOf("/")+1));//'/'의 인덱스의 다음부터의 문자열을 반환해준다.
 			return mimeType.startsWith("image");
 		}catch(IOException e) {
 			e.printStackTrace();

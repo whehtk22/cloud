@@ -6,19 +6,22 @@
 <html>
 <head>
 <meta charset="utf-8">
-	<!-- <meta charset="EUC-KR"> -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Board List</title>
-	<link rel="stylesheet" type="text/css" href="/resources/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-	<script src="/resources/js/jquery-1.12.4.min.js" type="text/javascript"></script>
-	<script src="/resources/js/floating-ads.js" type="text/javascript"></script>
-	<script src="/resources/js/floating-ads.js" type="text/javascript"></script>
-	<script src="/resources/js/boardlist.js" type="text/javascript"></script>
-	<script src="/resources/js/ajax.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <meta charset="EUC-KR"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Board List</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/reset.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+<!--  <script src="/resources/js/jquery-1.12.4.min.js" type="text/javascript"></script>  -->
+<script src="/resources/vendor/jquery/jquery.min.js"></script>
+<script src="/resources/js/floating-ads.js" type="text/javascript"></script>
+<script src="/resources/js/floating-ads.js" type="text/javascript"></script>
+<script src="/resources/js/ajax.js" type="text/javascript"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<link href="/resources/vendor/bootstrap/css/bootstrap.css"
+	rel="stylesheet" type="text/css">
+<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/js/boardlist.js" type="text/javascript"></script>
+
 </head>
 <body>
 	<div id="wrapper">
@@ -62,20 +65,41 @@
 							<fieldset id="searchField">
 								<p class="choose">
 									<select name="type">
-										<option value="" <c:out value="${page.page.type==null?'selected':'' }"/>>--</option>
-										<option value="T" <c:out value="${page.page.type eq 'T' ? 'selected':'' }"/>> 제목</option>
-										<option value="C" <c:out value="${page.page.type eq 'C' ? 'selected':'' }"/>> 내용</option>
-										<option value="W" <c:out value="${page.page.type eq 'W' ? 'selected':'' }"/>>작성자</option>
-										<option value="TC" <c:out value="${page.page.type eq 'TC' ? 'selected':'' }"/>>제목 or 내용</option>
-										<option value="TW" <c:out value="${page.page.type eq 'TW' ? 'selected':'' }"/>>제목 or 작성자</option>
-										<option value="TWC"	<c:out value="${page.page.type eq 'TWC' ? 'selected':'' }"/>>제목 or 내용 or 작성자</option>
+										<option value=""
+											<c:out value="${page.page.type==null?'selected':'' }"/>>--</option>
+										<option value="T"
+											<c:out value="${page.page.type eq 'T' ? 'selected':'' }"/>>
+											제목</option>
+										<option value="C"
+											<c:out value="${page.page.type eq 'C' ? 'selected':'' }"/>>
+											내용</option>
+										<option value="W"
+											<c:out value="${page.page.type eq 'W' ? 'selected':'' }"/>>작성자</option>
+										<option value="TC"
+											<c:out value="${page.page.type eq 'TC' ? 'selected':'' }"/>>제목
+											or 내용</option>
+										<option value="TW"
+											<c:out value="${page.page.type eq 'TW' ? 'selected':'' }"/>>제목
+											or 작성자</option>
+										<option value="TWC"
+											<c:out value="${page.page.type eq 'TWC' ? 'selected':'' }"/>>제목
+											or 내용 or 작성자</option>
 									</select>
-								</p><!--
-             				 --><p class="search">
-									<input type="text" name="keyword" placeholder="검색어 입력란"><!--
-          		 				 --><input type="hidden" name="pageNum" value="${page.page.pageNum}"><!--
-          		 				 --><input type="hidden" name="amount" value="${page.page.amount}"><!--
-          		 				 --><button>Search</button>
+								</p>
+								<!--
+             				 -->
+								<p class="search">
+									<input type="text" name="keyword" placeholder="검색어 입력란">
+									<!--
+          		 				 -->
+									<input type="hidden" name="pageNum"
+										value="${page.page.pageNum}">
+									<!--
+          		 				 -->
+									<input type="hidden" name="amount" value="${page.page.amount}">
+									<!--
+          		 				 -->
+									<button>Search</button>
 								</p>
 							</fieldset>
 						</form>
@@ -109,19 +133,19 @@
 										<p class="content1">
 											<span><a class="move"
 												href="<c:out value='${list.bno}'/>"><c:out
-														value="${list.title }" />
-											</a>
-											</span>
+														value="${list.title }" /><b>[<c:out
+															value="${list.replyCnt }" />]
+												</b> </a> </span>
 										</p>
 										<p class="content2">
 											<span>${list.writer }</span>
 										</p>
 										<p class="content3">
-											<span>1<fmt:formatDate pattern="yyyy-MM-dd"
+											<span><fmt:formatDate pattern="yyyy-MM-dd"
 													value="${list.regdate}" /></span>
 										</p>
 										<p class="content4">
-											<span>1<fmt:formatDate pattern="yyyy-MM-dd"
+											<span><fmt:formatDate pattern="yyyy-MM-dd"
 													value="${list.updateDate}" /></span>
 										</p>
 									</li>
@@ -188,9 +212,11 @@
 				</div>
 				<div class="adsArea">
 					<ul>
-						<li><a href="https://www.wdc.com/ko-kr/products/portable-storage.html"
+						<li><a
+							href="https://www.wdc.com/ko-kr/products/portable-storage.html"
 							title="광고1" target="_blank"> <img class="adImg01"
-								src="/resources/images/ads/adimg01.jpg" alt="광고1 western digital 이미지" />
+								src="/resources/images/ads/adimg01.jpg"
+								alt="광고1 western digital 이미지" />
 						</a></li>
 						<li><a href="https://www.sandisk.co.kr/home" title="광고2"
 							target="_blank"> <img class="adImg02"
