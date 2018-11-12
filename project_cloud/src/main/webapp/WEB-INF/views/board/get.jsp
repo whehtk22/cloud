@@ -12,6 +12,62 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
+
+<div class='bigPictureWrapper'>
+<div class="bigPicture"></div>
+</div>
+<style>
+
+.uploadResult {
+	width: 100%;
+	background-color: gray;
+}
+
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li {
+	list-style: none;
+	padding: 10px;
+	align-content: center;
+	text-align: center;
+}
+
+.uploadResult ul li img {
+	width: 100px;
+}
+
+.uploadResult ul li span {
+	color: white;
+}
+
+.bigPictureWrapper {
+	position: absolute;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	z-index: 100;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.bigPicture {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bigPicture img {
+	width: 600px;
+}</style>
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -95,42 +151,46 @@ function showReplyPage(replyCnt){
 	$(".panel-footer").html(str)
 	//replyPageFooter.html(str)
 }
-//for replyService add test
-//reply.js에서 등록한 변수인 replyService의 함수인 add를 호출해서 json의 형태로 추가해주고 결과가
-//나오면 경고창으로 보여준다.
-/* replyService.add(
-		{reply:"JS Test",replyer:"tester",bno:bnoValue},
-		function(result){
-			alert("RESULT: "+result)
-		}
-		) */
-		/* replyService.getList({bno:bnoValue,page:1},function(list){
-			for(var i=0,len=list.length||0;i<len;i++){
-				console.log(list[i])
-			}
-		}) */
-	/* 	replyService.remove(5,function(count){
-			console.log(count)
-			
-			if(count==="success"){
-				alert("REMOVED")
-			}
-		},function(err){
-			alert("ERROR..")
-		}) */
-		
-		//10번 댓글 수정
-		/* replyService.update({
-			rno:10,
-			bno:bnoValue,
-			reply:"Modified Reply..."
-		},function(result){
-			alert("수정 완료~~~")
-		}) */
 		replyService.get(10,function(data){
 			console.log(data)
 		})
+		
+function showImage(fileCallPath){
+			$(".bigPictureWrapper").css("display","flex").show()
+			
+			$(".bigPicture")
+			.html("<img src='/display?fileName="+fileCallPath+"'>")
+			.animate({width:'100%',height:'100%'},1000)
+		}
 $(document).ready(function(){
+	
+	(function(){//즉시 실행함수
+		var bno = '<c:out value="${board.bno}"/>'
+			
+			$.getJSON("/board/getAttachList",{bno:bno},function(arr){
+				console.log(arr)
+				
+				var str = ""
+				$(arr).each(function(i,attach){
+					//image type
+					if(attach.image){
+						var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName)
+						str+="<li data-path='"+attach.uploadPath+"' data-uuid='"
+						+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.image+"'><div>"
+						str+="<img src='/display?fileName="+fileCallPath+"'>"
+						str+="</div></li>"
+					}else{
+						str+="<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"
+						+attach.fileName+"' data-fileType='"+attach.image+"'><div>"
+						str+="<span> "+attach.fileName+"</span><br>"
+						str+="<img src='/resources/images/attach.jpg'>"
+						str+="</div></li>"
+					}
+				})
+				$(".uploadResult ul").html(str)
+			})
+	})()
+		
 	var operForm = $("#operForm")
 	
 	$("button[data-oper='modify']").on("click",function(e){
@@ -147,6 +207,26 @@ $(document).ready(function(){
 		operForm.attr("action","/board/remove")
 		operForm.attr("method","post")
 		operForm.submit()
+	})
+	
+	$(".uploadResult").on("click","li",function(e){
+		console.log("view image")
+		var liObj = $(this)
+		
+		var path= encodeURIComponent(liObj.data("path")+"/"+liObj.data("uuid")+"_"+liObj.data("filename"))
+		
+		if(liObj.data("type")){//이미지파일인 경우
+			showImage(path.replace(new RegExp(/\\/g),"/"))// \\를 모두 /로 바꾼다.
+			//함수로 전달하는 과정에서 문제가 생기므로 변환한다.
+		}else{
+			self.location="/download?fileName="+path//일반파일인 경우
+		}
+	})
+	$(".bigPictureWrapper").on("click",function(e){
+		$(".bigPicture").animate({width:'0%',height:'0%'},1000)
+		setTimeout(function(){
+			$(".bigPictureWrapper").hide()
+		},1000)
 	})
 })
 $(document).ready(function(){
@@ -303,12 +383,23 @@ $(document).ready(function(){
 		</tr>
 	</table>
 	<div class='row'>
+	
+	</div>
 		<div class="col-lg-12">
+		</div>
 			<!-- 패널 -->
 			<div class="panel panel-default">
-				<!-- <div class="panel-heading">
-	<i class="fa fa-comments fa-fw"></i>Reply
-	</div> -->
+				
+				<div class="panel-heading">
+				Files
+				</div>
+				<div class="panel-body">
+				<div class="uploadResult">
+				<ul>
+				
+				</ul>
+				</div>
+				</div>
 				<div class="panel-heading">
 					<i class="fa fa-comments fa-fw"></i>Reply
 					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New
@@ -321,13 +412,13 @@ $(document).ready(function(){
 						<li class="left clearfix" data-rno='12'>
 							<div>
 								<div class="left clearfix" data-rno='12'>
-									<div>
+									<!-- <div>
 										<div class="header">
 											<strong class="primary-foot">user000</strong> <small
 												class="pull-right text-muted">2018-11-04 14:43</small>
 										</div>
 										<p>Good job!!!</p>
-									</div>
+									</div> -->
 								</div>
 							</div>
 					</ul>

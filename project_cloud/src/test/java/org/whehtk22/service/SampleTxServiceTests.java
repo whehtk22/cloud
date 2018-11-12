@@ -16,7 +16,7 @@ public class SampleTxServiceTests {
 
 	@Setter(onMethod_= {@Autowired})
 	private SampleTxService service;
-	@Test
+	//@Test
 	public void testLong() {
 		
 		String str = "Starry\r\n"+"Starry night\r\n"+"Paint your palette blue and grey\r\n"+"Look out on a summer's day";

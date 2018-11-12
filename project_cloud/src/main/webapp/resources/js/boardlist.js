@@ -16,7 +16,20 @@ $(document).ready(function(){
   })
 
   var actionForm = $("#actionForm")
+  var handler = function() { console.log("click")
+		
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"))
+		actionForm.submit()} 
 
+$(".page_prev a").on("click",function(e){
+	e.preventDefault()
+	
+	console.log("click")
+	
+	actionForm.find("input[name='pageNum']").val($(this).attr("href"))
+	$(this).prop("href","#")
+	actionForm.submit()
+})
   $(".page_button a").on("click",function(e){
     e.preventDefault()
 
@@ -25,6 +38,14 @@ $(document).ready(function(){
     actionForm.find("input[name='pageNum']").val($(this).attr("href"))
     actionForm.submit()
   })
+$(".page_next a").on("click",function(e){
+	e.preventDefault()
+	
+	console.log("next")
+	
+	actionForm.find("input[name='pageNum']").val($(this).attr("href"))
+	actionForm.submit()
+})
 
   $(".move").on("click",function(e){
     e.preventDefault()

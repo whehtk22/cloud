@@ -21,7 +21,22 @@
 	rel="stylesheet" type="text/css">
 <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="/resources/js/boardlist.js" type="text/javascript"></script>
-
+<style>
+.page_button:active>a {
+	color: black;
+	background-color: #1bbc9b;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		var num = $
+		{
+			num
+		}
+		$("#num").off("click")
+		//$("#btnIdCheck").unbind("click");
+	})
+</script>
 </head>
 <body>
 	<div id="wrapper">
@@ -157,18 +172,29 @@
 							<div class="pagingArea">
 								<ul class="pagingInner">
 									<c:if test="${page.prev}">
-										<li><a href="${page.startPage-1}"> Previous </a></li>
+										<li class="page_prev"><a href="${page.startPage-1}">
+												Prev </a></li>
 									</c:if>
 									<c:forEach var="num" begin="${page.startPage}"
 										end="${page.endPage}">
-										<li>
-											<p class="page_button ${page.page.pageNum == num ? "active" : ""} ">
-												<a href="${num}" title="1"><span>${num}</span></a>
-											</p>
-										</li>
+										<li><c:choose>
+												<c:when test="${page.page.pageNum!=num }">
+													<p
+														class="page_button ${page.page.pageNum == num ? 'active' : ''} ">
+														<a href="${num}" title="1" id="${num}"><span>${num}</span></a>
+													</p>
+												</c:when>
+												<c:otherwise>
+													<p
+														class="page_button ${page.page.pageNum == num ? 'active' : ''} ">
+														<span>${num}</span>
+													</p>
+												</c:otherwise>
+											</c:choose></li>
 									</c:forEach>
 									<c:if test="${page.next}">
-										<li><a href="${page.endPage+1}"> Next </a></li>
+										<li class="page_next"><a href="${page.endPage+1}">
+												Next </a></li>
 									</c:if>
 								</ul>
 								<div class="hiddenFormArea">

@@ -112,6 +112,7 @@ public class UpdateController {
 					//받아온 multipartfile을 위의 경로의 이름으로 100*100사이즈로 생성해준다.
 					thumbnail.close();
 				}
+				log.info(attachDTO);
 				list.add(attachDTO);
 			}catch(Exception e) {
 				log.error(e.getMessage());

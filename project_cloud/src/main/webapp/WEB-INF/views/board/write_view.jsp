@@ -12,6 +12,150 @@
 	<script src="/resources/js/jquery-1.12.4.min.js" type="text/javascript"></script>
 	<script src="/resources/js/floating-ads.js" type="text/javascript"></script>
 	<script src="/resources/js/ajax.js" type="text/javascript"></script>
+	<script >
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$")//.뒤에 exe|sh|zip|alz의 형식을 검사하는 정규식
+	var maxSize = 50242880// 파일의 최대 크기 5MB
+	function checkExtension(fileName, fileSize) {
+		if (fileSize >= maxSize) {
+			alert("파일 사이즈 초과")
+			return false
+		}
+
+		if (regex.test(fileName)) {
+			alert("해당 종류의 파일은 업로드 할 수 없습니다.")
+			return false
+		}
+		return true
+	}
+	function showUploadResult(uploadResultArr) {
+		if(!uploadResultArr || uploadResultArr.length==0){return}
+		
+		var uploadUL = $(".uploadResult ul")
+		
+		var str=""
+		//이미지파일과 일반 파일을 동시에 올리는 경우 싱크로가 안 맞는 경우가 있어서 하나의 파일마다
+		//바로바로 보이게 한다.
+		$(uploadResultArr).each(
+						function(i, obj) {
+							if (!obj.image) {
+								var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/"
+										+ obj.uuid
+										+ "_"
+										+ obj.fileName)
+										var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/")
+										
+								str += "<li data-path='"+obj.uploadPath+"' data-uuid='"
+								+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div><span>"
+										+ obj.fileName+"</span>"
+										+ "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file'>"
+										+ "<i class='fa fa-times'>X</i></button><br>"
+										+ "<img src='/resources/img/attach.png'></a>"
+										+ "</div></li>"
+								console.log("일반파일")
+								uploadUL.append(str)
+								str = ""
+							} else {
+								//str += "<li>"+obj.fileName+"</li>"//공백문자나 한글 이름 등이 문제가 되기 때문에 인코딩을 해주어야 한다.
+								var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/s_"
+										+ obj.uuid
+										+ "_"
+										+ obj.fileName)
+								console.log("이미지"+obj.image)
+								var originPath = obj.uploadPath + "\\"
+										+ obj.uuid + "_" + obj.fileName//원본파일의 이름
+								str = "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"
+								+obj.fileName+"' data-type='"+obj.image+"'><div><span>"
+										+ obj.fileName
+										+ "</span>"
+										+ "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image'><i class='fa fa-times'>X</i></button><br>"
+										+ "<img src='/display?fileName="+fileCallPath+"'>"
+										+ "</div></li>"
+										uploadUL.append(str)
+								str = ""
+								console.log("이미지파일")
+							}
+						})
+		//uploadUL.append(str)//업로드 된 파일을 화면에 보여준다.
+	}
+	$(document).ready(function(e){
+		var formObj = $("form")
+		console.log(formObj)
+		$("input[type='submit']").on("click",function(e){
+			e.preventDefault()
+			
+			console.log("submit clicked")
+			
+			var str=""
+			$(".uploadResult ul li").each(function(i,obj){
+				var jobj = $(obj)
+				console.log("이미지인"+jobj.data("type"))
+				str +="<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>"
+				str +="<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>"
+				str +="<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>"
+				str +="<input type='hidden' name='attachList["+i+"].image' value='"+jobj.data("type")+"'>"
+				console.log(str)
+				formObj.append(str)
+			})
+			console.log(formObj)
+			$("form").submit()
+			
+		})
+		$("input[type='file']").change(function(e) {
+			var formData = new FormData()
+
+			var inputFile = $("input[name=upload]")
+
+			var files = inputFile[0].files
+
+			console.log(files)
+
+			for (var i = 0; i < files.length; i++) {
+
+				if (!checkExtension(files[i].name, files[i].size)) {//파일 사이즈나 파일의 확장자 제한에서 걸리면
+					return false
+				}
+				formData.append("uploadFile", files[i])//그렇지 않다면 폼데이터에 추가하라.
+			}
+
+			$.ajax({
+				url : '/uploadAjaxAction',
+				processData : false,
+				contentType : false,
+				data : formData,
+				type : 'POST',
+				dataType : 'json',//결과를 json타입으로 받겠다.
+				success : function(result) {//result는 다시 받는 결과값을 의미.
+					console.log(result)
+					showUploadResult(result)
+	/*				$(".uploadDiv").html(cloneObj.html())//업로드하고 버튼을 클릭하면 다시 초기화가 된다. */
+				}
+			})
+		})
+		$(".uploadResult").on("click","button",function(e){
+			console.log("delete file")
+			
+			var targetFile = $(this).data("file")
+			console.log(targetFile)
+			var type=$(this).data("type")
+			console.log(type)
+			var targetLi = $(this).closest("li")
+			console.log(targetLi)
+			$.ajax({
+				url:'/deleteFile',
+				data:{fileName:targetFile, type:type},
+				dataType:'text',
+				type:'POST',
+				success:function(result){
+					alert(result)
+					targetLi.remove()
+				}
+			})
+		})
+	
+	})
+	</script>
 </head>
 <body>
 	<!-- header starts -->
@@ -70,17 +214,19 @@
 							</p>
 						</div>
 						<hr/>
-						<div class="attachFiles">
+						<div class="form-group uploadDiv attachFiles">
 							<p>
 								<label for="file">파일첨부</label><!--
-							 --><input type="file" name="upload"/><!--
-							 --><button class="btn fileUpBtn">파일업로드</button>
-							</p>
+							 --><input type="file" name="upload" multiple/><!--
+							 --></p>
+						</div>
+						<div class='uploadResult'>
+						<ul></ul>
 						</div>
 						<div class="btnArea">
 							<p>
-								<button class="btn btnTempSave">임시저장</button><!--
-							 --><input type="submit" class="btn btn-default" value="작성완료" ><!--
+								<button class="btn btnTempSave">임시저장</button>
+							<input type="submit" class="btn btn-default" value="작성완료" ><!--
 							 --><a class="goListBtn" href="/board/list" title="글 목록 보기">글목록</a>
 							</p>
 						</div>

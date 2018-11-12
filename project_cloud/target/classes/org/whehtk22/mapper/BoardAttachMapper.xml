@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.whehtk22.mapper.BoardAttachMapper">
+<insert id="insert">
+insert into attachfile(fileName, uploadPath, uuid, image,bno) 
+values (#{fileName},#{uploadPath},#{uuid},#{image},#{bno})
+</insert>
+<delete id="delete">
+delete from attachfile where uuid=#{uuid}
+</delete>
+<select id="findByBno" resultType="org.whehtk22.domain.AttachFileDTO">
+select * from attachfile where bno=#{bno}
+</select>
+<delete id="deleteAll">
+delete from attachfile where bno=#{bno}
+</delete>
+<!-- 어제 날짜의 것을 찾아준다. -->
+<select id="getOldFiles" resultType="org.whehtk22.domain.AttachFileDTO">
+select * from attachfile where uploadpath=to_char(sysdate-2,'yyyy\mm\dd')
+</select>
+</mapper>
