@@ -6,29 +6,269 @@
 #cloudContentsWrap{
   width:100%;
   overflow:hidden;
+  position:relative;
 }
 #cloudContentsWrap:after{
   content:'';
   display:block;
   clear:both;
 }
+/*### sidebar starts ###*/
 #sideBarWrap{
   width:15%;
-  position:fixed;
+  padding:1%;
+  /* position:fixed; 
   left:0;
-  top:80px;
-  background-color:#ccc;
+  top:80px;*/
+  background-color:#1bbc9b;
+  float:left;
 }
-#subHeader,#mainArea{
-  float:right;
+#userInfo{
+	width:100%;
+	/* padding:5%; */
+	margin-top:10px;
+}
+.profile{
+	width:100%;
+	text-align:center;
+	background-color:#223d4b;
+	padding-top:30px;
+}
+.profileImg{
+	width:80px;
+	height:80px;
+	margin:0 auto;
+	overflow:hidden;
+	border-radius:50%;
+	background-color:#fff;
+	border:1px solid #ededed;
+}
+.defaultProfile{
+	width:100%;
+	height:100%;
+	transform:translateY(5px);
+}
+.infoArea{
+	width:100%;
+	padding:20px 0;
+}
+.nickname{
+	width:100%;
+	line-height:1.5rem;
+	padding:5px 0;
+}
+.nickname span{
+	display:block;
+	width:100%;
+	color:#fff;
+	text-shadow:1px 2px 2px #223d4b;
+}
+.storageVolume{
+	width:100%;
+}
+.storageVolumeInner{
+	width:80%;
+	margin:0 auto;
+	color:#ededed;
+}
+.usedVolume{
+	/* color:#D64F32; */
+	color:#F33D13;
+	font-weight:700;
+}
+.volumeUnit{
+	color:#ccc;
+	font-weight:700;
+}
+.graphArea{
+	width:80%;
+	height:10px;
+	margin:10px auto;
+}
+.outerBar{
+	display:block;
+	width:100%;
+	height:100%;
+	position:relative;
+	background-color:#fff;
+	box-shadow:1px 1px 1px rgba(34,61,75,0.5);
+}
+.innerBar{
+	display:block;
+	width:5%;
+	height:100%;
+	position:absolute;
+	left:0;
+	/* background-color:#D64F32; */
+	background-color:#F33D13;
+	top:0;
+}
+
+#sideBarWrap nav{
+	width:100%;
+}
+.sideNav{
+	width:100%;
+}
+.sideNav li{
+	width:100%;
+	height:50px;
+}
+.sideNav li a{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	line-height:50px;
+	text-align:right;
+	color:#fff;
+	transition:all .3s ease-in-out;
+}
+
+.connToExt{
+	width:100%;
+	height:100px;
+	overflow:hidden;
+	background-color:#ccc;
+}
+.connToExt li{
+	width:100%;
+	height:50px;
+	line-height:50px;
+}
+.connToExt li a{
+	display:block;
+	width:100%;
+	height:100%;
+	text-align:center;
+	color:#fff;
+}
+li.msTree{
+	border-right:1px solid #fff;
+}
+li.msTree,li.macTree{
+	float:left;
+	width:50%;
+	height:50px;
+	border-bottom:1px solid #fff;
+}
+
+/*### sidebar ends ###*/
+
+/*### subheader(functional buttons area) starts ###*/
+#subHeader,#dataAreaWrap{
+	float:right;
 }
 #subHeader{
-  width:85%;
-  height:100px;
-  background-color:pink;
+	width:85%;
+	height:150px;
 }
-#mainArea{
-  width:85%;
-  background-color:lightblue;
-  line-height:10rem;
+.subNavOuter{
+	width:100%;
+	height:100%;
+	padding:30px;
+	background-color:#ededed;
 }
+.subNavInner{
+	width:100%;
+	height:100%;
+}
+
+.subNavInner div{
+	float:left;
+	height:100%;
+	overflow:hidden;
+}
+
+.subNavInner div p{
+	float:left;
+	width:150px;
+	height:90px;
+	margin-right:35px;
+}
+.subNavInner div p a{
+	display:block;
+	width:100%;
+	height:100%;
+	text-align:center;
+}
+.subNavInner div p a:visited,.subNavInner div p a:focus{
+	text-decoration:none;
+	color:#000;
+}
+.subNavInner div p a img{
+	display:block;
+	width:40px;
+	height:40px;
+	margin:10px auto;
+}
+.subNavInner div p a span{
+	display:block;
+	width:100%;
+	height:30px;
+	color:#333;
+}
+.subNavInner div:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+
+/* .btnArea1과 .btnArea2 float 끊어주기 용도*/
+.subNavInner:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+/*### subheader(functional buttons area) ends ###*/
+
+/*### dataAreaWrap starts ###*/
+#dataAreaWrap{
+	width:85%;
+	padding:1%;
+	/* background-color:yellow; */
+}
+#uploadForm{
+	width:100%;
+	height:100%;
+	padding:1%;
+	/* background-color:lightblue; */
+}
+.fileViewInner{
+	width:100%;
+	heght:100%;
+	/* background-color:lime; */
+	overflow:hidden;
+}
+.fileViewInner li{
+	float:left;
+	width:20%;
+}
+.fileViewInner li p{
+	width:100%;
+}
+.firstSlot p{
+	border:1px dotted #ccc;
+}
+.fileViewInner li p a{
+	display:block;
+	width:100%;
+	border:1px dotted #ccc;
+}
+.fileViewInner li p a img{
+	display:inline-block;
+	width:80%;
+	margin:10%;
+	opacity:0.5;
+}
+/*### dataAreaWrap ends ###*/
+
+/*### dataInfoWrap starts ###*/
+#dataInfoWrap{
+	width:200px;
+	height:500px;
+	position:absolute;
+	right:-200px;
+	top:100px;
+}
+
+/*### dataInfoWrap ends ###*/

@@ -25,7 +25,7 @@
 	width:100%;
 	height:50px;
 	line-height:50px;
-	font-size:0.8rem;
+	font-size:1.5rem;
 	color:#ddd;
 }
 .sideNavWrap h3:after{
@@ -36,7 +36,7 @@
 	background-color:#ddd;
 }
 .sideNavWrap h3 span{
-	font-size:0.9rem;
+	font-size:14px;
 	color:#333;
 }
 .sideNav{
@@ -59,6 +59,7 @@
 	text-align:right;
 	color:#fff;
 	transition:all .3s ease-in-out;
+	font-size:2rem;
 }
 .sideNav li:hover a,.sideNav li a:focus{
 	color:red;
@@ -76,7 +77,7 @@
 	width:100%;
 	height:50px;
 	line-height:50px;
-	font-size:1rem;
+	font-size:2rem;
 	text-align:center;
 }
 .formArea h3:after{
@@ -89,7 +90,7 @@
 /*### search starts ###*/
 #searchAreaWrapper{
 	width:100%;
-	height:60px;
+	height:70px;
 	background-color:#223d4b;
 	margin-top:30px;
 }
@@ -119,6 +120,7 @@
 }
 .search{
 	width:70%;
+	height:
 }
 .search:after{
 	content:'';
@@ -154,7 +156,7 @@
 	width:75%;
 	margin-right:20px;
 	text-indent:10px;
-	font-size:0.8rem;
+	font-size:1.5rem;
 	line-height:20px;
 }
 .search input[type="hidden"]{
@@ -197,7 +199,7 @@
 	width:15%;
 	height:100%;
 	line-height:50px;
-	font-size:0.7rem;
+	font-size:1.4rem;
 }
 .table li:after{
 	content:'';
@@ -323,7 +325,9 @@ p.content4 span{
 .adImg02{
 	transform:translate(-60%);
 }
-
+.adImg03{
+	width:100%;
+}
 /* addClass ��ų css�Ӽ�����*/
 .fixed{
 	position:fixed;

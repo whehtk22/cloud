@@ -65,7 +65,7 @@ public class UpdateController {
 	@GetMapping("/uploadAjax")
 	public String uploadAjax() {
 		log.info("upload ajax");
-		return "/file/fileroom";
+		return "/file/fileroom1";
 	}
 	@PostMapping(value="/uploadAjaxAction",produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

@@ -62,7 +62,7 @@
 				<div class="sideBarArea">
 					<nav class="sideNavWrap">
 						<h3>
-							<span>Board&nbsp;>>&nbsp;</span>자유게시판
+							Board>><span>&nbsp;&nbsp;자유게시판</span>
 						</h3>
 						<ul class="sideNav">
 							<li class="homeLink"><a href="/index" title="홈으로">Home</a></li>
