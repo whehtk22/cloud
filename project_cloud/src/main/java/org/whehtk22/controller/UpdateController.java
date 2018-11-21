@@ -1,17 +1,18 @@
 package org.whehtk22.controller;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.apache.tika.Tika;
 import org.springframework.core.io.FileSystemResource;
@@ -20,17 +21,27 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.whehtk22.domain.AttachFileDTO;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -66,6 +77,61 @@ public class UpdateController {
 	public String uploadAjax() {
 		log.info("upload ajax");
 		return "/file/fileroom1";
+	}
+	private Desktop desktop = Desktop.getDesktop();
+	
+	@RequestMapping(value="/uploadBtn")
+	public String upload() {
+		Stage stage = new Stage();
+		stage.setTitle("File Chooser");
+		FileChooser fileChooser = new FileChooser();
+		Button openButton = new Button("Open file");
+		Button openMultipleButton = new Button("Open files");
+		openButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				File file = fileChooser.showOpenDialog(stage);
+				if(file!=null) {
+					System.out.println(file.getName());
+					openFile(file);
+				}	
+			}
+		});
+		
+		openMultipleButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				List<File> list = fileChooser.showOpenMultipleDialog(stage);
+				if(list!=null) {
+					for(File file:list) {
+						System.out.println(file.getName());
+						openFile(file);
+					}
+				}
+			}
+		});
+         GridPane inputGridPane = new GridPane();
+         
+         GridPane.setConstraints(openButton, 0, 0);
+         GridPane.setConstraints(openMultipleButton, 1, 0);
+         inputGridPane.setHgap(6);
+         inputGridPane.setVgap(6);
+         inputGridPane.getChildren().addAll(openButton,openMultipleButton);
+         Pane rootGroup = new VBox(12);
+         rootGroup.getChildren().addAll(inputGridPane);
+         rootGroup.setPadding(new Insets(12,12,12,12));
+         stage.setScene(new Scene(rootGroup));
+         stage.show();
+		return "/file/fileroom1";
+	}
+	
+	public void openFile(File file) {
+		try {
+			desktop.open(file);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	@PostMapping(value="/uploadAjaxAction",produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -230,4 +296,12 @@ public class UpdateController {
 		}
 		return false;
 	}
+	 /*@GetMapping(value="/getFileList",
+			   produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	   @ResponseBody
+	   public ResponseEntity<List<AttachFileDTO>>getAttachList(Long bno){
+		   log.info("getAttachList"+bno);
+		   
+		   return new ResponseEntity<>(service.getAttachList(bno),HttpStatus.OK);
+	   }*/
 }

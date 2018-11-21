@@ -44,7 +44,7 @@ public class FileCheckTask {//일정 시간을 정해서 주기적으로 실행�
 		return str.replace("-", File.separator);//"-"를 기준으로 폴더를 나누어 준다.
 	}
 	
-	@Scheduled(cron="0 * * * * *")//매일 새벽 2시에 작동
+	/*@Scheduled(cron="0 * * * * *")//매일 새벽 2시에 작동
 	public void checkFiles(){
 		log.warn("file Check Task run.............");
 		log.warn(new Date());
@@ -76,5 +76,5 @@ public class FileCheckTask {//일정 시간을 정해서 주기적으로 실행�
 			log.warn(file.getAbsolutePath());
 			file.delete();
 		}
-	}
+	}*/
 }

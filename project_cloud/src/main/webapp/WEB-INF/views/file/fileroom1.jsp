@@ -26,10 +26,148 @@
 		.uploadResult ul li img{
 			width:20px;
 		} */
+		#uploadfile{
+		position:fixed;top:-1000;
+		}
+		.blind{
+		display:none;
+		}
 	</style>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="/resources/js/jquery-1.12.4.min.js"></script>
-	<script src="/resources/js/file.js"></script>
+ <script src="/resources/js/file2.js"></script> 
+ <script>
+ var cloneObj
+ function openFileOption()
+ {
+   document.getElementById("uploadfile").click();
+   console.log(document.getElementById("uploadfile"))
+ }
+ function downLoad(){
+	 $('.fileViewInner').find('.input_check').each(function(){
+			if($(this).is(":checked")){
+				location.href="download?fileName="+$(this).next().next().next().attr("data-file")
+			}
+			console.log($(this).next().next().next().attr("data-file"))
+		})
+ }
+ function deleteFile(){
+	 $('.fileViewInner').find('.input_check').each(function(){
+			if($(this).is(":checked")){
+				//location.href="/file/deleteFile?fileName="+$(this).next().next().next().attr("data-file")
+						var fileName = $(this).siblings("span").attr("data-file")
+						var type = $(this).siblings("span").attr("data-type")
+						$(this).parent().remove()
+				$.ajax({
+					url : '/file/deleteFile',
+					data : {
+						fileName : fileName,
+						type : type,
+						user:'user1'
+					},
+					dataType : 'text',
+					type : 'POST',
+					success : function(result) {
+						alert(result)
+						
+					}
+				})
+			}
+			console.log($(this).next().next().next().attr("data-file"))
+		})
+ }
+ function viewDocu(){
+	 var fileViewInner = $(".fileViewInner")
+	 fileViewInner.html()
+		$.getJSON("/file/getFileList",{user:'user1'},function(arr){
+			console.log(arr)
+			
+			var str = ""
+			$(arr).each(function(i,obj){
+			
+				//image type
+				if(!obj.image){
+					var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+					var fileCallPath = encodeURIComponent(obj.uploadPath
+							+ "/"
+							+ obj.uuid
+							+ "_"
+							+ obj.fileName)
+							
+							str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
+						"<div class='check'>" +
+						"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+								"<label class='blind' for='chk_search_"+obj.uuid+"'>" +
+										""+obj.fileName+"</label><img src='/resources/images/attach.jpg' height='200px' width='160px'>"
+						+ obj.fileName
+						+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'>x</span>"
+						+ "</div></li>"
+				}
+			})
+			$(".fileViewInner").html(str)
+ })
+ }
+ function viewImage(){
+	 var fileViewInner = $(".fileViewInner")
+	 fileViewInner.html()
+		$.getJSON("/file/getImageList",{user:'user1'},function(arr){
+			console.log(arr)
+	 var str = ""
+			$(arr).each(function(i,obj){
+				var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
+				var originPath = obj.uploadPath + "\\"
+						+ obj.uuid + "_" + obj.fileName//원본파일의 이름
+
+				originPath = originPath.replace(new RegExp(
+						/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
+				//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
+
+				str = "<li><a href=\"javascript:showImage(\'"
+						+ originPath
+						+ "\')\"><img src='/file/display?fileName="
+						+ fileCallPath
+						+ "'></a>"
+						+ "<span data-file=\'"+fileCallPath+"\' data-type='image'>x</span></li>"
+			})
+			$(".fileViewInner").html(str)
+		})
+ }
+ $(document).on("ready",function(){
+	 
+	 
+	 $("#uploadfile").on('change', function () {//인풋태그에서의 변화가 있을 경우에.
+		  console.log(this.files);
+	 		console.log("태그변화")
+		  var files = this.files
+		  var formData = new FormData()
+	 		//console.log($('.fileViewInner').find('.input_check').is(":checked"))
+	 		
+		  for (var i = 0; i < files.length; i++) {
+
+				if (!checkExtension(files[i].name, files[i].size)) {//파일 사이즈나 파일의 확장자 제한에서 걸리면
+					return false
+				}
+				console.log("추가추가")
+				formData.append("uploadFile", files[i])//그렇지 않다면 폼데이터에 추가하라.
+				console.log(formData.get("uploadFile"))
+			}
+			$.ajax({
+				url : '/file/upload',
+				processData : false,
+				contentType : false,
+				data : formData,
+				type : 'POST',
+				dataType : 'json',//결과를 json타입으로 받겠다.
+				success : function(result) {//result는 다시 받는 결과값을 의미.
+					console.log(result)
+					showUploadedFilediv(result)
+					//$(".uploadDiv").html(cloneObj.html())//업로드하고 버튼을 클릭하면 다시 초기화가 된다.
+				}
+			})
+		})
+		})
+
+ </script>
 </head>
 <body>
 	<div id="wrapper">
@@ -67,12 +205,12 @@
 					</div>
 					<nav>
 						<ul class="sideNav classByType">
-							<li><a href="#none" title="문서 모아보기">문서</a></li>
-							<li><a href="#none" title="영상 모아보기">영상</a></li>
-							<li><a href="#none" title="사진 모아보기">사진</a></li>
+							<li><a href="javascript:void(0)" onclick="viewDocu();return;"title="문서 모아보기">문서</a></li>
+							<li><a href="javascript:void(0)" onclick="viewImage();return;" title="영상 모아보기">영상</a></li>
+							<li><a href="javascript:void(0)" onclick="viewImage();return;" title="사진 모아보기">사진</a></li>
 							<li><a href="#none" title="즐겨찾기 모아보기">즐겨찾기</a></li>
 							<li><a href="#none" title="즐겨찾기 모아보기">숨김|중요</a></li>
-							<li><a href="#none" title="즐겨찾기 모아보기">휴지통</a></li>
+							<li><a href="javascript:void(0)" onclick="deleteFile();return;" title="즐겨찾기 모아보기">삭제</a></li>
 						</ul>
 						<ul class="connToExt">
 							<li class="msTree"><a href="#none" title="내 윈도우 탐색기 연동"></a></li>
@@ -88,25 +226,27 @@
 							<div class="btnArea1">
 								<h3 class="hide">기능버튼 영역</h3>
 								<p>
-									<a href="#none" title="업로드 버튼">
-										<img src="/resources/images/icons/upload4.png" alt="업로드 아이콘">
+								<!--  -->
+									<a href="javascript:void(0);" onclick="openFileOption();return;" id="uploadBtn" title="업로드 버튼" >
+										<img src="/resources/images/icons/upload4.png" alt="업로드 아이콘" >
 										<span>upload</span>
-									</a>
+									 </a> 
+									 <input type="file" id="uploadfile" name="uploadfile" multiple>
 								</p>
 								<p>
-									<a href="#none" title="다운로드 버튼">
+									<a href="javascript:void(0);" onclick="downLoad();return;" id="downloadBtn" title="다운로드 버튼">
 										<img src="/resources/images/icons/download5.png" alt="다운로드 아이콘">
 										<span>다운로드</span>
 									</a>
 								</p>
 								<p>
-									<a href="#none" title="삭제 버튼">
+									<a href="javascript:void(0);" title="삭제 버튼">
 										<img src="/resources/images/icons/delete_100_124_5.png" alt="삭제 아이콘">
-										<span>휴지통</span>
+										<span>삭제</span>
 									</a>
 								</p>
 								<p>
-									<a href="#none" title="이름변경 버튼">
+									<a href="javascript:void(0);" title="이름변경 버튼">
 										<img src="/resources/images/icons/change_name4.png" alt="이름변경 아이콘">
 										<span>이름변경</span>
 									</a>
@@ -140,82 +280,17 @@
 				<section id="dataAreaWrap">
 					<h2>data list area</h2>
 					<h3 class="hide">drag and drop업로드가 구현되어야 할 부분</h3>
-					<form id="uploadForm" name="uploadForm" enctype="multipart/form-data" method="post"><!-- drag and dfrop form -->
-						<div id="fileView"><!-- file drop zone -->
+						<div id="fileView"><!-- 파일드롭구역 -->
 							<ul class="fileViewInner">
-								<li class="firstSlot slot"> <!-- onClick="firstFileUp()" -->
+								 <li class="firstSlot slot"><!-- onClick="firstFileUp()" -->
 									<p>
-										<a href="#none" title="클릭해서 업로드하기">
+										 <a href="#none" title="클릭해서 업로드하기">
 											<img src="/resources/images/icons/add_file.png" alt="클릭해서 업로드하는 버튼"/>
 										</a>
 									</p>
 								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<!-- <li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li>
-								<li class="slot">
-									<p>
-										<a href="#none" title="클릭해서 업로드하기">
-											1
-										</a>
-									</p>
-								</li> -->
 							</ul>
 						</div>
-					</form>
 				</section>
 				<section id="dataInfoWrap"><!-- hidden이었다가 modal -->
 					<h2>data info area modal</h2>

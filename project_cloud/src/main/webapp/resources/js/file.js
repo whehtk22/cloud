@@ -43,14 +43,12 @@ function fileDropDown(){
 	var dropZone = $("#fileView");
     //Drag기능
     dropZone.on('dragenter',function(e){
-    	alert(1);
         e.stopPropagation();
         e.preventDefault();
         // 드롭다운 영역 css_ 우선권이 fileroom.css에 있음
         //dropZone.css('background-color','#E3F2FC');
     });
     dropZone.on('dragleave',function(e){
-        alert(2);
     	e.stopPropagation();
         e.preventDefault();
         // 드롭다운 영역 css
@@ -95,7 +93,7 @@ function selectFile(fileObject){
 
 	// 다중파일 등록
 	if(files != null){
-		for(var i=0;i<files.length;i++){
+		for(var i=0;i<files.length;i++){//다중파일을 반복문들 돌려서해준다.
 			//파일명
 			var fileName = files[i].name;
 			var fileNameArr = fileName.split("\.");
@@ -104,7 +102,7 @@ function selectFile(fileObject){
 			// 파일 사이즈(단위 :MB)
             var fileSize = files[i].size / 1024 / 1024;
             
-            if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml']) >= 0){
+            if($.inArray(ext, ['exe', 'bat', 'sh', 'java','zip','alz', 'jsp', 'html', 'js', 'css', 'xml']) >= 0){
                 // 확장자 체크
                 alert("등록 불가 확장자");
                 break;
@@ -158,6 +156,57 @@ function addFileList(fIndex, fileName, fileSize){
 
   $('.fileViewInner').append(html);
   $('.left').text("           ");
+}
+function showUploadedFile(uploadResultArr) {
+	var str = ""
+	//이미지파일과 일반 파일을 동시에 올리는 경우 싱크로가 안 맞는 경우가 있어서 하나의 파일마다
+	//바로바로 보이게 한다.
+	$(uploadResultArr)
+			.each(
+					function(i, obj) {
+						if (!obj.image) {
+							var fileCallPath = encodeURIComponent(obj.uploadPath
+									+ "/"
+									+ obj.uuid
+									+ "_"
+									+ obj.fileName)
+							str += "<li><a href='/download?fileName="
+									+ fileCallPath
+									+ "'><img src='/resources/images/attach.jpg'>"
+									+ obj.fileName
+									+ "</a>"
+									+ "<span data-file=\'"+fileCallPath+"\' data-type='file'>x</span>"
+									+ "<div></li>"
+							console.log("일반파일")
+							uploadResult.append(str)
+							str = ""
+						} else {
+							//str += "<li>"+obj.fileName+"</li>"//공백문자나 한글 이름 등이 문제가 되기 때문에 인코딩을 해주어야 한다.
+							var fileCallPath = encodeURIComponent(obj.uploadPath
+									+ "/s_"
+									+ obj.uuid
+									+ "_"
+									+ obj.fileName)
+
+							var originPath = obj.uploadPath + "\\"
+									+ obj.uuid + "_" + obj.fileName//원본파일의 이름
+
+							originPath = originPath.replace(new RegExp(
+									/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
+							//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
+
+							str = "<li><a href=\"javascript:showImage(\'"
+									+ originPath
+									+ "\')\"><img src='/display?fileName="
+									+ fileCallPath
+									+ "'></a>"
+									+ "<span data-file=\'"+fileCallPath+"\' data-type='image'>x</span></li>"
+							uploadResult.append(str)
+							str = ""
+							console.log("이미지파일")
+						}
+					})
+	//uploadResult.append(str)//업로드 된 파일을 화면에 보여준다.
 }
 
 // 업로드 파일 삭제
@@ -223,5 +272,3 @@ function uploadFile(){
         });
     }
 }
-
-
