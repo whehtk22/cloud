@@ -18,18 +18,20 @@
 }
 #logo{
 	width:100px;
-	/* background-color:yellow; */
+	 /*background-color:yellow;*/ 
 }
 #logo a{
 	display:block;
 	height:40px;
 	line-height:40px;
-	text-align:center;
+	/* position:fixed; */
+	text-align:left;
 	color:#ededed;
-	margin-top:20px;
+	margin-top:0px;
+	z-index: 99;
 }
 
-/*pc ³ÐÀº È­¸é¿¡¼­ ¸Þ´º¹öÆ° ¼û±â±â*/
+/*pc ï¿½ï¿½ï¿½ï¿½ È­ï¿½é¿¡ï¿½ï¿½ ï¿½Þ´ï¿½ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½*/
 #menuWrap{
 	position:absolute;
 	left:-9999px;
@@ -65,7 +67,7 @@
 	color:red;
 }
 
-/*±¸ºÐ¼± divLine*/
+/*ï¿½ï¿½ï¿½Ð¼ï¿½ divLine*/
 .divLine{
 	color:red;
 }

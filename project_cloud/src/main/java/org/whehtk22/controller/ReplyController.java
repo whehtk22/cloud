@@ -32,6 +32,8 @@ public class ReplyController {
 	// consumes=> 처리할 데이터의 종류, produces=> 반환할 타입
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {// json타입을 ReplyVO타입으로 변환
+		System.out.println("newnew");
+		System.out.println(vo);
 		log.info("ReplyVO : " + vo);
 
 		int insertCount = service.register(vo);

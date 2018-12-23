@@ -30,8 +30,8 @@
 		<load-on-startup>1</load-on-startup>
 		<multipart-config><!-- WAS(Tomcat)자체의 설정 -->
 		<location>C:\\upload\\tmp</location>
-		<max-file-size>209175200</max-file-size><!-- 1MB * 20 업로드되는 파일의 최대 크기-->
-		<max-request-size>419430400</max-request-size><!-- 40MB  한번에 올릴 수 있는 파일의 최대 크기-->
+		<max-file-size>2091752000</max-file-size><!-- 1MB * 20 업로드되는 파일의 최대 크기-->
+		<max-request-size>4194304000</max-request-size><!-- 40MB  한번에 올릴 수 있는 파일의 최대 크기-->
 		<file-size-threshold>209715200</file-size-threshold><!-- 20MB 특정 사이즈의 메모리 사용-->
 		</multipart-config>
 	</servlet>

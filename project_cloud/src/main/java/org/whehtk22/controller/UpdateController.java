@@ -73,11 +73,11 @@ public class UpdateController {
 			}
 		}
 	}
-	@GetMapping("/uploadAjax")
+	/*@GetMapping("/uploadAjax")
 	public String uploadAjax() {
 		log.info("upload ajax");
 		return "/file/fileroom1";
-	}
+	}*/
 	private Desktop desktop = Desktop.getDesktop();
 	
 	@RequestMapping(value="/uploadBtn")

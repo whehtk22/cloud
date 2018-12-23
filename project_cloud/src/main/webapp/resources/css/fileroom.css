@@ -15,18 +15,19 @@
 }
 /*### sidebar starts ###*/
 #sideBarWrap{
-  width:15%;
+  width:10%;
   padding:1%;
-  /* position:fixed; 
-  left:0;
+   position:fixed; 
+  /*left:0;
   top:80px;*/
   background-color:#1bbc9b;
   float:left;
+  z-index: 55;
 }
 #userInfo{
 	width:100%;
 	/* padding:5%; */
-	margin-top:10px;
+	margin-top:5px;
 }
 .profile{
 	width:100%;
@@ -120,6 +121,7 @@
 	height:100%;
 	line-height:50px;
 	text-align:right;
+	font-size:20px;
 	color:#fff;
 	transition:all .3s ease-in-out;
 }
@@ -159,8 +161,8 @@ li.msTree,li.macTree{
 	float:right;
 }
 #subHeader{
-	width:85%;
-	height:150px;
+	width:90%;
+	height:120px;
 }
 .subNavOuter{
 	width:100%;
@@ -176,6 +178,8 @@ li.msTree,li.macTree{
 .subNavInner div{
 	float:left;
 	height:100%;
+	position:relative;
+	right:-10%;
 	overflow:hidden;
 }
 
@@ -213,7 +217,7 @@ li.msTree,li.macTree{
 	clear:both;
 }
 
-/* .btnArea1�� .btnArea2 float �����ֱ� �뵵*/
+/* .btnArea1�� .btnArea2 float �����ֱ� �뵵*/
 .subNavInner:after{
 	content:'';
 	display:block;
@@ -238,14 +242,13 @@ li.msTree,li.macTree{
 	heght:100%;
 	/* background-color:lime; */
 	overflow:hidden;
+	text-align:left;
 }
 .fileViewInner li{
-	float:left;
-	width:20%;
+	width:16%;
+	display:inline-block;
 }
-.fileViewInner li p{
-	width:100%;
-}
+
 .firstSlot p{
 	border:1px dotted #ccc;
 }
@@ -262,6 +265,9 @@ li.msTree,li.macTree{
 }
 /*### dataAreaWrap ends ###*/
 
+/* progress bar 화면 가운데 위치시키기*/
+
+/* progress bar 화면 가운데 위치시키기*/
 /*### dataInfoWrap starts ###*/
 #dataInfoWrap{
 	width:200px;
@@ -270,5 +276,13 @@ li.msTree,li.macTree{
 	right:-200px;
 	top:100px;
 }
-
+/*흑막*/
+ #full{
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.5);
+	position:fixed;
+	left:0;
+	top:0;
+} 
 /*### dataInfoWrap ends ###*/

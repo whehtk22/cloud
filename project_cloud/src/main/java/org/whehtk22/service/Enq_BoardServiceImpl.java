@@ -52,16 +52,24 @@ public class Enq_BoardServiceImpl implements Enq_BoardService {
 	@Transactional
 	@Override
 	public boolean modify(Enq_BoardVO board) {
+		System.out.println(board);
+		System.out.println("수정");
 		log.info("modify....."+board);
 		
-		attachMapper.deleteAll(board.getBno());//기존 첨부파일 관련 데이터를 삭제
+		if(board.getAttachList()!=null) {
+			System.out.println("삭제");
+			attachMapper.deleteAll(board.getBno());//기존 첨부파일 관련 데이터를 삭제			
+		}
 		
 		boolean modifyResult = mapper.update(board)==1;
+		log.info(modifyResult);
+		if(board.getAttachList()!=null) {
 		if(modifyResult && board.getAttachList().size()>0) {//게시판이 업데이트가 되고 게시판의 첨부파일의 갯수가 0개 이상이면
 			board.getAttachList().forEach(attach->{
 				attach.setBno(board.getBno());
 				attachMapper.insert(attach);
 			});
+		}
 		}
 		return modifyResult;//수정된 갯수
 	}

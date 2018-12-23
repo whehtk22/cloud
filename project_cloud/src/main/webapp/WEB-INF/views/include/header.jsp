@@ -29,7 +29,7 @@
 				<li><a href="about.jsp" title="greeting">Greeting</a><span
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="/index" title="home">Home</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
-				<li><a href="/uploadAjax" title="cloud">Cloud</a><span
+				<li><a href="/file/fileroom" title="cloud">Cloud</a><span
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="login.jsp" title="login">Sign In</a><span
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>

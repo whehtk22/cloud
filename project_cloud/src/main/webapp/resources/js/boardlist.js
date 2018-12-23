@@ -49,7 +49,6 @@ $(".page_next a").on("click",function(e){
 
   $(".move").on("click",function(e){
     e.preventDefault()
-
     console.log('click')
     actionForm.append("<input type='hidden' name='bno' value='"+
         $(this).attr("href")+"'>")//bno값을 추가하는 input태그를 생성

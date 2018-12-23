@@ -22,12 +22,14 @@ public class FileRoomServiceImpl implements FileRoomService{
 
 	@Override
 	public void remove(String fileuser, String uuid) {
+		System.out.println("fileuser는 "+fileuser);
+		System.out.println("uuid는 "+uuid);
 		mapper.remove(fileuser, uuid);
 	}
 
 	@Override
-	public List<FileVO> findFile(String fileuser) {
-		return mapper.findFile(fileuser);
+	public List<FileVO> findDocu(String fileuser) {
+		return mapper.findDocu(fileuser);
 	}
 
 
@@ -45,6 +47,18 @@ public class FileRoomServiceImpl implements FileRoomService{
 	@Override
 	public void update(FileVO dto) {
 		mapper.upload(dto);
+	}
+
+	@Override
+	public List<FileVO> findVideo(String fileuser) {
+		
+		return mapper.findVideo(fileuser);
+	}
+
+	@Override
+	public List<FileVO> findAll(String fileuser) {
+		
+		return mapper.findAll(fileuser);
 	}
 
 

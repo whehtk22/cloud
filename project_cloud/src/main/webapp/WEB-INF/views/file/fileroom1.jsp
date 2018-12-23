@@ -7,51 +7,141 @@
 	<title>FileRoom Home</title>
 	<link rel="stylesheet" type="text/css" href="/resources/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-	<style rel="stylesheet" type="text/css"><!--임의적으로 만든 것이라 수정가능.-->
-		/* .uploadResult{
-			width:100%;
-			background-color:blue;
-		}
-		
-		.uploadResult ul{
-			display:flex;
-			flex-flow:row;
-			justify-content:center;
-			align-items:center;
-		}
-		.uploadResult ul li{
-			list-style:none;
-			padding:10px;
-		}
-		.uploadResult ul li img{
-			width:20px;
-		} */
+	<link href="/resources/vendor/bootstrap/css/bootstrap.css"
+	rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="/resources/css/jquery.percentageloader-0.2.css">
+	<style>
 		#uploadfile{
-		position:fixed;top:-1000;
+			position:fixed;top:-1000px;
+			/* display:none; */
 		}
-		.blind{
-		display:none;
+		.bar{
+		background-color: black;
 		}
+		#topLoader{
+		width:256px;
+		height:256px;
+		margin-bottom:32px;
+		}
+		#procontainer{
+		width:940px;
+		padding:10px;
+		margin-left:auto;
+		margin-right:auto;
+		}
+		p{
+		font-size:12px;
+		width:160px;
+		word-wrap:break-word;
+		}
+		.check{
+			width:160px;
+		}
+		li:hover {
+		opacity: 0.5;
+}
+.file_li .list_head{
+	position:relative;
+	overflow:hidden;
+	height:25px;
+	text-align:right;
+	background:#f9f9f9;
+}
+.file_li .list_head li{
+	display:inline-block;
+	height:100%;
+	text-align:left;
+}
+.file_li .list_sort{
+	position:relative;
+	width:100%;
+	height:26px;
+}
+.file_li .list_head li.check{
+	float:left;
+	text-indent:8px;
+}
+.file_li .list_head li.type{
+	float:left;
+}
+.file_li .list_head li.filename{
+	position:relative;
+	float:left;
+	text-align:left;
+}
+.file_li .list_head li.span{
+	display:inline-block;
+	margin-top:6px;
+	letter-spaicng:-1px;
+	text-indent:8px;
+}
+.fileViewInner_ct .fileViewlist .list_body_li .list_body{
+	position:relative;
+	overflow:hidden;
+	height:31px;
+	text-align:right;
+	white-space:nowrap;
+}
+.fileViewInner_ct .fileViewlist .list_body_li{
+	border-bottom: 1px solid #f1f1f1;
+}
+.fileViewInner_ct .fileViewlist .list_body_li li{
+	display:inline-block;
+	padding:9px 0 0 0;
+	line-height:18px;
+	vertial-align:top;
+}
+.fileViewInner_ct .fileViewlist .list_body_li li.check{
+	float:left;
+	padding-top:11px;
+	text-align:left;
+	text-indent:8px;
+}
+.fileViewInner_ct .fileViewlist .list_body_li li.type{
+	float:left;
+	padding-top:10px;
+	text-indent:1px;
+}
+.fileViewInner_ct .fileViewlist .list_body_li li.filename{
+	float:left;
+	text-align:left;
+}
+.fileViewInner_ct .fileViewlist .list_body_li li.type img{
+	float: left;
+}
 	</style>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="/resources/js/jquery-1.12.4.min.js"></script>
+	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
  <script src="/resources/js/file2.js"></script> 
+<script src="/resources/js/jquery.percentageloader-0.2.js"></script>
  <script>
  var cloneObj
+ var category
+ var list
  function openFileOption()
  {
    document.getElementById("uploadfile").click();
    console.log(document.getElementById("uploadfile"))
  }
- function downLoad(){
+ function downLoadFile(){
+	 if(list===false){
 	 $('.fileViewInner').find('.input_check').each(function(){
 			if($(this).is(":checked")){
-				location.href="download?fileName="+$(this).next().next().next().attr("data-file")
+				console.log()
+				location.href="/file/download?fileName="+$(this).next().next().next().next().attr("data-file")
 			}
 			console.log($(this).next().next().next().attr("data-file"))
 		})
- }
+	 }else if(list===true){
+		 $(".fileViewlist").find('.input_check').each(function(){
+			if($(this).is(":checked")){
+				location.href="/file/download?fileName="+$(this).parent().next().next().next().attr("data-file")
+			}
+		 })
+	 }
+	}
  function deleteFile(){
+	 if(list===false){
 	 $('.fileViewInner').find('.input_check').each(function(){
 			if($(this).is(":checked")){
 				//location.href="/file/deleteFile?fileName="+$(this).next().next().next().attr("data-file")
@@ -73,20 +163,50 @@
 					}
 				})
 			}
-			console.log($(this).next().next().next().attr("data-file"))
+			console.log($(this).next().next().next().next().attr("data-file"))
 		})
+	 }else if(list===true){
+		 $(".fileViewlist").find('.input_check').each(function(){
+				if($(this).is(":checked")){
+					//location.href="/file/download?fileName="+$(this).parent().next().next().next().attr("data-file")
+							var fileName=$(this).parent().next().next().next().attr("data-file")
+							var type=$(this).parent().next().next().next().attr("data-type")
+							$(this).parent().parent().parent().remove()
+							$.ajax({
+								url:'/file/deleteFile',
+								data:{
+									fileName:fileName,
+									type:type,
+									user:'user1'
+								},
+								dataType:'text',
+								type:'POST',
+								success:function(result){
+									alert(result)
+								}
+							})
+				}
+			 })
+	 }
  }
- function viewDocu(){
+ 
+ 
+ function viewVideo(){
+	 category="video"
+	 list=false
+	 console.log("카테고리"+category)
 	 var fileViewInner = $(".fileViewInner")
-	 fileViewInner.html()
-		$.getJSON("/file/getFileList",{user:'user1'},function(arr){
+	 $(".fileViewInner_li").empty()
+	 $(".fileViewlist").empty()
+	 $("#fileView").css("display","block")
+	 fileViewInner.empty()
+		$.getJSON("/file/getVideoList",{user:'user1'},function(arr){
 			console.log(arr)
-			
+			console.log("video")
 			var str = ""
 			$(arr).each(function(i,obj){
 			
 				//image type
-				if(!obj.image){
 					var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
 					var fileCallPath = encodeURIComponent(obj.uploadPath
 							+ "/"
@@ -97,24 +217,63 @@
 							str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
 						"<div class='check'>" +
 						"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-								"<label class='blind' for='chk_search_"+obj.uuid+"'>" +
-										""+obj.fileName+"</label><img src='/resources/images/attach.jpg' height='200px' width='160px'>"
-						+ obj.fileName
-						+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'>x</span>"
+								"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/video-file.png' height='140px' width='140px'>"
+						+"<p>"+ obj.fileName+"</p>"
+						+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
 						+ "</div></li>"
-				}
 			})
-			$(".fileViewInner").html(str)
+			fileViewInner.append(str)
+ })
+ }
+ function viewDocu(){
+	 category="docu"
+	 list=false
+	 console.log("카테고리"+category)
+	 var fileViewInner = $(".fileViewInner")
+	 $(".fileViewInner_li").empty()
+	 $(".fileViewlist").empty()
+	 $("#fileView").css("display","block")
+	 fileViewInner.empty()
+		$.getJSON("/file/getDocuList",{user:'user1'},function(arr){
+			console.log(arr)
+			
+			var str = ""
+			$(arr).each(function(i,obj){
+			
+				//image type
+					var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+					var fileCallPath = encodeURIComponent(obj.uploadPath
+							+ "/"
+							+ obj.uuid
+							+ "_"
+							+ obj.fileName)
+							
+							str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
+						"<div class='check'>" +
+						"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+								"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/document.png' height='140px' width='140px'>"
+										+"<p>"+ obj.fileName+"</p>"
+						+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
+						+ "</div></li>"
+			})
+			fileViewInner.append(str)
  })
  }
  function viewImage(){
+	 category="image"
+	 list=false
+	 console.log("카테고리"+category)
 	 var fileViewInner = $(".fileViewInner")
-	 fileViewInner.html()
+	 $(".fileViewInner_li").empty()
+	 $(".fileViewlist").empty()
+	 $("#fileView").css("display","block")
+	 fileViewInner.empty()
 		$.getJSON("/file/getImageList",{user:'user1'},function(arr){
 			console.log(arr)
 	 var str = ""
 			$(arr).each(function(i,obj){
 				var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
+				var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
 				var originPath = obj.uploadPath + "\\"
 						+ obj.uuid + "_" + obj.fileName//원본파일의 이름
 
@@ -122,26 +281,318 @@
 						/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
 				//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
 
-				str = "<li><a href=\"javascript:showImage(\'"
-						+ originPath
-						+ "\')\"><img src='/file/display?fileName="
+				str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><div class='check'>" +
+				"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+				"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/file/display?fileName="
 						+ fileCallPath
-						+ "'></a>"
-						+ "<span data-file=\'"+fileCallPath+"\' data-type='image'>x</span></li>"
+						+ "' height='140px' width='140px'></a>"
+						+"<p>"+ obj.fileName+"</p>"
+						+ "<span data-file=\'"+fileCallPath+"\' data-type='image'></span></li>"
 			})
-			$(".fileViewInner").html(str)
+			fileViewInner.append(str)
 		})
  }
+ function viewAll(){
+	 category="all"
+	 list=false
+	 console.log("카테고리 "+category)
+	 var fileViewInner = $(".fileViewInner")
+	 fileViewInner.empty() 
+	 $(".fileViewInner_li").empty()
+	 $(".fileViewlist").empty()
+	 $("#fileView").css("display","block")
+	 $.getJSON("/file/getImageList",{user:'user1'},function(arr){
+			console.log(arr)
+			 var str = ""
+					$(arr).each(function(i,obj){
+						var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
+						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+						var originPath = obj.uploadPath + "\\"
+								+ obj.uuid + "_" + obj.fileName//원본파일의 이름
+
+						originPath = originPath.replace(new RegExp(
+								/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
+						//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
+
+						str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><div class='check'>" +
+						"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+						"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/file/display?fileName="
+								+ fileCallPath
+								+ "' height='140px' width='140px'></a>"
+								+"<p>"+ obj.fileName+"</p>"
+								+ "<span data-file=\'"+fileCallPath+"\' data-type='image'></span></li>"
+								//fileViewInner.append(str)
+					})
+					fileViewInner.append(str)
+	 }).success(function(){
+		 $.getJSON("/file/getDocuList",{user:'user1'},function(arr){
+				console.log(arr)
+				
+		var str = ""
+				$(arr).each(function(i,obj){
+				
+					//image type
+						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+						var fileCallPath = encodeURIComponent(obj.uploadPath
+								+ "/"
+								+ obj.uuid
+								+ "_"
+								+ obj.fileName)
+								
+								str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
+							"<div class='check'>" +
+							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+									"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/document.png' height='140px' width='140px'>"
+											+"<p>"+ obj.fileName+"</p>"
+							+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
+							+ "</div></li>"
+							//fileViewInner.append(str)
+				})
+				fileViewInner.append(str)
+	 }).success(function(){
+		 $.getJSON("/file/getVideoList",{user:'user1'},function(arr){
+				console.log(arr)
+				console.log("video")
+				var str = ""
+				$(arr).each(function(i,obj){
+				
+					//image type
+						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+						var fileCallPath = encodeURIComponent(obj.uploadPath
+								+ "/"
+								+ obj.uuid
+								+ "_"
+								+ obj.fileName)
+								
+								str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
+							"<div class='check'>" +
+							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+									"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/video-file.png' height='140px' width='140px'>"
+							+"<p>"+ obj.fileName+"</p>"
+							+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
+							+ "</div></li>"
+				})
+							fileViewInner.append(str)
+				
+		 })
+	 })
+	 })
+ }
+ function view_li(){
+	 list=true
+	 if(category==="all"){
+			 var fileView = $("#fileView")
+			 fileView.hide()
+			 var fileViewInner_li = $(".fileViewInner_li")
+			 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
+			 "<li class='check' style='width:35px;'></li>"+
+			 "<li class='type' style='width:50px;'>종류</li>"+
+			 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
+			 "</div> ")
+			 var fileViewlist = $(".fileViewlist")
+			 $.getJSON("/file/getImageList",{user:'user1'},function(arr){
+					console.log(arr)
+					 var str = ""
+							$(arr).each(function(i,obj){
+								var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
+								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+								var originPath = obj.uploadPath + "\\"
+										+ obj.uuid + "_" + obj.fileName//원본파일의 이름
+
+								originPath = originPath.replace(new RegExp(
+										/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
+								//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
+
+								str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
+								"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+								"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
+								"<li class='type' style='width:50px'><img src='/resources/images/icons/image.png' height='20px' width='25px'></li>"
+										+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p></li>"
+										+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='image'></span></ul></li>"
+										//fileViewInner.append(str)
+							})
+							fileViewlist.append(str)
+			 }).success(function(){
+				 $.getJSON("/file/getDocuList",{user:'user1'},function(arr){
+						console.log(arr)
+						
+				var str = ""
+						$(arr).each(function(i,obj){
+						
+							//image type
+								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+								var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/"
+										+ obj.uuid
+										+ "_"
+										+ obj.fileName)
+										
+										str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
+									"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+											"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
+											"<li class='type' style='width:50px'><img src='/resources/images/icons/document.png' height='20px' width='25px'></li>"
+													+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p>"
+									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
+									//fileViewInner.append(str)
+						})
+						fileViewlist.append(str)
+			 }).success(function(){
+				 $.getJSON("/file/getVideoList",{user:'user1'},function(arr){
+						console.log(arr)
+						console.log("video")
+						var str = ""
+						$(arr).each(function(i,obj){
+						
+							//image type
+								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+								var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/"
+										+ obj.uuid
+										+ "_"
+										+ obj.fileName)
+										
+										str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
+									"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+											"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
+											"<li class='type' style='width:50px'><img src='/resources/images/icons/video-file.png' height='20px' width='25px'></li>"
+									+"<li class='filename' stye='width:auto'><p>"+ obj.fileName+"</p></li>"
+									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
+						})
+									fileViewlist.append(str)
+						
+				 })
+			 })
+			 })
+	 }else if(category==="video"){
+		 var fileView = $("#fileView")
+		 fileView.hide()
+		 var fileViewInner_li = $(".fileViewInner_li")
+		 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
+		 "<li class='check' style='width:35px;'></li>"+
+		 "<li class='type' style='width:50px;'>종류</li>"+
+		 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
+		 "</div> ")
+		 var fileViewlist = $(".fileViewlist")
+		 $.getJSON("/file/getVideoList",{user:'user1'},function(arr){
+						console.log(arr)
+						console.log("video")
+						var str = ""
+						$(arr).each(function(i,obj){
+						
+							//image type
+								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+								var fileCallPath = encodeURIComponent(obj.uploadPath
+										+ "/"
+										+ obj.uuid
+										+ "_"
+										+ obj.fileName)
+										
+										str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
+									"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+											"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
+											"<li class='type' style='width:50px'><img src='/resources/images/icons/video-file.png' height='20px' width='25px'></li>"
+									+"<li class='filename' stye='width:auto'><p>"+ obj.fileName+"</p></li>"
+									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
+						})
+									fileViewlist.append(str)
+						
+				 })
+	 }else if(category==="docu"){
+		 var fileView = $("#fileView")
+		 fileView.hide()
+		 var fileViewInner_li = $(".fileViewInner_li")
+		 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
+		 "<li class='check' style='width:35px;'></li>"+
+		 "<li class='type' style='width:50px;'>종류</li>"+
+		 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
+		 "</div> ")
+		 var fileViewlist = $(".fileViewlist")
+		 $.getJSON("/file/getDocuList",{user:'user1'},function(arr){
+				console.log(arr)
+				
+		var str = ""
+				$(arr).each(function(i,obj){
+				
+					//image type
+						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+						var fileCallPath = encodeURIComponent(obj.uploadPath
+								+ "/"
+								+ obj.uuid
+								+ "_"
+								+ obj.fileName)
+								
+								str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
+							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+									"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
+									"<li class='type' style='width:50px'><img src='/resources/images/icons/document.png' height='20px' width='25px'></li>"
+											+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p>"
+							+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
+							//fileViewInner.append(str)
+				})
+				fileViewlist.append(str)
+		 })
+	 }else if(category==="image"){
+		 var fileView = $("#fileView")
+		 fileView.hide()
+		 var fileViewInner_li = $(".fileViewInner_li")
+		 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
+		 "<li class='check' style='width:35px;'></li>"+
+		 "<li class='type' style='width:50px;'>종류</li>"+
+		 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
+		 "</div> ")
+		 var fileViewlist = $(".fileViewlist")
+		 $.getJSON("/file/getImageList",{user:'user1'},function(arr){
+				console.log(arr)
+				 var str = ""
+						$(arr).each(function(i,obj){
+							var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
+							var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+							var originPath = obj.uploadPath + "\\"
+									+ obj.uuid + "_" + obj.fileName//원본파일의 이름
+
+							originPath = originPath.replace(new RegExp(
+									/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
+							//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
+
+							str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
+							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+							"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
+							"<li class='type' style='width:50px'><img src='/resources/images/icons/image.png' height='20px' width='25px'></li>"
+									+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p></li>"
+									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='image'></span></ul></li>"
+									//fileViewInner.append(str)
+						})
+						fileViewlist.append(str)
+	 })
+ }
+ }
+ var percentComplete=0;
  $(document).on("ready",function(){
 	 
-	 
+	 $("#full").hide()
+	 $(".fileViewInner").on("click","li",function(){
+		 console.log("클릭")
+		 $(this).find('.input_check').each(function(){
+			if($(this).is(":checked"))  $(this).prop("checked",false); 
+			else if(!$(this).is(":checked"))$(this).prop("checked",true); 
+	 })
+	 })
+	 $(".fileViewlist").on("click","li",function(){
+		 $(this).find('.input_check').each(function(){
+			 if($(this).is(":checked")) $(this).prop("checked",false)
+			 else $(this).prop("checked",true)
+		 })
+	 })
 	 $("#uploadfile").on('change', function () {//인풋태그에서의 변화가 있을 경우에.
-		  console.log(this.files);
+		 var topLoader = new PercentageLoader(document.getElementById('toploader'), {
+              width: 256, height: 256, controllable: true, progress: 0.5, onProgressUpdate: function (val) {
+                this.setValue(Math.round(val * 100.0) + 'kj');
+              }
+            })
+		 console.log(this.files);
 	 		console.log("태그변화")
 		  var files = this.files
-		  var formData = new FormData()
-	 		//console.log($('.fileViewInner').find('.input_check').is(":checked"))
-	 		
+		  var formData = new FormData()	 		
 		  for (var i = 0; i < files.length; i++) {
 
 				if (!checkExtension(files[i].name, files[i].size)) {//파일 사이즈나 파일의 확장자 제한에서 걸리면
@@ -152,6 +603,25 @@
 				console.log(formData.get("uploadFile"))
 			}
 			$.ajax({
+				xhr:function(){
+					var xhr = new window.XMLHttpRequest()
+					//흑막.
+					xhr.upload.addEventListener("progress",function(evt){
+						if(evt.lengthComputable){
+							var kb = evt.loaded
+							var totalKb = evt.total
+							percentComplete = parseInt(percentComplete*100)
+							topLoader.setProgress(kb/totalKb)
+							topLoader.setValue(kb.toString()+'kb')
+								console.log("킬로"+kb/totalKb)
+							console.log("percentComplete"+percentComplete)
+							if(kb/totalKb===1){
+								$("#toploader").empty()//업로드 진행이 다 되면 프로그레스바 비우기
+							}
+						}
+					},false)
+					return xhr
+				},
 				url : '/file/upload',
 				processData : false,
 				contentType : false,
@@ -161,12 +631,11 @@
 				success : function(result) {//result는 다시 받는 결과값을 의미.
 					console.log(result)
 					showUploadedFilediv(result)
-					//$(".uploadDiv").html(cloneObj.html())//업로드하고 버튼을 클릭하면 다시 초기화가 된다.
 				}
 			})
+			
 		})
 		})
-
  </script>
 </head>
 <body>
@@ -205,8 +674,9 @@
 					</div>
 					<nav>
 						<ul class="sideNav classByType">
+							<li><a href="javascript:void(0)" onclick="viewAll();return;"title="기본 모아보기">기본</a></li>
 							<li><a href="javascript:void(0)" onclick="viewDocu();return;"title="문서 모아보기">문서</a></li>
-							<li><a href="javascript:void(0)" onclick="viewImage();return;" title="영상 모아보기">영상</a></li>
+							<li><a href="javascript:void(0)" onclick="viewVideo();return;" title="영상 모아보기">영상</a></li>
 							<li><a href="javascript:void(0)" onclick="viewImage();return;" title="사진 모아보기">사진</a></li>
 							<li><a href="#none" title="즐겨찾기 모아보기">즐겨찾기</a></li>
 							<li><a href="#none" title="즐겨찾기 모아보기">숨김|중요</a></li>
@@ -229,26 +699,26 @@
 								<!--  -->
 									<a href="javascript:void(0);" onclick="openFileOption();return;" id="uploadBtn" title="업로드 버튼" >
 										<img src="/resources/images/icons/upload4.png" alt="업로드 아이콘" >
-										<span>upload</span>
+										<span class="hide">upload</span>
 									 </a> 
 									 <input type="file" id="uploadfile" name="uploadfile" multiple>
 								</p>
 								<p>
-									<a href="javascript:void(0);" onclick="downLoad();return;" id="downloadBtn" title="다운로드 버튼">
+									<a href="javascript:void(0);" onclick="downLoadFile();return;" id="downloadBtn" title="다운로드 버튼">
 										<img src="/resources/images/icons/download5.png" alt="다운로드 아이콘">
-										<span>다운로드</span>
+										<span class="hide">다운로드</span>
 									</a>
 								</p>
 								<p>
-									<a href="javascript:void(0);" title="삭제 버튼">
+									<a href="javascript:void(0);" onclick="deleteFile();return;" id="deleteBtn" title="삭제 버튼">
 										<img src="/resources/images/icons/delete_100_124_5.png" alt="삭제 아이콘">
-										<span>삭제</span>
+										<span class="hide">삭제</span>
 									</a>
 								</p>
 								<p>
 									<a href="javascript:void(0);" title="이름변경 버튼">
 										<img src="/resources/images/icons/change_name4.png" alt="이름변경 아이콘">
-										<span>이름변경</span>
+										<span class="hide">이름변경</span>
 									</a>
 								</p>
 							</div>
@@ -257,20 +727,20 @@
 								<p class="gridStyleBtn">
 									<!-- 그리드 형식 보기가 디폴트방식 -->
 									<a href="#none" title="그리드 형식으로 보기" onclick="showList()">
-										<img src="/resources/images/icons/grid4.png" alt="그리드 형식 보기 아이콘">
-										<span>그리드 보기</span>
+										<img src="/resources/images/icons/grid5.png" alt="그리드 형식 보기 아이콘">
+										<span class="hide">그리드 보기</span>
 									</a>
 								</p>
 								<p class="listStyleBtn">
-									<a href="#none" title="리스트 형식으로 보기">
-										<img src="/resources/images/icons/list4.png" alt="리스트 형식 보기 아이콘">
-										<span>리스트 보기</span>
+									<a href="#none" title="리스트 형식으로 보기" onclick="view_li()">
+										<img src="/resources/images/icons/list5.png" alt="리스트 형식 보기 아이콘">
+										<span class="hide">리스트 보기</span>
 									</a>
 								</p>
 								<p class="showInfoBtn">
 									<a href="#none" title="파일 또는 폴더 정보보기">
 										<img src="/resources/images/icons/info4.png" alt="정보보기 아이콘">
-										<span>정보보기</span>
+										<span class="hide">정보보기</span>
 									</a>
 								</p>
 							</div>
@@ -290,7 +760,26 @@
 									</p>
 								</li>
 							</ul>
+							</div>
+							<div class="file_li">
+							<div class="fileViewInner_li"><!-- 테이블헤더 -->
+							
+							</div>
+							<div class="fileViewInner_ct"><!-- 테이블바디 -->
+							<ul class="fileViewlist">
+							</ul>
+							</div>
+							</div>
+						<div>
+						
 						</div>
+						<!-- <div id="full"></div> -->
+						<!-- <div class="progress-bar" data-percent="100"></div> -->
+						<div id="procontainer">
+						<div id="toploader"></div>
+						</div>
+						
+						<!-- <div id="pgb"></div> -->
 				</section>
 				<section id="dataInfoWrap"><!-- hidden이었다가 modal -->
 					<h2>data info area modal</h2>

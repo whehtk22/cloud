@@ -3,17 +3,16 @@ $(function (){
     // 파일 드롭 다운
     fileDropDown();
    // uploadBtn();
-    showfiles();
+    //showfiles();
 });
 var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$")//.뒤에 exe|sh|zip|alz의 형식을 검사하는 정규식
 var maxSize = 6024288000// 파일의 최대 크기 5MB
-
 function showImage(fileCallPath) {
 	//alert(fileCallPath)
 	$(".bigPictureWrapper").css("display", "flex").show()
 
 	$(".bigPicture").html(
-			"<img src='/display?fileName=" + encodeURI(fileCallPath)
+			"<img src='/file/display?fileName=" + encodeURI(fileCallPath)
 					+ "'>").animate({
 		width : '100%',
 		height : '100%'
@@ -65,7 +64,7 @@ function uploadBtn(){
 		})
 	})
 }
-function showfiles(){//즉시 실행함수
+/*function showfiles(){//즉시 실행함수
 	//var user = '<c:out value="${board.bno}"/>'
 		var fileViewInner = $(".fileViewInner")
 		var cloneObj = $(".fileViewInner").clone()
@@ -111,7 +110,7 @@ function showfiles(){//즉시 실행함수
 			})
 			$(".fileViewInner").html(str)
 		})
-}
+}*/
 function showUploadedFile(uploadResultArr) {
 	var fileViewInner = $(".fileViewInner")
 	var str = ""
@@ -176,7 +175,7 @@ function showUploadedFilediv(uploadResultArr) {
 	$(uploadResultArr)
 			.each(
 					function(i, obj) {
-						if (!obj.image) {
+						if (!obj.image&!obj.video) {
 							var ext = obj.fileName.substring(obj.fileName.lastIndexOf("."))//파일확장자
 							var fileCallPath = encodeURIComponent(obj.uploadPath
 									+ "/"
@@ -184,19 +183,36 @@ function showUploadedFilediv(uploadResultArr) {
 									+ "_"
 									+ obj.fileName)
 									
-							str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
-									"<div class='check'>" +
-									"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-											"<label class='blind' for='chk_search_"+obj.uuid+"'>" +
-													""+obj.fileName+"</label><img src='/resources/images/attach.jpg' height='200px' width='160px'>"
-									+ obj.fileName
-									+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'>x</span>"
-									+ "</div></li>"
+							str +="<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
+							"<div class='check'>" +
+							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+									"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/document.png' height='140px' width='140px'>"
+							+ "<p>"+obj.fileName+"</p>"
+							+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
+							+ "</div></li>"
 							console.log("일반파일")
 							fileViewInner.append(str)
 							str = ""
-						} else {
+						}else if(!obj.image&obj.video){
+							var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
+							var fileCallPath = encodeURIComponent(obj.uploadPath
+									+ "/"
+									+ obj.uuid
+									+ "_"
+									+ obj.fileName)
+									
+									str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
+								"<div class='check'>" +
+								"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+										"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/video-file.png' height='140px' width='140px'>"
+								+"<p>"+ obj.fileName+"</p>"
+								+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
+								+ "</div></li>"
+								fileViewInner.append(str)
+								str=""
+						}else if(obj.image){
 							//str += "<li>"+obj.fileName+"</li>"//공백문자나 한글 이름 등이 문제가 되기 때문에 인코딩을 해주어야 한다.
+							var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
 							var fileCallPath = encodeURIComponent(obj.uploadPath
 									+ "/s_"
 									+ obj.uuid
@@ -210,12 +226,13 @@ function showUploadedFilediv(uploadResultArr) {
 									/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
 							//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
 
-							str = "<li><a href=\"javascript:showImage(\'"
-									+ originPath
-									+ "\')\"><img src='/display?fileName="
+							str = "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><div class='check'>" +
+							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
+							"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/file/display?fileName="
 									+ fileCallPath
-									+ "'></a>"
-									+ "<span data-file=\'"+fileCallPath+"\' data-type='image'>x</span></li>"
+									+ "'  height='140px' width='140px'></a>"
+									+"<p>"+ obj.fileName+"</p>"
+									+ "<span data-file=\'"+fileCallPath+"\' data-type='image'></span></li>"
 							fileViewInner.append(str)
 							str = ""
 							console.log("이미지파일")
@@ -259,6 +276,8 @@ function fileDropDown() {
         //dropZone.css('background-color','#FFFFFF');
         var files = e.originalEvent.dataTransfer.files;
         console.log(files)
+         var pgb = $('#pgb')
+		 pgb.ariaProgressbar()
         //드롭다운....
         for (var i = 0; i < files.length; i++) {
 
@@ -269,19 +288,34 @@ function fileDropDown() {
 		}
         console.log(formData.getAll('uploadFile'))
 		$.ajax({
-			url : '/file/upload',
-			processData : false,
-			contentType : false,
-			data : formData,
-			type : 'POST',
-			dataType : 'json',//결과를 json타입으로 받겠다.
-			success : function(result) {//result는 다시 받는 결과값을 의미.
-				console.log(result)
-				formData.delete('uploadFile')
-				showUploadedFilediv(result)
-				//$(".uploadDiv").html(cloneObj.html())//업로드하고 버튼을 클릭하면 다시 초기화가 된다.
-			}
-		})
+				xhr:function(){
+					var xhr = new window.XMLHttpRequest()
+					
+					xhr.upload.addEventListener("progress",function(evt){
+						if(evt.lengthComputable){
+							var percentComplete = evt.loaded/evt.total
+							percentComplete = parseInt(percentComplete*100)
+							console.log(percentComplete)
+							pgb.ariaProgressbar('update',percentComplete)
+							if(percentComplete===100){
+								
+							}
+						}
+					},false)
+					return xhr
+				},
+				url : '/file/upload',
+				processData : false,
+				contentType : false,
+				data : formData,
+				type : 'POST',
+				dataType : 'json',//결과를 json타입으로 받겠다.
+				success : function(result) {//result는 다시 받는 결과값을 의미.
+					console.log(result)
+					showUploadedFilediv(result)
+					//$(".uploadDiv").html(cloneObj.html())//업로드하고 버튼을 클릭하면 다시 초기화가 된다.
+				}
+			})
     });
 
 }

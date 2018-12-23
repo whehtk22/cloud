@@ -17,9 +17,10 @@
 <script src="/resources/js/floating-ads.js" type="text/javascript"></script>
 <script src="/resources/js/ajax.js" type="text/javascript"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.css"
-	rel="stylesheet" type="text/css">
-<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--  <link href="/resources/vendor/bootstrap/css/bootstrap.css"
+	rel="stylesheet" type="text/css">  -->
+<!-- <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script> -->
+<script type="text/javascript" src="/resources/vendor/bootstrap/js/bootstrap2.js"></script>
 <script src="/resources/js/boardlist.js" type="text/javascript"></script>
 <style>
 .page_button:active>a {
@@ -199,19 +200,23 @@
 								</ul>
 								<div class="hiddenFormArea">
 									<form id='actionForm' action="/board/list" method="get">
-										<input type='hidden' name='pageNum'
-											value='${page.page.pageNum}'> <input type='hidden'
-											name='amount' value='${page.page.amount}'> <input
+										 <input type='hidden' name='pageNum'
+											value='${page.page.pageNum}'> 
+											<input type='hidden'
+											name='amount' value='${page.page.amount}'> 
+											<input
 											type='hidden' name='type' value='${page.page.type}'>
 										<input type='hidden' name='keyword'
 											value='${page.page.keyword}'>
+											<input type='hidden' name='list' value='${list}'>
+											<%-- <input type='hidden' name='pagedto' value='${page}'> --%>
 									</form>
 								</div>
 							</div>
 						</div>
 					</section>
-					<section class="forModale">
-						<!-- Modal -->
+					<!-- <section class="forModale">
+						Modal
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
@@ -229,12 +234,12 @@
 											changes</button>
 									</div>
 								</div>
-								<!-- /.modal-content -->
+								/.modal-content
 							</div>
-							<!-- /.modal-dialog -->
+							/.modal-dialog
 						</div>
-						<!-- /.modal -->
-					</section>
+						/.modal
+					</section> -->
 				</div>
 				<div class="adsArea">
 					<ul>
