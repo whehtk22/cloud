@@ -1,0 +1,309 @@
+
+.sideBarArea,.contentsArea,.adsArea{
+	float:left;
+	overflow:hidden;
+}
+
+/* ########## formArea 관련 css ########## */
+.contentsArea{
+	width:70%;
+	padding:1% 3%;
+	background-color:#efefef;
+}
+.contentsArea h3{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	font-size:1rem;
+	text-align:center;
+}
+.contentsArea h3:after{
+	content:'';
+	display:block;
+	width:100%;
+	height:1px;
+	background-color:red;
+}
+
+/* #showContents : 게시글 보여주는 영역*/
+#showContents{
+	width:100%;
+}
+#contentInfo{
+	width:100%;
+	height:80px;
+	/* background-color:pink; */
+	overflow:hidden;
+}
+#contentInfo:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+#contentInfo h4, #contentInfo div{
+	float:left;
+	height:50px;
+	line-height:50px;
+}
+#contentInfo h4{
+	font-size:0.9rem;
+	width:30%;
+	padding-left:5px;
+}
+#contentInfo h4 span{
+	font-weight:normal;
+}
+#contentInfo div{
+	width:70%;
+	/* font-size:0.7rem; */
+	font-size:10px;
+	/* background-color:pink; */
+	text-align:right;
+	padding-right:5px;
+}
+#contentInfo div span{
+	color:#999;
+}
+.contentAddr:before{
+	content:"";
+	display:block;
+	width:100%;
+	height:1px;
+	background-color:#ccc;
+	position:absolute;
+	top:50px;
+}
+.contentAddr{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	position:relative;
+}
+.contentAddr a{
+	font-size:9px;
+	text-decoration:underline;
+	color:#333;
+	padding-left:5px;
+	cursor:pointer;
+}
+.contentAddr button{
+	font-size:10px;
+	padding:0 3px;
+	border:none;
+	border:1px solid #cecece;
+}
+
+/*게시판 글 영역*/
+#boardArticle{
+	width:100%;
+	background-color:#f9f9f9;
+}
+#boardArticle div{
+	width:100%;
+	overflow:hidden;
+}
+#boardArticle div:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.articleTitle h4,.articleTitle p{
+	float:left;
+}
+.articleTitle{
+	width:100%;
+	height:50px;
+	padding:10px 5px;
+}
+.articleTitle h4{
+	width:65%;
+}
+.articleTitle p{
+	width:35%;
+	text-align:right;
+}
+.articleDetail{
+	width:100%;
+	min-height:300px;
+	padding:5px;
+	line-height:1.2;
+	font-size:14px;
+	background-color:#ccc;
+}
+.articleDetail p{
+	width:100%;
+	background-color:#fff;
+	min-height:290px;
+}
+/*reply area :: #rplArea*/
+#rplArea{
+	width:100%;
+	background-color:lightblue;
+	padding:5px;
+}
+#showRpl{
+	width:100%;
+}
+#showRpl h4{
+	width:100%;
+	height:20px;
+	line-height:20px;
+	background-color:#fff;
+	font-size:12px;
+}
+#showRpl h4 span{
+	color:#1bbc9b;
+}
+
+/*댓글 unit :: .rplUnit*/
+.rplUnit{
+	margin-top:10px;
+	width:100%;
+	height:60px;
+	overflow:hidden;
+	margin-bottom:10px;
+}
+.rplUnit:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.rplUnit dt,rplUnit dd{
+	float:left;
+}
+.rplUnit dt{
+	display:inline-block;
+	width:6%;
+	height:60px;
+	overflow:hidden;
+	margin-left:50px;
+	background-color:#fff;
+}
+.rplUnit dt img{
+	display:inline-block;
+	width:100%;
+	height:100%;
+	transform:translateY(10px);
+}
+.rplUnit dd{
+	width:85%;
+	height:100%;
+	margin-left:100px;
+	/* background-color:pink; */
+	padding-left:5px;
+	overflow:hidden;
+}
+.rplUnit dd div{
+	width:100%;
+	padding-left:5px;
+	background-color:#fff;
+}
+.rplInfo{
+	width:100%;
+	height:20px;
+	line-height:20px;
+}
+.rplInfo span{
+	color:#3f3f3f;
+	font-size:11px;
+}
+.rplInfo span:first-child{
+	display:inline-block;
+	margin-right:30px;
+}
+.rplTxt{
+	width:100%;
+	height:20px;
+	line-height:20px;
+	font-size:14px;
+}
+.rplBtn{
+	width:100%;
+	height:20px;
+	line-height:20px;
+	padding-right:5px;
+	text-align:right;
+}
+.rplBtn button{
+	display:inline-block;
+	width:30px;
+	height:16px;
+	line-height:16px;
+	font-size:10px;
+	background-color:#223d4b;
+	border:none;
+	border:1px solid #223d4b;
+	color:#fff;
+}
+/*댓글 쓰는곳 :: #writeRpl*/
+#writeRpl{
+	width:100%;
+	margin-top:20px;
+}
+#writeRpl div{
+	width:100%;
+}
+.writeRpl{
+	width:100%;
+	padding:5px;
+}
+.writeRpl fieldset{
+	width:100%;
+	height:50px;
+	border:none;
+	border:1px solid #939393;
+	overflow:hidden;
+}
+.writePrl fieldset:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.writeRpl fieldset p{
+	float:left;
+	height:100%;
+}
+.writeRpl fieldset p:first-child{
+	width:90%;
+}
+.writeRpl fieldset p:first-child input{
+	width:100%;
+	height:100%;
+	text-indent:5px;
+}
+.writeRpl fieldset p:last-child{
+	width:10%;
+}
+.writeRpl fieldset p:last-child button{
+	width:100%;
+	height:100%;
+}
+
+/*btnArea*/
+.btnArea{
+	width:100%;
+	height:50px;
+	margin-bottom:30px;
+}
+.btnArea p{
+	width:100%;
+	height:100%;
+	line-height:50px;
+	text-align:center;
+}
+.btnArea p button,
+.btnArea p input,
+.btnArea p a{
+	display:inline-block;
+	width:20%;
+	height:30px;
+	line-height:30px;
+	vertical-align:middle;
+	margin-right:1%;
+	font-size:1rem;
+	background-color:transparent;
+	border:none;
+	border:1px solid #223d4b;
+	color:#223d4b;
+	transition:all .3s ease-in-out;
+}

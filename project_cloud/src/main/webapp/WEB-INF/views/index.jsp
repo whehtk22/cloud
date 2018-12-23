@@ -29,7 +29,7 @@
 					</p>
 				</div>
 			</div>
-			<div id="contentsWrap">
+			<div class="contentsWrap">
 				<section id="contents">
 					<article id="aboutZone" class="row1">
 						<h3>파일룸 서비스 소개</h3>

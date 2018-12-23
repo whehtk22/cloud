@@ -1,13 +1,13 @@
-#contentsWrap{
+.contentsWrap{
 	background-color:#efefef;
 }
-/* form�� ���Ե� ��ü contentWrap �κ� */
+/* form占쏙옙 占쏙옙占쌉듸옙 占쏙옙체 contentWrap 占싸븝옙 */
 #formArea{
 	width:100%;
 	padding:60px 60px 150px 60px;
 }
 
-/* ȸ������ �׸� �Էºκ��� ���� */
+/* 회占쏙옙占쏙옙占쏙옙 占쌓몌옙 占쌉력부븝옙占쏙옙 占쏙옙占쏙옙 */
 #registWrap{
 	width:100%;
 }
@@ -28,19 +28,19 @@
 	background-color:red;
 }
 
-/* ���� form ���� ���� ���� */
+/* 占쏙옙占쏙옙 form 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 */
 #registerBox{
 	width:100%;
 	/* background-color:lightblue; */
 	margin-top:30px;
 }
-/* ��¥ form ����*/
+/* 占쏙옙짜 form 占쏙옙占쏙옙*/
 #registerBox form{
 	width:100%;
 	line-height:2rem;
 	padding:2%;
 }
-/* ù ��° fieldset#membership : ȸ������ �Է� �κ� */
+/* 첫 占쏙옙째 fieldset#membership : 회占쏙옙占쏙옙占쏙옙 占쌉뤄옙 占싸븝옙 */
 #membership{
 	width:100%;
 	border:none;
@@ -69,7 +69,7 @@
 	color:red;
 	padding-left:5px;
 }
-/* input�� ���� ul,li�±� */
+/* input占쏙옙 占쏙옙占쏙옙 ul,li占승깍옙 */
 #signUp{
 	width:100%;
 	padding:20px;
@@ -104,7 +104,7 @@
 	text-indent:5px;
 	border:none;
 }
-/* 모든 input 및 버튼기능하는 요소들 모서리처리 */
+/* 紐⑤뱺 input 諛� 踰꾪듉湲곕뒫�븯�뒗 �슂�냼�뱾 紐⑥꽌由ъ쿂由� */
 #signUp li input, #buttonArea input, .agreeText a{
 	border-radius:5px;
 }
@@ -148,7 +148,7 @@
 	width:15px;
 	height:15px;
 }
-/* 주의사항 */
+/* 二쇱쓽�궗�빆 */
 .caution{
 	display:inline-block;
 	width:100%;
@@ -159,7 +159,7 @@
 	font-size:0.8rem;
 }
 
-/* email,phone 수신동의 부분 */
+/* email,phone �닔�떊�룞�쓽 遺�遺� */
 #signUp li.specific p.agree{
 	width:50%;
 	height:30px;
@@ -222,7 +222,7 @@
 	font-weight:700;
 }
 
-/* 이용약관, 개인정보 */
+/* �씠�슜�빟愿�, 媛쒖씤�젙蹂� */
 #termsPrivacy{
 	margin-top:60px;
 	width:100%;

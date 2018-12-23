@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.whehtk22.mapper.FileRoomMapper">
+<insert id="upload" parameterType="org.whehtk22.domain.FileVO">
+insert into fileroom(fileName, uploadPath, uuid, image,fileuser,video) 
+values (#{fileName},#{uploadPath},#{uuid},#{image},#{fileuser},#{video})
+</insert>
+<delete id="remove" parameterType="String">
+delete from fileroom where  fileuser=#{param1} and uuid=#{param2} 
+</delete>
+<select id="findAll" resultType="org.whehtk22.domain.FileVO">
+select * from fileroom where fileuser=#{fileuser}
+</select>
+<select id="findDocu" resultType="org.whehtk22.domain.FileVO">
+select * from fileroom where fileuser=#{fileuser} and image=0 and video=0
+</select>
+<select id="findImage" resultType="org.whehtk22.domain.FileVO">
+select * from fileroom where image=1 and fileuser=#{fileuser}
+</select>
+<select id="findVideo" resultType="org.whehtk22.domain.FileVO">
+select * from fileroom where video=1 and fileuser=#{fileuser}
+</select>
+<delete id="removeAll">
+delete from fileroom where fileuser=#{fileuser}
+</delete>
+</mapper>

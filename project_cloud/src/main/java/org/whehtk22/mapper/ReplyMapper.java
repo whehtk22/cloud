@@ -12,11 +12,13 @@ public interface ReplyMapper {
 	
 	public ReplyVO read(Long bno);
 	
-	public int delete(Long bno);
+	public int delete(Long rno);
 	
 	public int update(ReplyVO reply);
 	
 	public List<ReplyVO> getListWithPaging(@Param("page") PageSetting page, @Param("bno") Long bno);
 	
 	public int getCountByBno(Long bno);
+	
+	public int deleteAll(Long bno);
 }

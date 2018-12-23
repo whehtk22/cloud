@@ -1,0 +1,63 @@
+.subpageWrapBgColor{
+  background-color:#223d4b;
+}
+#loginWrap{
+  width:400px;
+  height:300px;
+  padding:20px;
+  border-radius:5px;
+  position:absolute;
+  left:50%;
+  top:60%;
+  transform:translate(-50%,-50%);
+  background-color:#1bbc9b;
+}
+#loginWrap h3{
+  width:100%;
+  padding:20px;
+  text-align:center;
+}
+
+#loginWrap input{
+  display:block;
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:5px;
+  text-align:center;
+}
+
+.submit-btn{
+	margin-bottom:30px;
+	/* background-color:#1bbc9b; */
+  background-color:#ccc;
+	color:#333;
+  font-weight:700;
+  transition:all .4s ease-in-out;
+}
+
+.submit-btn:hover,.submit-btn:focus{
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+  color:#ededed;
+  background-color:#223d4b;
+}
+.links{
+  width:100%;
+  height:40px;
+  line-height:40px;
+  padding-top:10px;
+  text-align:center;
+}
+.links a{
+  font-weight:700;
+	color:#ccc;
+  transition:color .4s ease-in-out;
+  vertical-align:middle;
+}
+.divLine{
+  vertical-align:top;
+}
+.links a:hover,.links a:focus{
+  color:red;
+}
