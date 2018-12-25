@@ -16,6 +16,8 @@ public interface FileRoomMapper {
 	
 	public List<FileVO>findVideo(String fileuser);
 	
+	public Long findSum(String fileuser);
+	
 	public void removeAll(String fileuser);
 
 	public void upload(FileVO dto);

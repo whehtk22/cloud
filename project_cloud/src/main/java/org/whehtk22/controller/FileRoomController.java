@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +47,16 @@ public class FileRoomController {
 	private FileRoomService service;
 	
 	@GetMapping("/fileroom")
-	public String uploadAjax() {
+	public String uploadAjax(Model model) {
+		float total;
+		if(service.findSum("user1")==null) {
+			total=0;
+		}else {
+			total = (float)service.findSum("user1")/1000000000; 
+			System.out.println(Math.round(total*100)/100.0);
+			
+		}
+		model.addAttribute("total", Math.round(total*100)/100.0);
 		log.info("upload ajax");
 		return "/file/fileroom1";
 	}
@@ -103,7 +114,7 @@ public class FileRoomController {
 		}
 		
 		for(MultipartFile multipartfile:uploadFile) {
-			
+			long size = multipartfile.getSize();
 			FileVO fileVO = new FileVO();
 			
 			String uploadFileName = multipartfile.getOriginalFilename();
@@ -114,7 +125,7 @@ public class FileRoomController {
 			}
 			log.info("only file name: "+uploadFileName);
 			fileVO.setFileName(uploadFileName);
-			
+			fileVO.setFilesize(size);
 			UUID uuid = UUID.randomUUID();//uuid를 랜덤으로 생성해주어서
 			fileVO.setUuid(uuid.toString());
 			fileVO.setUploadPath(uploadFolderPath);
@@ -248,16 +259,17 @@ public class FileRoomController {
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName,String type,String user) throws InterruptedException{
 		log.info("deleteFile : "+fileName);
-		
+		log.info("type"+type);
 		File file;
 		try {
 			String decoded = URLDecoder.decode(fileName, "UTF-8").replace('\\','/');
 			String realname = decoded.substring(fileName.lastIndexOf('/')+1);
-			String uuid = decoded.substring(realname.lastIndexOf('/')+3, realname.lastIndexOf('_'));
+			String uuid = decoded.substring(realname.lastIndexOf('/')+1, realname.indexOf('_'));
 			String filename = decoded.substring(realname.lastIndexOf('_')+1);
 			log.info("realname = "+realname);
 			log.info("uuid = "+uuid);
 			log.info("filename = "+filename);
+			log.info("user"+user);
 			file = new File("C:/fileroom/"+URLDecoder.decode(fileName, "UTF-8").replace('\\','/'));
 			log.info("원본파일"+"C:/fileroom/"+URLDecoder.decode(fileName, "UTF-8").replace('\\','/'));
 			file.delete();
@@ -267,7 +279,7 @@ public class FileRoomController {
 				log.info("largeFileName: "+largeFileName);
 				file = new File(largeFileName);
 				file.delete();
-				
+				service.remove(user, decoded.substring(realname.lastIndexOf('/')+3, realname.lastIndexOf('_')));
 			}
 		}catch(UnsupportedEncodingException e) {
 			e.printStackTrace();

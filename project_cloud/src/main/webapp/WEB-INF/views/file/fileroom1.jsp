@@ -29,11 +29,13 @@
 		margin-left:auto;
 		margin-right:auto;
 		}
-		p{
+		/* p{
 		font-size:12px;
 		width:160px;
-		word-wrap:break-word;
-		}
+		/* word-wrap:break-word; */
+		
+		
+		} */
 		.check{
 			width:160px;
 		}
@@ -114,462 +116,12 @@
 	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
  <script src="/resources/js/file2.js"></script> 
 <script src="/resources/js/jquery.percentageloader-0.2.js"></script>
+<script src="/resources/js/file3.js"></script>
  <script>
- var cloneObj
- var category
- var list
- function openFileOption()
- {
-   document.getElementById("uploadfile").click();
-   console.log(document.getElementById("uploadfile"))
- }
- function downLoadFile(){
-	 if(list===false){
-	 $('.fileViewInner').find('.input_check').each(function(){
-			if($(this).is(":checked")){
-				console.log()
-				location.href="/file/download?fileName="+$(this).next().next().next().next().attr("data-file")
-			}
-			console.log($(this).next().next().next().attr("data-file"))
-		})
-	 }else if(list===true){
-		 $(".fileViewlist").find('.input_check').each(function(){
-			if($(this).is(":checked")){
-				location.href="/file/download?fileName="+$(this).parent().next().next().next().attr("data-file")
-			}
-		 })
-	 }
-	}
- function deleteFile(){
-	 if(list===false){
-	 $('.fileViewInner').find('.input_check').each(function(){
-			if($(this).is(":checked")){
-				//location.href="/file/deleteFile?fileName="+$(this).next().next().next().attr("data-file")
-						var fileName = $(this).siblings("span").attr("data-file")
-						var type = $(this).siblings("span").attr("data-type")
-						$(this).parent().remove()
-				$.ajax({
-					url : '/file/deleteFile',
-					data : {
-						fileName : fileName,
-						type : type,
-						user:'user1'
-					},
-					dataType : 'text',
-					type : 'POST',
-					success : function(result) {
-						alert(result)
-						
-					}
-				})
-			}
-			console.log($(this).next().next().next().next().attr("data-file"))
-		})
-	 }else if(list===true){
-		 $(".fileViewlist").find('.input_check').each(function(){
-				if($(this).is(":checked")){
-					//location.href="/file/download?fileName="+$(this).parent().next().next().next().attr("data-file")
-							var fileName=$(this).parent().next().next().next().attr("data-file")
-							var type=$(this).parent().next().next().next().attr("data-type")
-							$(this).parent().parent().parent().remove()
-							$.ajax({
-								url:'/file/deleteFile',
-								data:{
-									fileName:fileName,
-									type:type,
-									user:'user1'
-								},
-								dataType:'text',
-								type:'POST',
-								success:function(result){
-									alert(result)
-								}
-							})
-				}
-			 })
-	 }
- }
- 
- 
- function viewVideo(){
-	 category="video"
-	 list=false
-	 console.log("카테고리"+category)
-	 var fileViewInner = $(".fileViewInner")
-	 $(".fileViewInner_li").empty()
-	 $(".fileViewlist").empty()
-	 $("#fileView").css("display","block")
-	 fileViewInner.empty()
-		$.getJSON("/file/getVideoList",{user:'user1'},function(arr){
-			console.log(arr)
-			console.log("video")
-			var str = ""
-			$(arr).each(function(i,obj){
-			
-				//image type
-					var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-					var fileCallPath = encodeURIComponent(obj.uploadPath
-							+ "/"
-							+ obj.uuid
-							+ "_"
-							+ obj.fileName)
-							
-							str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
-						"<div class='check'>" +
-						"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-								"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/video-file.png' height='140px' width='140px'>"
-						+"<p>"+ obj.fileName+"</p>"
-						+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
-						+ "</div></li>"
-			})
-			fileViewInner.append(str)
- })
- }
- function viewDocu(){
-	 category="docu"
-	 list=false
-	 console.log("카테고리"+category)
-	 var fileViewInner = $(".fileViewInner")
-	 $(".fileViewInner_li").empty()
-	 $(".fileViewlist").empty()
-	 $("#fileView").css("display","block")
-	 fileViewInner.empty()
-		$.getJSON("/file/getDocuList",{user:'user1'},function(arr){
-			console.log(arr)
-			
-			var str = ""
-			$(arr).each(function(i,obj){
-			
-				//image type
-					var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-					var fileCallPath = encodeURIComponent(obj.uploadPath
-							+ "/"
-							+ obj.uuid
-							+ "_"
-							+ obj.fileName)
-							
-							str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
-						"<div class='check'>" +
-						"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-								"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/document.png' height='140px' width='140px'>"
-										+"<p>"+ obj.fileName+"</p>"
-						+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
-						+ "</div></li>"
-			})
-			fileViewInner.append(str)
- })
- }
- function viewImage(){
-	 category="image"
-	 list=false
-	 console.log("카테고리"+category)
-	 var fileViewInner = $(".fileViewInner")
-	 $(".fileViewInner_li").empty()
-	 $(".fileViewlist").empty()
-	 $("#fileView").css("display","block")
-	 fileViewInner.empty()
-		$.getJSON("/file/getImageList",{user:'user1'},function(arr){
-			console.log(arr)
-	 var str = ""
-			$(arr).each(function(i,obj){
-				var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
-				var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-				var originPath = obj.uploadPath + "\\"
-						+ obj.uuid + "_" + obj.fileName//원본파일의 이름
-
-				originPath = originPath.replace(new RegExp(
-						/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
-				//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
-
-				str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><div class='check'>" +
-				"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-				"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/file/display?fileName="
-						+ fileCallPath
-						+ "' height='140px' width='140px'></a>"
-						+"<p>"+ obj.fileName+"</p>"
-						+ "<span data-file=\'"+fileCallPath+"\' data-type='image'></span></li>"
-			})
-			fileViewInner.append(str)
-		})
- }
- function viewAll(){
-	 category="all"
-	 list=false
-	 console.log("카테고리 "+category)
-	 var fileViewInner = $(".fileViewInner")
-	 fileViewInner.empty() 
-	 $(".fileViewInner_li").empty()
-	 $(".fileViewlist").empty()
-	 $("#fileView").css("display","block")
-	 $.getJSON("/file/getImageList",{user:'user1'},function(arr){
-			console.log(arr)
-			 var str = ""
-					$(arr).each(function(i,obj){
-						var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
-						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-						var originPath = obj.uploadPath + "\\"
-								+ obj.uuid + "_" + obj.fileName//원본파일의 이름
-
-						originPath = originPath.replace(new RegExp(
-								/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
-						//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
-
-						str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><div class='check'>" +
-						"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-						"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/file/display?fileName="
-								+ fileCallPath
-								+ "' height='140px' width='140px'></a>"
-								+"<p>"+ obj.fileName+"</p>"
-								+ "<span data-file=\'"+fileCallPath+"\' data-type='image'></span></li>"
-								//fileViewInner.append(str)
-					})
-					fileViewInner.append(str)
-	 }).success(function(){
-		 $.getJSON("/file/getDocuList",{user:'user1'},function(arr){
-				console.log(arr)
-				
-		var str = ""
-				$(arr).each(function(i,obj){
-				
-					//image type
-						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-						var fileCallPath = encodeURIComponent(obj.uploadPath
-								+ "/"
-								+ obj.uuid
-								+ "_"
-								+ obj.fileName)
-								
-								str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
-							"<div class='check'>" +
-							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-									"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/document.png' height='140px' width='140px'>"
-											+"<p>"+ obj.fileName+"</p>"
-							+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
-							+ "</div></li>"
-							//fileViewInner.append(str)
-				})
-				fileViewInner.append(str)
-	 }).success(function(){
-		 $.getJSON("/file/getVideoList",{user:'user1'},function(arr){
-				console.log(arr)
-				console.log("video")
-				var str = ""
-				$(arr).each(function(i,obj){
-				
-					//image type
-						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-						var fileCallPath = encodeURIComponent(obj.uploadPath
-								+ "/"
-								+ obj.uuid
-								+ "_"
-								+ obj.fileName)
-								
-								str += "<li title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'>" +
-							"<div class='check'>" +
-							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-									"<label class='blind' for='chk_search_"+obj.uuid+"'></label><img src='/resources/images/icons/video-file.png' height='140px' width='140px'>"
-							+"<p>"+ obj.fileName+"</p>"
-							+ "<span data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span>"
-							+ "</div></li>"
-				})
-							fileViewInner.append(str)
-				
-		 })
-	 })
-	 })
- }
- function view_li(){
-	 list=true
-	 if(category==="all"){
-			 var fileView = $("#fileView")
-			 fileView.hide()
-			 var fileViewInner_li = $(".fileViewInner_li")
-			 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
-			 "<li class='check' style='width:35px;'></li>"+
-			 "<li class='type' style='width:50px;'>종류</li>"+
-			 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
-			 "</div> ")
-			 var fileViewlist = $(".fileViewlist")
-			 $.getJSON("/file/getImageList",{user:'user1'},function(arr){
-					console.log(arr)
-					 var str = ""
-							$(arr).each(function(i,obj){
-								var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
-								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-								var originPath = obj.uploadPath + "\\"
-										+ obj.uuid + "_" + obj.fileName//원본파일의 이름
-
-								originPath = originPath.replace(new RegExp(
-										/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
-								//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
-
-								str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
-								"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-								"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
-								"<li class='type' style='width:50px'><img src='/resources/images/icons/image.png' height='20px' width='25px'></li>"
-										+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p></li>"
-										+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='image'></span></ul></li>"
-										//fileViewInner.append(str)
-							})
-							fileViewlist.append(str)
-			 }).success(function(){
-				 $.getJSON("/file/getDocuList",{user:'user1'},function(arr){
-						console.log(arr)
-						
-				var str = ""
-						$(arr).each(function(i,obj){
-						
-							//image type
-								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-								var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName)
-										
-										str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
-									"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-											"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
-											"<li class='type' style='width:50px'><img src='/resources/images/icons/document.png' height='20px' width='25px'></li>"
-													+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p>"
-									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
-									//fileViewInner.append(str)
-						})
-						fileViewlist.append(str)
-			 }).success(function(){
-				 $.getJSON("/file/getVideoList",{user:'user1'},function(arr){
-						console.log(arr)
-						console.log("video")
-						var str = ""
-						$(arr).each(function(i,obj){
-						
-							//image type
-								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-								var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName)
-										
-										str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
-									"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-											"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
-											"<li class='type' style='width:50px'><img src='/resources/images/icons/video-file.png' height='20px' width='25px'></li>"
-									+"<li class='filename' stye='width:auto'><p>"+ obj.fileName+"</p></li>"
-									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
-						})
-									fileViewlist.append(str)
-						
-				 })
-			 })
-			 })
-	 }else if(category==="video"){
-		 var fileView = $("#fileView")
-		 fileView.hide()
-		 var fileViewInner_li = $(".fileViewInner_li")
-		 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
-		 "<li class='check' style='width:35px;'></li>"+
-		 "<li class='type' style='width:50px;'>종류</li>"+
-		 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
-		 "</div> ")
-		 var fileViewlist = $(".fileViewlist")
-		 $.getJSON("/file/getVideoList",{user:'user1'},function(arr){
-						console.log(arr)
-						console.log("video")
-						var str = ""
-						$(arr).each(function(i,obj){
-						
-							//image type
-								var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-								var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName)
-										
-										str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
-									"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-											"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
-											"<li class='type' style='width:50px'><img src='/resources/images/icons/video-file.png' height='20px' width='25px'></li>"
-									+"<li class='filename' stye='width:auto'><p>"+ obj.fileName+"</p></li>"
-									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
-						})
-									fileViewlist.append(str)
-						
-				 })
-	 }else if(category==="docu"){
-		 var fileView = $("#fileView")
-		 fileView.hide()
-		 var fileViewInner_li = $(".fileViewInner_li")
-		 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
-		 "<li class='check' style='width:35px;'></li>"+
-		 "<li class='type' style='width:50px;'>종류</li>"+
-		 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
-		 "</div> ")
-		 var fileViewlist = $(".fileViewlist")
-		 $.getJSON("/file/getDocuList",{user:'user1'},function(arr){
-				console.log(arr)
-				
-		var str = ""
-				$(arr).each(function(i,obj){
-				
-					//image type
-						var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-						var fileCallPath = encodeURIComponent(obj.uploadPath
-								+ "/"
-								+ obj.uuid
-								+ "_"
-								+ obj.fileName)
-								
-								str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
-							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-									"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
-									"<li class='type' style='width:50px'><img src='/resources/images/icons/document.png' height='20px' width='25px'></li>"
-											+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p>"
-							+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='file' class='blind'></span></ul></li>"
-							//fileViewInner.append(str)
-				})
-				fileViewlist.append(str)
-		 })
-	 }else if(category==="image"){
-		 var fileView = $("#fileView")
-		 fileView.hide()
-		 var fileViewInner_li = $(".fileViewInner_li")
-		 fileViewInner_li.append("<div class='list_sort'><ul class='list_head'>"+
-		 "<li class='check' style='width:35px;'></li>"+
-		 "<li class='type' style='width:50px;'>종류</li>"+
-		 "<li class='filename' style='width:auto;'><span>이름</span><div class='move_zone' style='width:462px;'></div></li>"+
-		 "</div> ")
-		 var fileViewlist = $(".fileViewlist")
-		 $.getJSON("/file/getImageList",{user:'user1'},function(arr){
-				console.log(arr)
-				 var str = ""
-						$(arr).each(function(i,obj){
-							var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
-							var ext = obj.fileName.substring(obj.fileName.lastIndexOf(".")+1)
-							var originPath = obj.uploadPath + "\\"
-									+ obj.uuid + "_" + obj.fileName//원본파일의 이름
-
-							originPath = originPath.replace(new RegExp(
-									/\\/g), "/")//정규식을 써서 \(역슬래쉬)를 /로 바꿔준다.
-							//역슬래쉬는 일반 문자열과는 처리가 다르게 되기 때문에 바꾸어준다.
-
-							str += "<li class='list_body_li' title='"+obj.fileName+"' _extension='"+ext+"' _resourceno='"+obj.uuid+"'><ul class='list_body'><li class='check' style='width:35px'>" +
-							"<input type='checkbox' class='input_check' id='chk_search_"+obj.uuid+"'>" +
-							"<label class='blind' for='chk_search_"+obj.uuid+"'></label>"+
-							"<li class='type' style='width:50px'><img src='/resources/images/icons/image.png' height='20px' width='25px'></li>"
-									+"<li class='filename' style='width:auto'><p>"+ obj.fileName+"</p></li>"
-									+ "<span style='display:none' data-file=\'"+fileCallPath+"\' data-type='image'></span></ul></li>"
-									//fileViewInner.append(str)
-						})
-						fileViewlist.append(str)
-	 })
- }
- }
  var percentComplete=0;
  $(document).on("ready",function(){
-	 
 	 $("#full").hide()
+	 console.log($(".fileViewInner > li").size())
 	 $(".fileViewInner").on("click","li",function(){
 		 console.log("클릭")
 		 $(this).find('.input_check').each(function(){
@@ -583,6 +135,9 @@
 			 else $(this).prop("checked",true)
 		 })
 	 })
+	 /*업로드한 파일 목록 3줄 넘어가면 스크롤 생기기*/
+	 
+	 
 	 $("#uploadfile").on('change', function () {//인풋태그에서의 변화가 있을 경우에.
 		 var topLoader = new PercentageLoader(document.getElementById('toploader'), {
               width: 256, height: 256, controllable: true, progress: 0.5, onProgressUpdate: function (val) {
@@ -652,15 +207,13 @@
 						<h3 class="hide">profile and info</h3>
 						<div class="profile">
 							<p class="profileImg">
-								<!-- <div class="hide man license">Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
-								<!-- <div class="hide woman license">Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
 								<img class="defaultProfile" src="/resources/images/profile/man.png" alt="user default profile image"/>
 							</p>
 							<div class="infoArea">
-								<p class="nickname"><span>userNickName</span></p>
+								<p class="nickname"><span>user1</span></p>
 								<p class="storageVolume">
 									<a class="storageVolumeInner" href="#none" title="나의 잔여용량 보기">
-										<span class="usedVolume">1.6</span>&nbsp;/&nbsp;<span class="totalVolume">32</span>
+										<span class="usedVolume">${total}</span>&nbsp;/&nbsp;<span class="totalVolume">32</span>
 										<span class="volumeUnit">GB</span>
 									</a>
 								</p>
@@ -726,7 +279,7 @@
 								<h3 class="hide">그리드 및 정보버튼 영역</h3>
 								<p class="gridStyleBtn">
 									<!-- 그리드 형식 보기가 디폴트방식 -->
-									<a href="#none" title="그리드 형식으로 보기" onclick="showList()">
+									<a href="#none" title="그리드 형식으로 보기" onclick="showGrid()">
 										<img src="/resources/images/icons/grid5.png" alt="그리드 형식 보기 아이콘">
 										<span class="hide">그리드 보기</span>
 									</a>
@@ -753,10 +306,10 @@
 						<div id="fileView"><!-- 파일드롭구역 -->
 							<ul class="fileViewInner">
 								 <li class="firstSlot slot"><!-- onClick="firstFileUp()" -->
-									<p>
-										 <a href="#none" title="클릭해서 업로드하기">
+									<p class="check">
+										<!--  <a href="#none" title="클릭해서 업로드하기"> -->
 											<img src="/resources/images/icons/add_file.png" alt="클릭해서 업로드하는 버튼"/>
-										</a>
+										<!-- </a> -->
 									</p>
 								</li>
 							</ul>
@@ -843,6 +396,14 @@
 		</div>
 		<!-- container starts -->
 		<!-- footer starts -->
+		<script>
+		$(document).on("ready",function(){
+			var elems = $(".innerBar")
+			console.log(elems)
+			var width = parseFloat($(".usedVolume").text())/parseFloat($(".totalVolume").text())*100
+			elems.css("width",width+"%")
+		})
+		</script>
 		<jsp:include page="../include/footer.jsp"/>
 		<!-- footer ends -->
 	</div>

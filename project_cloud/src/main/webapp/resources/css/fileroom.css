@@ -1,10 +1,12 @@
 .cloudMainWrap{
   width:100%;
-  height:100%;
+  /* height:100%; */
+  height:810px;/*서브내비 120 + 파일뷰 본문 600+60+30*/
   background-color:none;
 }
 #cloudContentsWrap{
   width:100%;
+  height:100%;
   overflow:hidden;
   position:relative;
 }
@@ -228,7 +230,10 @@ li.msTree,li.macTree{
 /*### dataAreaWrap starts ###*/
 #dataAreaWrap{
 	width:85%;
-	padding:1%;
+	height:690px;/*firstslot을 윗벽으로부터 30떨어뜨린 만큼 추가*/
+	padding-top:30px;
+	/* overflow-y:scroll; *//*height방향으로 요소들이 넘치면 스크롤*/
+	/* padding:1%; */
 	/* background-color:yellow; */
 }
 #uploadForm{
@@ -244,23 +249,68 @@ li.msTree,li.macTree{
 	overflow:hidden;
 	text-align:left;
 }
+.fileViewInner:after{
+	content:'';
+	display:block;
+	clear:both;
+}
 .fileViewInner li{
 	width:16%;
+	height:200px;
+	/* display:inline-block; */
+	float:left;
+}
+.fileViewInner li div.check{
+	width:100%;
+	height:100%;
+	position:relative;
+}
+.fileViewInner li div input[type="checkbox"]{
 	display:inline-block;
+	width:20px;
+	height:20px;
+	position:absolute;
+	left:20px;
+	top:20px;
+}
+.fileViewInner li div img{
+	display:block;
+	width:160px;
+	height:160px;
+	margin:0 auto;
+}
+.fileViewInner li div p{
+		width:160px;
+		height:30px;
+		line-height:30px;
+		text-align:center;
+		/* word-wrap:break-word; */
+		font-size:12px;
+		margin:0 auto;
+		overflow:hidden;
+		white-space:nowrap;
+		text-overflow:ellipsis;
 }
 
-.firstSlot p{
-	border:1px dotted #ccc;
+
+.firstSlot{
+	width:200px;
 }
-.fileViewInner li p a{
+ .firstSlot p{
+ width:200px;
+ 	height:200px;
+	border:1px dotted #ccc;
+} 
+/* .fileViewInner li p a{
 	display:block;
 	width:100%;
 	border:1px dotted #ccc;
-}
-.fileViewInner li p a img{
+} */
+.fileViewInner li p img{
 	display:inline-block;
-	width:80%;
-	margin:10%;
+	width:160px;
+	height:160px;
+	margin:20px;
 	opacity:0.5;
 }
 /*### dataAreaWrap ends ###*/

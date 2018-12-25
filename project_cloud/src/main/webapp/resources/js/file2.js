@@ -277,7 +277,7 @@ function fileDropDown() {
         var files = e.originalEvent.dataTransfer.files;
         console.log(files)
          var pgb = $('#pgb')
-		 pgb.ariaProgressbar()
+		//pgb.ariaProgressbar()
         //드롭다운....
         for (var i = 0; i < files.length; i++) {
 
