@@ -11,4 +11,5 @@ public class FileVO {
 	private boolean image;
 	private String fileuser;
 	private boolean video;
+	private long filesize;
 }

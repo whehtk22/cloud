@@ -61,5 +61,11 @@ public class FileRoomServiceImpl implements FileRoomService{
 		return mapper.findAll(fileuser);
 	}
 
+	@Override
+	public Long findSum(String fileuser) {
+		
+		return mapper.findSum(fileuser);
+	}
+
 
 }
