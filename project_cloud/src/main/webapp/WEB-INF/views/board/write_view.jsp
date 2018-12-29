@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,6 +105,9 @@
 			$("form").submit()
 			
 		})
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
 		$("input[type='file']").change(function(e) {
 			var formData = new FormData()
 
@@ -123,13 +129,15 @@
 				url : '/uploadAjaxAction',
 				processData : false,
 				contentType : false,
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				data : formData,
 				type : 'POST',
 				dataType : 'json',//결과를 json타입으로 받겠다.
 				success : function(result) {//result는 다시 받는 결과값을 의미.
-					console.log(result)
+					console.log(result);
 					showUploadResult(result)
-	/*				$(".uploadDiv").html(cloneObj.html())//업로드하고 버튼을 클릭하면 다시 초기화가 된다. */
 				}
 			})
 		})
@@ -145,6 +153,9 @@
 			$.ajax({
 				url:'/deleteFile',
 				data:{fileName:targetFile, type:type},
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				dataType:'text',
 				type:'POST',
 				success:function(result){
@@ -193,7 +204,7 @@
 							<h4 class="hide">자유게시판</h4>
 							<p>
 								<label for="writer">작성자</label>
-								<input type="text" name="writer" required/>
+								<input type="text" name="writer" value='<sec:authentication property="principal.username"/>' required/>
 								<%--  <input type="text" name="bName" size="10"> --%>
 								<%-- ${user_name}(${user_id}) --%>
 								<%-- input을 가려서 파라미터가 없어졌으니 히든으로 이름정보를 DB에 넘겨야--%>
@@ -231,6 +242,7 @@
 							</p>
 						</div>
 					</fieldset>
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 				</form>
 			</div>
 			<div class="adsArea">

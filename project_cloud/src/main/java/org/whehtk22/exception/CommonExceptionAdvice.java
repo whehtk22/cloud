@@ -1,4 +1,4 @@
-package org.whehtk22.exception;
+/*package org.whehtk22.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -27,3 +27,4 @@ public class CommonExceptionAdvice {
 		return "custom404";
 	}
 }
+*/

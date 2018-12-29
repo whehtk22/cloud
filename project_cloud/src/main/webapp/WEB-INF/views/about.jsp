@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +11,9 @@
 		<div id="headWrap">
 			<header id="header">
 				<h1 id="logo">
-					<a href="/index" title="¸ÞÀÎÆäÀÌÁö·Î">LOGO</a>
+					<a href="/index" title="ë©”ì¸íŽ˜ì´ì§€ë¡œ">LOGO</a>
 				</h1>
-				<a id="menuWrap" href="#none" title="menu contents ¸µÅ©">
+				<a id="menuWrap" href="#none" title="menu contents ë§í¬">
 					<dl id="menuBtn">
 						<dt>
 							<strong>menu</strong>
@@ -28,7 +28,7 @@
 					</dl>
 				</a>
 				<nav id="gnb">
-					<h2>Çì´õ ³» gnb</h2>
+					<h2>í—¤ë” ë‚´ gnb</h2>
 					<ul>
 						<li><a href="#none" title="greeting">Greeting</a></li>
 						<li><a href="#none" title="contact">Contact</a></li>
@@ -41,7 +41,7 @@
 			<div id="mainVisualWrap">
 				<div id="mainVisual">
 					<p class="imgArea">
-						<img src="/resources/images/bg_landing.jpg" alt="¸ÞÀÎºñÁÖ¾ó"/>
+						<img src="/resources/images/bg_landing.jpg" alt="ë©”ì¸ë¹„ì£¼ì–¼"/>
 					</p>
 					<p class="textARea">
 						Mini<span>&nbsp;Cloud</span>
@@ -50,11 +50,11 @@
 			</div>
 			<div id="contentsWrap">
 				<section>
-					<h3>±âÈ¹/°³¹ßÀÚ ÀÎ»ç</h3>
+					<h3>ê¸°íš/ê°œë°œìž ì¸ì‚¬</h3>
 					<p>
-						¾È³çÇÏ¼¼¿ä. ¹Ì´Ï¸Ö ¹öÀü Å¬¶ó¿ìµå <strong>FileRoom</strong>ÀÇ<br>
-						±âÈ¹/°³¹ßÀÚ <a href="#none" title="">Á¶Çö¼º<span>(nickname)</span></a>
-						&amp;<a href="#none" title="">±èÁøÈ«<span>(jimmyzip)</span></a>ÀÔ´Ï´Ù.
+						ì•ˆë…•í•˜ì„¸ìš”. ë¯¸ë‹ˆë©€ ë²„ì „ í´ë¼ìš°ë“œ <strong>FileRoom</strong>ì˜<br>
+						ê¸°íš/ê°œë°œìž <a href="#none" title="">ì¡°í˜„ì„±<span>(nickname)</span></a>
+						&amp;<a href="#none" title="">ê¹€ì§„í™<span>(jimmyzip)</span></a>ìž…ë‹ˆë‹¤.
 					</p>
 				</section>
 			</div>

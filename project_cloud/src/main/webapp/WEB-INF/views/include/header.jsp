@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <head>
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 </head>
 <div id="headWrap">
 	<header id="header">
@@ -31,8 +31,10 @@
 				<li><a href="/index" title="home">Home</a><span class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="/file/fileroom" title="cloud">Cloud</a><span
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
-				<li><a href="login.jsp" title="login">Sign In</a><span
+					<sec:authorize access="isAnonymous()">
+				<li><a href="/customLogin" title="login">Sign In</a><span
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
+					</sec:authorize>
 				<li><a href="/member/join" title="register">Register</a><span
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="mypage.jsp" title="register">My Page</a><span
@@ -46,7 +48,11 @@
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
 				<li><a href="location.jsp" title="location">Location</a><span
 					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
-				<li><a href="sitemap.jsp" title="sitemap">Site Map</a></li>
+				<li><a href="sitemap.jsp" title="sitemap">Site Map</a><span
+					class="divLine">&nbsp;&nbsp;|&nbsp;</span></li>
+				<sec:authorize access="isAuthenticated()">
+				<li><a href="/customLogout" title="sitemap">Sign Out</a></li>
+				</sec:authorize>
 			</ul>
 		</nav>
 	</header>

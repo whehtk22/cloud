@@ -12,6 +12,7 @@ import org.apache.tika.Tika;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,11 +62,12 @@ public class BoardController {
 		
 	}*/
    @GetMapping("/register")
+   @PreAuthorize("isAuthenticated()")
    public String register() {
-	   System.out.println("register");
 	   return "/board/write_view";
    }
    @PostMapping("/register")
+   @PreAuthorize("isAuthenticated()")
 	public String register(Enq_BoardVO board, RedirectAttributes rttr) {
 		log.info("register: "+board);
 		
@@ -75,7 +77,7 @@ public class BoardController {
 			board.getAttachList().forEach(attach->log.info(attach));
 		}
 		log.info("=========================");
-		//rttr.addFlashAttribute("result",board.getBno());//새롭게 등록된 게시블의 번호를 같이 전달.
+		 rttr.addFlashAttribute("result",board.getBno());//새롭게 등록된 게시블의 번호를 같이 전달.
 		return "redirect:/board/list";//스프링이 자동적으로 response.sendRedirect()를 처리해 준다.
 	}
    /*@GetMapping("/get")
@@ -96,6 +98,7 @@ public class BoardController {
 	   log.info("modify");
 	   model.addAttribute("board",service.get(bno));
    }
+   @PreAuthorize("principal.username==#board.writer")
    @PostMapping("/modify")
    public String modify(@ModelAttribute Enq_BoardVO board,@ModelAttribute("page") PageSetting page, RedirectAttributes rttr) {
 	   	log.info("modify: "+board);
@@ -110,10 +113,11 @@ public class BoardController {
 		
 		return "redirect:/board/list"+page.getListLink();
 	}
+   @PreAuthorize("principal.username==#writer")
    @PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("page") PageSetting page, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("page") PageSetting page, RedirectAttributes rttr,String writer) {
 		log.info("remove......"+bno);
-		
+		log.info("writer+"+writer);
 		List<AttachFileDTO> attachList = service.getAttachList(bno);
 		
 		if(service.remove(bno)) {

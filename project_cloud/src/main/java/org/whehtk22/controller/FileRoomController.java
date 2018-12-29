@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -45,20 +47,24 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class FileRoomController {
 
 	private FileRoomService service;
-	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/fileroom")
-	public String uploadAjax(Model model) {
+	public String uploadAjax(Model model, Principal principal) {
 		float total;
-		if(service.findSum("user1")==null) {
+		String username = principal.getName();
+		log.info("username="+principal.getName());
+		Long sum = service.findSum(username);
+		log.info("합계"+sum);
+		if(sum==null) {
 			total=0;
 		}else {
-			total = (float)service.findSum("user1")/1000000000; 
+			total = (float)sum/1000000000; 
 			System.out.println(Math.round(total*100)/100.0);
 			
 		}
 		model.addAttribute("total", Math.round(total*100)/100.0);
 		log.info("upload ajax");
-		return "/file/fileroom1";
+		return "/file/fileroom";
 	}
 	@GetMapping(value="/getAllList",
 			   produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -98,10 +104,11 @@ public class FileRoomController {
 		log.info("getVideoList"+user);
 		return new ResponseEntity<>(service.findVideo(user),HttpStatus.OK);
 	}
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/upload",produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<FileVO>> uploadAjaxPost(@RequestHeader("User-Agent") String userAgent, MultipartFile[] uploadFile) {
-		
+	public ResponseEntity<List<FileVO>> uploadAjaxPost(@RequestHeader("User-Agent") String userAgent, MultipartFile[] uploadFile,String username) {
+		log.info("username"+username);
 		List<FileVO>list = new ArrayList<>();
 		String uploadFolder = "C:\\fileroom";
 		
@@ -147,7 +154,7 @@ public class FileRoomController {
 						fileVO.setVideo(true);
 					}
 				log.info(fileVO);
-				fileVO.setFileuser("user1");
+				fileVO.setFileuser(username);
 				list.add(fileVO);
 			}catch(Exception e) {
 				log.error(e.getMessage());
