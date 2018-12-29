@@ -34,10 +34,12 @@ var replyService=(function(){
 			}
 		})
 	}
-	function remove(rno,callback,error){//댓글제거하기
+	function remove(rno,replyer,callback,error){//댓글제거하기
 		$.ajax({
 			type:'delete',
 			url:'/replies/'+rno,
+			data:JSON.stringify({rno:rno, replyer:replyer}),
+			contentType: "application/json; charset=utf-8",
 			success:function(deleteResult, status,xhr){
 				if(callback){
 					callback(deleteResult)

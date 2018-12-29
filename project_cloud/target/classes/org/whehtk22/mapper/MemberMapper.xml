@@ -5,12 +5,13 @@
 	<mapper namespace="org.whehtk22.mapper.MemberMapper">
 	<resultMap type="org.whehtk22.domain.MemberVO" id="memberMap">
 	<id property="userid" column="userid"/>
-	<result property="userid" column="userid"/>
 	<result property="userpw" column="userpw"/>
-	<result property="userName" column="username"/>
+	<result property="username" column="username"/>
 	<result property="enabled" column="enabled"/>
-	<result property="regDate" column="regdate"/>
-	<result property="updateDate" column="updatedate"/>
+	<result property="regdate" column="regdate"/>
+	<result property="updatedate" column="updatedate"/>
+	<!-- <result property="useremail" column="useremail" javaType="String"/>
+	<result property="phone" column="phone" javaType="String"></result> -->
 	<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
@@ -19,12 +20,24 @@
 	<result property="auth" column="auth"/>
 	</resultMap>
 	
-	<select id="read" resultMap="memberMap">
+	<select id="read" resultMap="memberMap" parameterType="String">
 	SELECT
-		mem.userid, userpw, username, enabled, regdate, updatedate, auth 
+		mem.userid, userpw, username, enabled, regdate, updatedate,useremail,phone, auth 
 	FROM
 		tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.userid=
 	auth.userid
 	WHERE mem.userid = #{userid} 
+	</select>
+	<insert id="insert" parameterType="org.whehtk22.domain.MemberVO">
+	insert into tbl_member values(#{userid},#{userpw},#{username},sysdate,sysdate,1,#{useremail},#{phone} )
+	</insert>
+	<insert id="insertauth" parameterType="org.whehtk22.domain.AuthVO">
+	insert into tbl_member_auth values(#{userid},'ROLE_MEMBER')
+	</insert>
+	<select id="emailCheck" parameterType="String" resultType="int">
+	select count(*) from tbl_member where useremail=#{param1}
+	</select>
+	<select id="idCheck" parameterType="String" resultType="int">
+	select count(*) from tbl_member where userid=#{param1}
 	</select>
 	</mapper>

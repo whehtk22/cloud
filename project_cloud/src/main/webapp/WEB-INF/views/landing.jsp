@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +17,9 @@
 		<div id="headWrap">
 			<header id="header">
 				<h1 id="logo">
-					<a href="/index" title="∏ﬁ¿Œ∆‰¿Ã¡ˆ∑Œ">LOGO</a>
+					<a href="/index" title="Î©îÏù∏ÌéòÏù¥ÏßÄÎ°ú">LOGO</a>
 				</h1>
-				<a id="menuWrap" href="#none" title="menu contents ∏µ≈©">
+				<a id="menuWrap" href="#none" title="menu contents ÎßÅÌÅ¨">
 					<dl id="menuBtn">
 						<dt>
 							<strong>menu</strong>
@@ -34,7 +34,7 @@
 					</dl>
 				</a>
 				<nav id="gnb">
-					<h2>«Ï¥ı ≥ª gnb</h2>
+					<h2>Ìó§Îçî ÎÇ¥ gnb</h2>
 					<ul>
 						<li><a href="/about" title="greeting">Greeting</a></li>
 						<li><a href="#none" title="contact">Contact</a></li>
@@ -45,10 +45,10 @@
 		</div>
 		<div id="container">
 			<section id="linksOuter">
-				<h2>FileRoom »®</h2>
+				<h2>FileRoom Ìôà</h2>
 				<article id="linksInner" class="innerArticle">
 					<h3>
-						<a href="/index" title="FileRoom »®¿∏∑Œ">
+						<a href="/index" title="FileRoom ÌôàÏúºÎ°ú">
 							FileRoom Home
 						</a>
 					</h3>

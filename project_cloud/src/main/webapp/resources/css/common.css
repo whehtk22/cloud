@@ -1,4 +1,4 @@
-/* ï¿½ï¿½ css sheetï¿½ï¿½ ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ import ï¿½ï¿½ï¿½Ö·ï¿½ */
+/* ÀÌ css sheetÀº ÇãºêÃ³·³ import À§ÁÖ·Î */
 
 @import 'wrap.css';
 @import 'reset.css';
@@ -9,3 +9,4 @@
 @import 'board_write.css';
 @import 'board_list.css';
 @import 'fileroom.css';
+@import 'file_list.css';

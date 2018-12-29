@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,47 +146,49 @@ textarea {
 	padding-left: 5px;
 	padding-top: 5px;
 }
+
 .form-group {
-    display: block;
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
-  .uploadDiv {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+	display: block;
+	margin-bottom: 0;
+	vertical-align: middle;
+}
+
+.uploadDiv {
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
 }
 
 .fbtn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 5px;
-  margin-top:5px;
-  margin-left:5px;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	margin-left: 5px;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
 }
 
 .uploadDiv input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
+	font-size: 100px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
 }
 </style>
 <meta charset="UTF-8">
@@ -343,7 +347,8 @@ $(document).ready(function(){
 			targetLi.remove()
 		}
 	})
-	
+	var csrfHeaderName = "${_csrf.headerName}"
+	var csrfTokenValue = "${_csrf.token}"
 		$("input[type='file']").change(function(e) {
 			var formData = new FormData()
 
@@ -367,6 +372,9 @@ $(document).ready(function(){
 				contentType : false,
 				data : formData,
 				type : 'POST',
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				dataType : 'json',//결과를 json타입으로 받겠다.
 				success : function(result) {//result는 다시 받는 결과값을 의미.
 					console.log(result)
@@ -395,110 +403,120 @@ $(document).ready(function(){
 			</div>
 		</div>
 		<form role="form" action="/board/modify" method="post">
-		<div id="contentsWrap">
-			<div class="sideBarArea">
-				<nav class="sideNavWrap">
-					<h3>
-						<span>Board&nbsp;>>&nbsp;</span>자유게시판
-					</h3>
-					<ul class="sideNav">
-						<li class="homeLink"><a href="/index" title="홈으로">Home</a></li>
-						<li class="freeBLink"><a href="#none" title="자유게시판">Free
-								Board</a></li>
-						<li class="marketBLink"><a href="#none" title="마켓게시판">Share
-								Market</a></li>
-					</ul>
-				</nav>
-			</div>
-			<div class="contentsArea">
-				<section id="showContents">
-					<article id="contentInfo">
-						<h4>
-							작성자 <span>님의 게시물입니다.</span>
-						</h4>
-						<div>
-							<span> 작성자 <b><input name='writer' value="${board.writer}"
-					readonly="readonly"></b>
-							</span> <span> 작성일 <b><input name='regdate'
-					value='<fmt:formatDate value="${board.regdate}" pattern="yyyy/MM/dd"/>'
-					readonly="readonly"></b>
-							</span>
-						</div>
-						<p class="contentAddr">
-							<a href="#none" title="글의 주소">글의 주소</a>
-							<button onClick="copyAddr()">주소 복사</button>
-						</p>
-					</article>
-					<article id="boardArticle">
-						<div class="articleTitle">
-							<h4>글 제목 : <input name='title' value="${board.title}"></h4>
-							<p>글 번호 : <input name='bno' value='${board.bno}'
-					readonly="readonly"></p>
-						</div>
-						<div class="articleDetail">
-							<p>
-								<textarea name='content'>${board.content}</textarea>
+			<div id="contentsWrap">
+				<div class="sideBarArea">
+					<nav class="sideNavWrap">
+						<h3>
+							<span>Board&nbsp;>>&nbsp;</span>자유게시판
+						</h3>
+						<ul class="sideNav">
+							<li class="homeLink"><a href="/index" title="홈으로">Home</a></li>
+							<li class="freeBLink"><a href="#none" title="자유게시판">Free
+									Board</a></li>
+							<li class="marketBLink"><a href="#none" title="마켓게시판">Share
+									Market</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="contentsArea">
+					<section id="showContents">
+						<article id="contentInfo">
+							<h4>
+								작성자 <span>님의 게시물입니다.</span>
+							</h4>
+							<div>
+								<span> 작성자 <b><input name='writer'
+										value="${board.writer}" readonly="readonly"></b>
+								</span> <span> 작성일 <b><input name='regdate'
+										value='<fmt:formatDate value="${board.regdate}" pattern="yyyy/MM/dd"/>'
+										readonly="readonly"></b>
+								</span>
+							</div>
+							<p class="contentAddr">
+								<a href="#none" title="글의 주소">글의 주소</a>
+								<button onClick="copyAddr()">주소 복사</button>
 							</p>
-						</div>
-					</article>
-				</section>
-				<article class="panel-heading"></article>
-				<section class="panel-body">
-					<article class="uploadResult">
-						<!-- 파일이 보이는곳 -->
-						<div class="form-group uploadDiv">
-				<button class="fbtn">파일 첨부</button>
+						</article>
+						<article id="boardArticle">
+							<div class="articleTitle">
+								<h4>
+									글 제목 : <input name='title' value="${board.title}">
+								</h4>
+								<p>
+									글 번호 : <input name='bno' value='${board.bno}'
+										readonly="readonly">
+								</p>
+							</div>
+							<div class="articleDetail">
+								<p>
+									<textarea name='content'>${board.content}</textarea>
+								</p>
+							</div>
+						</article>
+					</section>
+					<article class="panel-heading"></article>
+					<section class="panel-body">
+						<article class="uploadResult">
+							<!-- 파일이 보이는곳 -->
+							<div class="form-group uploadDiv">
+								<button class="fbtn">파일 첨부</button>
 								<input type="file" name='uploadFile' multiple="multiple">
 							</div>
-						<ul>
+							<ul>
 
-						</ul>
-					</article>
-				</section>
-				<div class="hiddenFormArea"></div>
+							</ul>
+						</article>
+					</section>
+					<div class="hiddenFormArea"></div>
+					<div>
+					<sec:authentication property="principal" var="pinfo"/>
+					<sec:authorize access="isAuthenticated()">
+					<c:if test="${pinfo.username eq board.writer }"	>
+						<button type="submit" class="btn btns" data-oper='modify'>수정</button>
+						<button type="submit" class="btn btns" data-oper='remove'>삭제</button>
+					</c:if>
+					</sec:authorize>
+						<button type="submit" class="btn btns" data-oper='list'>목록</button>
+					</div>
+				</div>
+				<div class="adsArea">
+					<ul>
+						<li><a
+							href="https://www.wdc.com/ko-kr/products/portable-storage.html"
+							title="광고1" target="_blank"> <img class="adImg01"
+								src="/resources/images/ads/adimg01.jpg"
+								alt="광고1 western digital 이미지" />
+						</a></li>
+						<li><a href="https://www.sandisk.co.kr/home" title="광고2"
+							target="_blank"> <img class="adImg02"
+								src="/resources/images/ads/adimg02.jpg" alt="광고2 sandisk 이미지" />
+						</a></li>
+						<li><a href="https://www.seagate.com/kr/ko/consumer/backup/"
+							title="광고3" target="_blank"> <img class="adImg03"
+								src="/resources/images/ads/adimg03.jpg" alt="광고3 seagate 이미지" />
+						</a></li>
+					</ul>
+				</div>
+				<!-- 숨겨진 폼을 만들어서 각각의 버튼에 대해서 다른 기능을 구현. -->
 				<div>
-					<button type="submit" class="btn btns" data-oper='modify'>수정</button>
-					<button type="submit" class="btn btns" data-oper='remove'>삭제</button>
-					<button type="submit" class="btn btns" data-oper='list'>목록</button>
+					<input type="hidden" class="form-control" name='updateDate'
+						value='<fmt:formatDate value="${board.updateDate}" pattern="yyyy/MM/dd/"/>'>
+					<input type="hidden" name='pageNum' value='${page.pageNum}'>
+					<input type="hidden" name='amount' value='${page.amount}'>
+					<input type='hidden' name='keyword' value='${page.keyword}'>
+					<input type='hidden' name='type' value='${page.type}'>
+					<input type='hidden' name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				</div>
 			</div>
-			<div class="adsArea">
-				<ul>
-					<li><a
-						href="https://www.wdc.com/ko-kr/products/portable-storage.html"
-						title="광고1" target="_blank"> <img class="adImg01"
-							src="/resources/images/ads/adimg01.jpg"
-							alt="광고1 western digital 이미지" />
-					</a></li>
-					<li><a href="https://www.sandisk.co.kr/home" title="광고2"
-						target="_blank"> <img class="adImg02"
-							src="/resources/images/ads/adimg02.jpg" alt="광고2 sandisk 이미지" />
-					</a></li>
-					<li><a href="https://www.seagate.com/kr/ko/consumer/backup/"
-						title="광고3" target="_blank"> <img class="adImg03"
-							src="/resources/images/ads/adimg03.jpg" alt="광고3 seagate 이미지" />
-					</a></li>
-				</ul>
-			</div>
-			<!-- 숨겨진 폼을 만들어서 각각의 버튼에 대해서 다른 기능을 구현. -->
-			<div>
-			<input type="hidden" class="form-control" name='updateDate'
-				value='<fmt:formatDate value="${board.updateDate}" pattern="yyyy/MM/dd/"/>'>
-			<input type="hidden" name='pageNum' value='${page.pageNum}'>
-			<input type="hidden" name='amount' value='${page.amount}'> <input
-				type='hidden' name='keyword' value='${page.keyword}'> <input
-				type='hidden' name='type' value='${page.type}'>
-				</div>
-				</div>
-				</form>
-				<%-- <input type="hidden" id="bno" name="bno"
+		</form>
+		<%-- <input type="hidden" id="bno" name="bno"
 					value="<c:out value='${board.bno}'/>"> <input type="hidden"
 					name="pageNum" value="<c:out value='${page.pageNum}'/>"> <input
 					type="hidden" name="amount" value="<c:out value='${page.amount}'/>">
 				<input type="hidden" name="keyword"
 					value="<c:out value='${page.keyword}'/>"> <input
 					type="hidden" name="type" value="<c:out value='${page.type}'/>"> --%>
-		</div>
+	</div>
 	<jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

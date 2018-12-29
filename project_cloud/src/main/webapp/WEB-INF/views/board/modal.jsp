@@ -12,7 +12,7 @@
 			<div class="modal-body">
 				<div class="form-group">
 					<label>Replyer</label> <input class="form-control" name='replyer'
-						value='replyer'>
+						value='<sec:authentication property="principal.username"/>'>
 				</div>
 				<div class="form-group">
 					<label>Reply</label> <input class="form-control" name='reply'

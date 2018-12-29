@@ -26,6 +26,6 @@ select * from fileroom where video=1 and fileuser=#{fileuser}
 delete from fileroom where fileuser=#{fileuser}
 </delete>
 <select id="findSum" resultType="Long">
-select sum(filesize) from fileroom group by fileuser
+select sum(filesize) from fileroom group by fileuser having fileuser=#{fileuser}
 </select>
 </mapper>

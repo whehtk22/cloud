@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +11,41 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 <script src="/resources/js/jquery-1.12.4.min.js"></script>
 <script src="/resources/js/common.js"></script>
+<script>
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+function idCheck(id,callback,error){//ì•„ì´ë””ì²´í¬
+	console.log(" idcheck")
+	console.log(id)
+$.get('/register/idcheck/'+id,function(result){
+		alert(result)
+	}).fail(function(xhr,status,err){
+		if(error){
+			error()
+		}
+})
+}
+function emailCheck(email1,email2,callback,error){//ì•„ì´ë””ì²´í¬
+	console.log("emailcheck")
+$.get('/register/emailcheck/'+email1+"/"+email2,function(result){
+		alert(result)
+	}).fail(function(xhr,status,err){
+		if(error){
+			error()
+		}
+})
+}
+$(document).on("ready",function(){
+	$("#idCheck").on("click",function(){
+		console.log($("#userid1").val())
+		idCheck($("#userid1").val())
+	})
+	$("#emailCheck").on("click",function(){
+		console.log($("#useremail").val())
+		emailCheck($("#useremail").val())
+	})
+})
+</script>
 </head>
 <body>
 	<div id="wrapper">
@@ -21,37 +56,37 @@
 			<div id="mainVisualWrap">
 				<div id="mainVisual">
 					<p class="imgArea">
-					<h2>¸ŞÀÎºñÁê¾ó</h2>
-					<!-- <img src="./images/bg_landing.jpg" alt="¸ŞÀÎºñÁÖ¾ó"/> -->
+					<h2>ë©”ì¸ë¹„ì¥¬ì–¼</h2>
+					<!-- <img src="./images/bg_landing.jpg" alt="ë©”ì¸ë¹„ì£¼ì–¼"/> -->
 					</p>
 					<p class="textArea">
 						Welcome to our <span>Mini&nbsp;Cloud</span>, <strong>FileRoom</strong>
 					</p>
 				</div>
 			</div>
-			<div id="contentsWrap">
+			<div class="contentsWrap">
 				<section id="formArea">
-					<h2>ÅëÇÕÈ¸¿ø°¡ÀÔ °¨½Î´Â ¿µ¿ª</h2>
-					<h3 class="hide">FileRoom Å¬¶ó¿ìµå È¸¿ø°¡ÀÔ</h3>
+					<h2>í†µí•©íšŒì›ê°€ì… ê°ì‹¸ëŠ” ì˜ì—­</h2>
+					<h3 class="hide">FileRoom í´ë¼ìš°ë“œ íšŒì›ê°€ì…</h3>
 					<div id="registWrap">
-						<h2>ÅëÇÕÈ¸¿ø°¡ÀÔ °¨½Î´Â ¿µ¿ª</h2>
-						<h3>FileRoom Service È¸¿ø°¡ÀÔ</h3>
+						<h2>í†µí•©íšŒì›ê°€ì… ê°ì‹¸ëŠ” ì˜ì—­</h2>
+						<h3>FileRoom Service íšŒì›ê°€ì…</h3>
 						<div id="registArea">
-							<h2>ÅëÇÕÈ¸¿ø°¡ÀÔ ¿µ¿ª</h2>
+							<h2>í†µí•©íšŒì›ê°€ì… ì˜ì—­</h2>
 							<div id="registerBox">
-								<h2>°¡ÀÔ¾ç½Ä ÀÛ¼º¿µ¿ª</h2>
-								<form action="#none" method="post">
+								<h2>ê°€ì…ì–‘ì‹ ì‘ì„±ì˜ì—­</h2>
+								<form action="/member/join" method="post">
 									<fieldset id="membership">
 										<legend>
-											Member's Information<span>(ÇÊ¼öÇ×¸ñ)</strong></span>
+											Member's Information<span>(í•„ìˆ˜í•­ëª©)</strong></span>
 										</legend>
 										<ul id="signUp">
 											<li><label for="userid1">USERID</label><input
 												id="userid1" type="text" name="userid"
 												placeholder="Your ID to use" required="required"
 												maxlength="13" autofocus="on" autocomplete="off" /> <input
-												id="idCheck" type="button" name="idCheck" title="IDÁßº¹È®ÀÎ"
-												value="ID Áßº¹È®ÀÎ" required="required" /></li>
+												id="idCheck" type="button" name="idCheck" title="IDì¤‘ë³µí™•ì¸"
+												value="ID ì¤‘ë³µí™•ì¸" required="required" /></li>
 											<li><label for="userpw1">PASSWORD</label><input
 												id="userpw1" type="password" name="userpw1"
 												placeholder="Your PW to use" required="required"
@@ -60,78 +95,82 @@
 												id="userpw2" type="password" name="userpw2"
 												placeholder="Your PW again" required="required"
 												maxlength="13" autocomplete="off" /></li>
-											<li><label for="userName">ÀÌ¸§</label><input id="userName"
-												type="password" name="userName" placeholder="¼º¸í"
-												required="required" maxlength="4" min="2" /></li>
-											<li class="email specific"><label for="useremail">Email</label><input
-												id="useremail" type="email" name="useremail"
-												placeholder="yourEmail@email.com" required="required" /> <input
-												id="emailCheck" type="button" name="emailCheck"
-												title="emailÁßº¹È®ÀÎ" value="Email Áßº¹È®ÀÎ" required="required" /><br />
-												<span class="caution">¾ÆÀÌµğ ºñ¹Ğ¹øÈ£ ºĞ½Ç ½Ã ÇÊ¿äÇÑ Á¤º¸ÀÌ¹Ç·Î, Á¤È®ÇÏ°Ô
-													±âÀÔÇØ ÁÖ½Ê½Ã¿À.</span><br />
+											<li><label for="userName">ì´ë¦„</label><input id="userName"
+												type="text" name="username" placeholder="ì„±ëª…"
+												required="required" maxlength="10" min="2" /></li>
+											<li class="email specific">
+												<label for="useremail">Email</label><!-- 
+											 --><p class="emailInputArea">
+													<input
+													id="useremail" type="text" name="useremail1"
+													placeholder="yourEmailID" required="required" /><!--
+												 --><span>@</span><!-- 
+												 --><input
+													id="useremail2" type="text" name="useremail2"
+													placeholder="yourEmailHost" required="required" />
+												</p>
+												<input
+													id="emailCheck" type="button" name="emailCheck"
+													title="emailì¤‘ë³µí™•ì¸" value="Email ì¤‘ë³µí™•ì¸" required="required" />
+												<span class="caution">ì•„ì´ë”” ë¹„ë°€ë²ˆí˜¸ ë¶„ì‹¤ ì‹œ í•„ìš”í•œ ì •ë³´ì´ë¯€ë¡œ, ì •í™•í•˜ê²Œ
+													ê¸°ì…í•´ ì£¼ì‹­ì‹œì˜¤.</span>
 												<p class="agree">
 													<input type="checkbox" name="emailAgree"
-														title="Á¤º¸¼º,ÀÌº¥Æ® ¸ŞÀÏ ¼ö½Åµ¿ÀÇ" /><label for="emailAgree"
-														class="normal">Á¤º¸,ÀÌº¥Æ® ¸ŞÀÏ ¼ö½Åµ¿ÀÇ</label>
+														title="ì •ë³´ì„±,ì´ë²¤íŠ¸ ë©”ì¼ ìˆ˜ì‹ ë™ì˜" /><label for="emailAgree"
+														class="normal">ì •ë³´,ì´ë²¤íŠ¸ ë©”ì¼ ìˆ˜ì‹ ë™ì˜</label>
 												</p></li>
-											<li class="phone specific"><label for="phone">ÈŞ´ëÀüÈ­</label><input
+											<li class="phone specific"><label for="phone">íœ´ëŒ€ì „í™”</label><input
 												id="phone" type="tel" name="phone"
 												pattern="\d{3}-\d{3,4}-\{4}"
-												placeholder="010-1234-5678, (-)ÇÏÀÌÇÂ Æ÷ÇÔ" />
+												placeholder="010-1234-5678, (-)í•˜ì´í”ˆ í¬í•¨" />
 												<p class="agree">
 													<input type="checkbox" name="smsAgree"
-														title="Á¤º¸¼º,ÀÌº¥Æ® SMS ¼ö½Åµ¿ÀÇ" /><label for="smsAgree"
-														class="normal">Á¤º¸,ÀÌº¥Æ® SMS ¼ö½Åµ¿ÀÇ</label>
+														title="ì •ë³´ì„±,ì´ë²¤íŠ¸ SMS ìˆ˜ì‹ ë™ì˜" /><label for="smsAgree"
+														class="normal">ì •ë³´,ì´ë²¤íŠ¸ SMS ìˆ˜ì‹ ë™ì˜</label>
 												</p></li>
 										</ul>
 									</fieldset>
 									<div id="buttonArea">
-										<p>
-											<input id="join" type="submit" name="join" title="È¸¿ø°¡ÀÔ¾ç½ÄÁ¦Ãâ¹öÆ°"
-												value="Sign Up" />
-											<!--
-                   -->
-											<input id="reset" type="reset" name="reset" title="reset¹öÆ°"
-												value="´Ù½Ã ÀÛ¼ºÇÏ±â" />
-											<!--
-                   -->
-											<input id="prev" type="button" name="prev" title="µÚ·Î°¡±â¹öÆ°"
-												value="ÀÌÀüÀ¸·Î" />
-										</p>
+										<input id="join" type="submit" title="íšŒì›ê°€ì…ì–‘ì‹ì œì¶œë²„íŠ¼"
+											value="Sign Up" /><!-- 
+									 --><input id="reset" type="reset" title="resetë²„íŠ¼"
+											value="ë‹¤ì‹œ ì‘ì„±í•˜ê¸°" /><!-- 
+								     --><input id="prev" type="button" title="ë’¤ë¡œê°€ê¸°ë²„íŠ¼"
+												value="ì´ì „ìœ¼ë¡œ" />
 									</div>
 									<fieldset id="termsPrivacy">
-										<legend>ÀÌ¿ë¾à°ü ¹× °³ÀÎÁ¤º¸ Ãë±Ş¹æÄ§</legend>
+										<legend>ì´ìš©ì•½ê´€ ë° ê°œì¸ì •ë³´ ì·¨ê¸‰ë°©ì¹¨</legend>
 										<div class="agreeText">
 											<p class="terms">
-												<span>ÀÌ¿ë¾à°ü : </span>
+												<span>ì´ìš©ì•½ê´€ : </span>
 												<!--
   								   -->
 												<input id="conditionAgree" type="checkbox"
 													name="conditionAgree" />
 												<!--
   									 -->
-												<label for="conditionAgree">ÀÌ¿ë¾à°ü¿¡ µ¿ÀÇÇÕ´Ï´Ù.</label>
+												<label for="conditionAgree">ì´ìš©ì•½ê´€ì— ë™ì˜í•©ë‹ˆë‹¤.</label>
 												<!--
   									 -->
-												<a href="termsandpriv.html" title="ÀÌ¿ë¾à°ü È®ÀÎ ÆäÀÌÁö·Î">ÀÌ¿ë¾à°ü
-													È®ÀÎÇÏ±â</a>
+												<a href="termsandpriv.html" title="ì´ìš©ì•½ê´€ í™•ì¸ í˜ì´ì§€ë¡œ">ì´ìš©ì•½ê´€
+													í™•ì¸í•˜ê¸°</a>
 											</p>
 											<p class="privacy">
-												<span>°³ÀÎÁ¤º¸ Ãë±Ş¹æÄ§ : </span>
+												<span>ê°œì¸ì •ë³´ ì·¨ê¸‰ë°©ì¹¨ : </span>
 												<!--
   									 -->
 												<input id="privacyAgree" type="checkbox" name="privacyAgree" />
 												<!--
   									 -->
-												<label for="privacyAgree">°³ÀÎÁ¤º¸ Ãë±Ş¹æÄ§¿¡ µ¿ÀÇÇÕ´Ï´Ù.</label>
+												<label for="privacyAgree">ê°œì¸ì •ë³´ ì·¨ê¸‰ë°©ì¹¨ì— ë™ì˜í•©ë‹ˆë‹¤.</label>
 												<!--
   									 -->
-												<a href="termsandpriv.html" title="°³ÀÎÁ¤º¸ Ãë±Ş¹æÄ§ È®ÀÎ ÆäÀÌÁö·Î">°³ÀÎÁ¤º¸
-													Ãë±Ş¹æÄ§ È®ÀÎÇÏ±â</a>
+												<a href="termsandpriv.html" title="ê°œì¸ì •ë³´ ì·¨ê¸‰ë°©ì¹¨ í™•ì¸ í˜ì´ì§€ë¡œ">ê°œì¸ì •ë³´
+													ì·¨ê¸‰ë°©ì¹¨ í™•ì¸í•˜ê¸°</a>
 											</p>
 										</div>
 									</fieldset>
+									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/> 
 								</form>
 							</div>
 						</div>

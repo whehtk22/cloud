@@ -12,10 +12,10 @@ var modalRemoveBtn = $("#modalRemoveBtn")
 var modalRegisterBtn = $("#modalRegisterBtn")
 var modalCloseBtn = $("#modalCloseBtn")
 //새로운 댓글 등록버튼을 눌렀을 경우의 이벤트
-
 $(function(){
 	$("#addReplyBtn").on("click",function(e){
 		modal.find("input").val("")
+		modal.find("input[name='replyer']").val(replyer)
 		modalInputReplyDate.closest("div").hide()
 		modal.find("button[id!='modalCloseBtn']").hide()
 		
@@ -41,7 +41,23 @@ $(function(){
 	})
 	
 	modalModBtn.on("click",function(e){//수정하는 버튼을 클릭하였을 경우
-		var reply={rno:modal.data("rno"),reply:modalInputReply.val()}
+		var originalReplyer = modalInputReplyer.val();
+		
+		var reply={rno:modal.data("rno"),
+				reply:modalInputReply.val(),
+				replyer:originalReplyer};
+		
+		if(!replyer){
+			alert("로그인후 수정이 가능합니다.")
+			modal.modal("hide");
+			return;
+		}
+		
+		if(replyer !=originalReplyer){
+			alert("자신이 작성한 댓글만 수정 가능합니다.")
+			modal.modal("hide")
+			return;
+		}
 		replyService.update(reply,function(result){
 			alert(result)
 			modal.modal("hide")
@@ -51,8 +67,22 @@ $(function(){
 	})
 	modalRemoveBtn.on("click",function(e){//삭제하는 버튼을 클릭하였을 경우
 		var rno =modal.data("rno")
+		if(!replyer){
+			alert("로그인후 삭제가 가능합니다!")
+			modal.modal("hide")
+			return;
+		}
 		
-		replyService.remove(rno,function(result){
+		var originalReplyer = modalInputReplyer.val();
+		
+		console.log("원래 댓글 작성자 : "+originalReplyer)
+		
+		if(replyer!=originalReplyer){
+			alert("자신이 작성한 댓글만 삭제 가능합니다.")
+			modal.modal("hide")
+			return;
+		}
+		replyService.remove(rno,originalReplyer,function(result){
 			alert(result)
 			modal.modal("hide")
 			showList(pageNum)

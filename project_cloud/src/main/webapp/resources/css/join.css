@@ -1,298 +1,349 @@
-.contentsWrap{
-	background-color:#efefef;
-}
-/* form占쏙옙 占쏙옙占쌉듸옙 占쏙옙체 contentWrap 占싸븝옙 */
-#formArea{
-	width:100%;
-	padding:60px 60px 150px 60px;
+.contentsWrap {
+	background-color: #efefef;
 }
 
-/* 회占쏙옙占쏙옙占쏙옙 占쌓몌옙 占쌉력부븝옙占쏙옙 占쏙옙占쏙옙 */
-#registWrap{
-	width:100%;
-}
-#registWrap h3{
-	width:100%;
-	height:40px;
-	lineheight:40px;
-	text-align:center;
-	font-size:2rem;
-	color:#223d4b;
-}
-#registWrap h3:after{
-	content:'';
-	display:block;
-	width:100%;
-	height:1px;
-	margin:15px 0;
-	background-color:red;
+#formArea {
+	width: 100%;
+	padding: 60px 60px 150px 60px;
 }
 
-/* 占쏙옙占쏙옙 form 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 */
-#registerBox{
-	width:100%;
+#registWrap {
+	width: 100%;
+}
+
+#registWrap h3 {
+	width: 100%;
+	height: 40px;
+	lineheight: 40px;
+	text-align: center;
+	font-size: 2rem;
+	color: #223d4b;
+}
+
+#registWrap h3:after {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 1px;
+	margin: 15px 0;
+	background-color: red;
+}
+
+#registerBox {
+	width: 100%;
 	/* background-color:lightblue; */
-	margin-top:30px;
+	margin-top: 30px;
 }
-/* 占쏙옙짜 form 占쏙옙占쏙옙*/
-#registerBox form{
-	width:100%;
-	line-height:2rem;
-	padding:2%;
+
+#registerBox form {
+	width: 100%;
+	line-height: 2rem;
+	padding: 2%;
 }
-/* 첫 占쏙옙째 fieldset#membership : 회占쏙옙占쏙옙占쏙옙 占쌉뤄옙 占싸븝옙 */
-#membership{
-	width:100%;
-	border:none;
+
+#membership {
+	width: 100%;
+	border: none;
 }
-#membership legend{
-	display:inline-block;
-	width:100%;
-	height:30px;
-	line-height:30px;
-	text-align:center;
-	font-weight:700;
-	font-size:24px;
-	color:#3e3e3e;
-	margin-bottom:50px;
+
+#membership legend {
+	display: inline-block;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-weight: 700;
+	font-size: 24px;
+	color: #3e3e3e;
+	margin-bottom: 50px;
 }
-#membership legend:after{
-	content:'';
-	display:block;
-	width:5%;
-	height:3px;
-	background-color:#3e3e3e;
-	margin:15px auto;
+
+#membership legend:after {
+	content: '';
+	display: block;
+	width: 5%;
+	height: 3px;
+	background-color: #3e3e3e;
+	margin: 15px auto;
 }
-#membership legend span{
-	font-size:20px;
-	color:red;
-	padding-left:5px;
+
+#membership legend span {
+	font-size: 20px;
+	color: red;
+	padding-left: 5px;
 }
-/* input占쏙옙 占쏙옙占쏙옙 ul,li占승깍옙 */
-#signUp{
-	width:100%;
-	padding:20px;
-	border:1px solid #ccc;
+
+#signUp {
+	width: 100%;
+	padding: 20px;
+	border: 1px solid #ccc;
 }
-#signUp li{
-	width:100%;
-	height:60px;
+
+#signUp li {
+	width: 100%;
+	height: 60px;
 }
-#signUp li label{
-	display:inline-block;
-	vertical-align:middle;
-	width:25%;
-	height:50%;
-	line-height:30px;
-	padding-right:5%;
-	text-align:right;
+
+#signUp li label {
+	display: inline-block;
+	vertical-align: middle;
+	width: 25%;
+	height: 50%;
+	line-height: 30px;
+	padding-right: 5%;
+	text-align: right;
 }
-#signUp li label:after{
-	content:'';
-	display:inline-block;
-	vertical-align:middel;
-	height:15px;
-	padding-left:3%;
-	border-right:1px solid #3e3e3e;
+
+#signUp li label:after {
+	content: '';
+	display: inline-block;
+	vertical-align: middel;
+	height: 15px;
+	padding-left: 3%;
+	border-right: 1px solid #3e3e3e;
 }
-#signUp li input{
-	display:inline-block;
-	width:50%;
-	height:30px;
-	line-height:30px;
-	text-indent:5px;
-	border:none;
+
+#signUp li input {
+	display: inline-block;
+	width: 50%;
+	height: 30px;
+	line-height: 30px;
+	text-indent: 5px;
+	border: none;
 }
-/* 紐⑤뱺 input 諛� 踰꾪듉湲곕뒫�븯�뒗 �슂�냼�뱾 紐⑥꽌由ъ쿂由� */
-#signUp li input, #buttonArea input, .agreeText a{
-	border-radius:5px;
+
+#signUp li input, #buttonArea input, .agreeText a {
+	border-radius: 5px;
 }
 /* email */
-#signUp li.email{
-	width:100%;
-	height:90px;
-	margin-bottom:30px;
-}
-#signUp li.email label{
-	height:30px;
-	line-height:30px;
-}
-/* phone */
-#signUp li.phone{
-	width:100%;
-	height:60px;
-	margin-bottom:30px;
-}
-#signUp li.phone label{
-	height:30px;
-	line-height:30px;
-}
-#signUp li input[type="button"]{
-	display:inline-block;
-	width:20%;
-	height:30px;
-	vertical-align:middle;
-	background-color:transparent;
-	border:none;
-	border:1px solid #223d4b;
-	color:#223d4b;
-	transition:all .3s ease-in-out;
-}
-#signUp li input[type="button"]:hover,#signUp li input[type="button"]:focus{
-	color:#ededed;
-	background-color:#223d4b;
-}
-#signUp li input[type="checkbox"]{
-	display:inline-block;
-	width:15px;
-	height:15px;
-}
-/* 二쇱쓽�궗�빆 */
-.caution{
-	display:inline-block;
-	width:100%;
-	height:30px;
-	line-height:30px;
-	padding-left:25%;
-	color:red;
-	font-size:0.8rem;
+#signUp li.email {
+	width: 100%;
+	height: 90px;
+	margin-bottom: 30px;
 }
 
-/* email,phone �닔�떊�룞�쓽 遺�遺� */
-#signUp li.specific p.agree{
-	width:50%;
-	height:30px;
-	line-height:30px;
-	margin-left:25%;
-	overflow:hidden;
+#signUp li.email label {
+	display: inline-block;
+	width: 25%;
+	height: 30px;
+	vertical-align:top;
 }
-#signUp li.specific p.agree input[type="checkbox"]{
-	display:inline-block;
-	width:3%;
-	height:100%;
-	padding:0;
-	vertical-align:middle;
+
+p.emailInputArea {
+	display: inline-block;
+	width: 50%;
+	height: 30px;
+	overflow: hidden;
 }
-#signUp li.specific p.agree label.normal{
-	display:inline-block;
-	width:97%;
-	height:100%;
-	line-height:28px;
-	padding:0;
-	vertical-align:middle;
-	text-align:left;
-	text-indent:1%;
+
+#useremail, #useremail2 {
+	display: block;
+	width: 48% !important;
 }
-#signUp li.specific p.agree label.normal:after{
-	content:'';
-	width:0;
-	height:30px;
-	line-height:30px;
-	display:none;
+
+p.emailInputArea span {
+	display: inline-block;
+	width: 4%;
+	height: 100%;
+	text-align: center;
+	color: #333;
+}
+
+/* phone */
+#signUp li.phone {
+	width: 100%;
+	height: 60px;
+	margin-bottom: 30px;
+}
+
+#signUp li.phone label {
+	height: 30px;
+	line-height: 30px;
+}
+
+#signUp li input[type="button"] {
+	display: inline-block;
+	width: 20%;
+	height: 30px;
+	vertical-align: middle;
+	background-color: transparent;
+	border: none;
+	border: 1px solid #223d4b;
+	color: #223d4b;
+	transition: all .3s ease-in-out;
+}
+#signUp li.email input[type="button"] {
+	vertical-align: top;
+}
+
+#signUp li input[type="button"]:hover, #signUp li input[type="button"]:focus
+	{
+	color: #ededed;
+	background-color: #223d4b;
+}
+
+#signUp li input[type="checkbox"] {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+}
+
+.caution {
+	display: inline-block;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 25%;
+	color: red;
+	font-size: 0.8rem;
+}
+
+/* email,phone  */
+#signUp li.specific p.agree {
+	width: 50%;
+	height: 30px;
+	line-height: 30px;
+	margin-left: 25%;
+	overflow: hidden;
+}
+
+#signUp li.specific p.agree input[type="checkbox"] {
+	display: inline-block;
+	width: 3%;
+	height: 100%;
+	padding: 0;
+	vertical-align: middle;
+}
+
+#signUp li.specific p.agree label.normal {
+	display: inline-block;
+	width: 97%;
+	height: 100%;
+	line-height: 28px;
+	padding: 0;
+	vertical-align: middle;
+	text-align: left;
+	text-indent: 1%;
+}
+
+#signUp li.specific p.agree label.normal:after {
+	content: '';
+	width: 0;
+	height: 30px;
+	line-height: 30px;
+	display: none;
 }
 
 /* #buttonArea */
-#buttonArea{
-	width:100%;
-	height:50px;
-	margin-top:30px;
-	overflow:hidden;
-}
-#buttonArea p{
-	width:50%;
-	height:30px;
-	margin:10px auto;
-}
-#buttonArea p input{
-	display:inline-block;
-	width:32%;
-	height:100%;
-	line-height:30px;
-	margin-left:1%;
-	border:none;
-	border:1px solid #ccc;
-	background-color:transparent;
-	transition:all .3s ease-in-out;
-}
-#buttonArea p input:hover,#button p input:focus{
-	background-color:#223d4b;
-	/* color:#ef4b24; */
-	color:pink;
-	font-weight:700;
+#buttonArea {
+	width: 100%;
+	height: 50px;
+	margin-top: 30px;
+	overflow: hidden;
 }
 
-/* �씠�슜�빟愿�, 媛쒖씤�젙蹂� */
-#termsPrivacy{
-	margin-top:60px;
-	width:100%;
-	height:100px;
-	border:none;
+#buttonArea input {
+	display: inline-block;
+	width: 32%;
+	height: 100%;
+	line-height: 50px;
+	margin-right:2%;
+	border: none;
+	border: 1px solid #ccc;
+	background-color: transparent;
+	font-size:1.2rem;
+	transition: all .4s ease-in-out;
 }
-#termsPrivacy legend{
-	display:inline-block;
-	width:100%;
-	height:30px;
-	line-height:30px;
-	text-align:center;
-	font-weight:700;
-	font-size:24px;
-	color:#3e3e3e;
-	margin-bottom:50px;
+#buttonArea input:last-child{
+	margin-right:0;
 }
-#termsPrivacy legend:after{
-	content:'';
-	display:block;
-	width:5%;
-	height:3px;
-	background-color:#3e3e3e;
-	margin:15px auto;
+
+#buttonArea input:hover, #button input:focus {
+	background-color: #223d4b;
+	/* color:#ef4b24; */
+	color:#fff;
+	font-weight: 700;
 }
-.agreeText{
-	width:100%;
-	padding:30px;
-	border:1px solid #ccc;
+
+#termsPrivacy {
+	margin-top: 60px;
+	width: 100%;
+	height: 100px;
+	border: none;
 }
-.agreeText p{
-	width:100%;
-	height:100%;
-	line-height:30px;
-	overflow:hidden;
-	margin-bottom:10px;
+
+#termsPrivacy legend {
+	display: inline-block;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-weight: 700;
+	font-size: 24px;
+	color: #3e3e3e;
+	margin-bottom: 50px;
 }
-.agreeText p span{
-	display:inline-block;
-	width:25%;
-	height:100%;
-	padding-right:5%;
-	vertical-align:middle;
-	text-align:right;
+
+#termsPrivacy legend:after {
+	content: '';
+	display: block;
+	width: 5%;
+	height: 3px;
+	background-color: #3e3e3e;
+	margin: 15px auto;
 }
-.agreeText p input[type="checkbox"]{
-	display:inline-block;
-	width:16px;
-	height:16px;
-	padding:7px 0;
-	vertical-align:middle;
+
+.agreeText {
+	width: 100%;
+	padding: 30px;
+	border: 1px solid #ccc;
 }
-.agreeText p label{
-	display:inline-block;
-	width:49%;
-	vertical-align:middle;
-	text-indent:1%;
+
+.agreeText p {
+	width: 100%;
+	height: 100%;
+	line-height: 30px;
+	overflow: hidden;
+	margin-bottom: 10px;
 }
-.agreeText p a{
-	display:inline-block;
-	width:20%;
-	color:#223d4b;
-	background-color:transparent;
-	border:1px solid #223d4b;
-	text-align:center;
-	font-size:0.8rem;
-	transition:all .5s ease-in-out;
-	vertical-align:middle;
+
+.agreeText p span {
+	display: inline-block;
+	width: 25%;
+	height: 100%;
+	padding-right: 5%;
+	vertical-align: middle;
+	text-align: right;
 }
-.agreeText p:hover a,.agreeText p a:focus{
-	color:#ededed;
-	background-color:#223d4b;
+
+.agreeText p input[type="checkbox"] {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	padding: 7px 0;
+	vertical-align: middle;
+}
+
+.agreeText p label {
+	display: inline-block;
+	width: 49%;
+	vertical-align: middle;
+	text-indent: 1%;
+}
+
+.agreeText p a {
+	display: inline-block;
+	width: 20%;
+	color: #223d4b;
+	background-color: transparent;
+	border: 1px solid #223d4b;
+	text-align: center;
+	font-size: 0.8rem;
+	transition: all .5s ease-in-out;
+	vertical-align: middle;
+}
+
+.agreeText p:hover a, .agreeText p a:focus {
+	color: #ededed;
+	background-color: #223d4b;
 }
